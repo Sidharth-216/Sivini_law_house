@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!-- Created By CodingLab - www.codinglabweb.com -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <!---<title> Responsive Registration Form | CodingLab </title>--->
+    <link rel="stylesheet" href="static/style2.css">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Registration Form</title>
+     
+   </head>
+<body>
+  
+  <div class="square">
+    
+  <form action="{{ url_for('register') }}" method="post">
+    <div class="container">
+    
+      <div class="title">Registration</div>
+      <div class="content">
+        <form action="#" enctype="multipart/form-data">
+          <div class="user-details">
+            <div class="input-box">
+              <span class="details">Full Name</span>
+              <input type="text" id="Enter your name" placeholder="Full name" autocomplete="on" name="name" required>
+            </div>
+            <div class="input-box">
+              <span class="details">Username</span>
+              <input type="text" id="Enter your username" placeholder="Username here"autocomplete="on" name ="username" required>
+            </div>
+            <div class="input-box">
+              <span class="details">Email</span>
+              <input type="text" id="Enter your email"placeholder="enter your email" autocomplete="on" name ="email" required>
+            </div>
+            <div class="input-box">
+              <span class="details">Phone Number</span>
+              <input type="text" id="Enter your number" placeholder="enter your number" autocomplete="on" name ="number" required>
+            </div>
+            <div class="input-box">
+              <span class="details">Password</span>
+              <input type="password" id="Enter your password" placeholder="enter  your password"  name ="paswd"required>
+            </div>
+            <div class="input-box">
+              <span class="details">Confirm Password</span>
+              <input type="password" id="Confirm your password" placeholder="same as password" name ="cnfpas" required>
+            </div>
+          </div>
+          <div class="gender-details">
+            <input type="radio" name="gender" id="dot-1">
+            <input type="radio" name="gender" id="dot-2">
+            <input type="radio" name="gender" id="dot-3">
+            <span class="gender-title">Gender</span>
+            <div class="category">
+              <label for="dot-1">
+                <span class="dot one"></span>
+                <span class="gender">Male</span>
+              </label>
+              <label for="dot-2">
+                <span class="dot two"></span>
+                <span class="gender">Female</span>
+              </label>
+              <label for="dot-3">
+                <span class="dot three"></span>
+                <span class="gender">Prefer not to say</span>
+              </label>
+            </div>
+          </div>
+          <div class="button">
+            <input type="submit" value="Register">
+          </form>
+            <a href="{{ url_for('login') }}">Already registered</a>
+          </div>
+  </form>
+    </div>
+  </div>
+  <div class="back-button" style="display: block;"></div>
+  <a href="{{ url_for('index') }}"><button id="backButton" class="back-button">Back</button></a>
+
+   <!-- Flash Messages -->
+   {% with messages = get_flashed_messages(with_categories=true) %}
+   {% if messages %}
+       <ul>
+           {% for category, message in messages %}
+               <li class="{{ category }}">{{ message }}</li>
+           {% endfor %}
+       </ul>
+   {% endif %}
+{% endwith %}
+
+<!-- Page-specific content goes here -->
+{% block content %}{% endblock %}
+
+</body>
+</html>

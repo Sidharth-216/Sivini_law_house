@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="static/profile.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            
+            <img src="static/banner.jpg" alt="Banner">
+            <h1>Welcome, {{ username }}!</h1>
+        </header>
+        <section class="profile-info">
+            <h2>Personal Information</h2>
+            <div class="info-item">
+                <label>Profile Picture:</label>
+               <img src="static/mypic(1).jpeg" alt="Profile Picture" class="profile-image">
+                <label>Username:</label>
+                <input type="text" value="{{ username }}" name="username">
+            </div>
+            <div class="info-item">
+                <label>Email:</label>
+                <input type="email" value="{{ email }}"name="email">
+            </div>
+            <div class="info-item">
+                <label>Phone Number:</label>
+                <input type="tel" value="{{number}}"name="number">
+            </div>
+        </section>
+        <section class="bookings">
+            <h2>Booking Details</h2>
+           
+            {% if bookings %}
+                <ul>
+                    {% for booking in bookings %}
+                        <li>
+                            <strong>Name:</strong> {{ booking[1] }}<br> <!-- Adjust index based on your table structure -->
+                            <strong>Lawyer Type:</strong> {{ booking[2] }}<br>
+                            <strong>Case Description:</strong> {{ booking[4] }}<br>
+                            <strong>Appointment Date:</strong> {{ booking[5] }}<br>
+                            <strong>Time of Booking:</strong> {{ booking[6] }}<br>
+                            <strong>Date of Booking:</strong> {{ booking[7] }}<br>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No bookings found.</p>
+            {% endif %}
+        </section>
+        <div class="booking-button">
+            <a href="{{ url_for('homepage') }}"><button id="bookButton">Book Again</button></a>
+        </div>
+        <div class="backButton" style="display: block;">
+            <a href="{{ url_for('index') }}"><button id="backButton">Back</button></a> 
+        </div>
+    <script src="static/profile.js"></script>
+</body>
+</html>

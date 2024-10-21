@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/team.css">
+    <title>Our Legal Team</title>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <h1>Our Legal Team</h1>
+        <div class="main-card" id="mainCard">
+            <h2>Our Team</h2>
+        </div>
+        <div class="lawyer-grid" id="lawyerGrid" style="display: none;">
+            <div class="lawyer-card">
+                <img src="static/daddy.jpeg" alt="S Babu Rao - Founder">
+                <h2>S Babu Rao</h2>
+                <p>Founder, GP</p>
+                <p>Specialization: All Types</p>
+                <p>Experience: 45+ years</p>
+                <button class="contact-btn" data-email="john@example.com">Contact</button>
+            </div>
+            <div class="lawyer-card">
+                <img src="static/chinna.jpeg" alt="L N Patnaik - Senior Lawyer">
+                <h2>L N Patnaik</h2>
+                <p>Senior Lawyer</p>
+                <p>Specialization: Civil, Family Law</p>
+                <p>Experience: 30+ years</p>
+                <button class="contact-btn" data-email="jane@example.com">Contact</button>
+            </div>
+            <div class="lawyer-card">
+                <img src="static/sanjit.jpeg" alt="Sanjit Patnaik - Junior Lawyer">
+                <h2>Sanjit Patnaik</h2>
+                <p>Junior Lawyer</p>
+                <p>Specialization: Corporate Law, Criminal Law</p>
+                <p>Experience: 5 years</p>
+                <button class="contact-btn" data-email="mike@example.com">Contact</button>
+            </div>
+            <div class="lawyer-card">
+                <img src="static/chinna.jpeg" alt="Santosh - Junior Lawyer">
+                <h2>Santosh</h2>
+                <p>Junior Lawyer</p>
+                <p>Specialization: Intellectual Property</p>
+                <p>Experience: 5 years</p>
+                <button class="contact-btn" data-email="sarah@example.com">Contact</button>
+            </div>
+            <div class="lawyer-card">
+                <img src="static/chinna.jpeg" alt="Praveen Kumar - Real Estate Law">
+                <h2>Praveen Kumar</h2>
+                <p>Specialization: Real Estate Law</p>
+                <p>Experience: 5 years</p>
+                <button class="contact-btn" data-email="david@example.com">Contact</button>
+            </div>
+            <div class="lawyer-card">
+                <img src="static/sanjit.jpeg" alt="Amit Patnaik - Environmental Law">
+                <h2>Amit Patnaik</h2>
+                <p>Specialization: Environmental Law</p>
+                <p>Experience: 2 years</p>
+                <button class="contact-btn" data-email="emily@example.com">Contact</button>
+            </div>
+        </div>
+        <div class="back-button" style="display: block;"></div>
+<a href="{{ url_for('index') }}"><button id="backButton" class="back-button">Back</button></a>
+
+    </div>
+
+    <script src="static/team.js"></script>
+</body>
+</html>

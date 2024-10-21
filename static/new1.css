@@ -1,0 +1,81 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Legal Advice Section */
+.legal-advice {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+}
+
+.legal-advice h1 {
+    color: #333;
+    text-align: center;
+}
+
+.advice {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.advice-item h2 {
+    color: #0056b3;
+}
+
+.consultation-btn {
+    display: block;
+    background-color: #0056b3;
+    color: white;
+    padding: 10px 20px;
+    margin: 20px auto;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.consultation-btn:hover {
+    background-color: #004085;
+}
+
+/* FAQ Section */
+.faq-section {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+}
+
+.faq-section h1 {
+    text-align: center;
+    color: #333;
+}
+
+.faq-item {
+    margin: 10px 0;
+}
+
+.faq-item h3 {
+    color: #0056b3;
+    cursor: pointer;
+    margin: 0;
+}
+
+.faq-item .answer {
+    display: none;
+    margin-top: 5px;
+}
+
+/* For smaller screens */
+@media (max-width: 768px) {
+    .advice {
+        grid-template-columns: 1fr;
+    }
+}

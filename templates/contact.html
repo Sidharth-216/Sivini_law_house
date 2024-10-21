@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Working Contact Form To Email Using JavaScript</title>
+    <link rel="stylesheet" href="static/style3.css">
+</head>
+
+<body>
+    <div class ="container">
+        <main>
+            <section id="contact-form">
+
+                <h2>Contact Us!</h2>
+        
+                <form id="contact" action="{{ url_for('contact') }}" method="POST">
+                    <label for="name">Enter yout Name:</label>
+                    <input type="text" id="name" name="name" required>
+                            
+                    <label for="name">email:</label>
+                    <input type="text" id="email" name="email" required>
+        
+                    <label for="name">phone number</label>
+                    <input type="text" id="number" name="number" required>
+                    
+                    <label for="name">Subject:</label>
+                    <input type="text" id="subject" name="subject" required>
+                    
+                    <label for="name">message:</label>
+                    <input type="text" id="message" name="message" required>
+        
+                    <button type="submit">Send Message</button>
+                </form>
+            </section>
+        </main>
+    </div>
+    <div class="back-button" style="display: block;"></div>
+          <a href="{{ url_for('index') }}"><button id="backButton" class="back-button">Back</button></a>
+
+
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="static/script3.js"></script>
+    <script>
+       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+
+// Form submission feedback
+document.getElementById('contact').addEventListener('submit', function(e) {
+    e.preventDefault(); // Prevent default form submission
+
+    // Show SweetAlert and submit form after user clicks 'OK'
+    Swal.fire({
+        title:'Message Sucessfully sent!',
+        text: 'Thank you ! We will contact you soon.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Submit the form after SweetAlert confirmation
+            e.target.submit();  // Manually submit the form
+        }
+    });
+});
+
+    </script>
+</body>
+
+</html>

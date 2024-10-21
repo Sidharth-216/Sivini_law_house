@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="static/login.css" />
+  </head>
+  <body>
+    <div class="background">
+      <video autoplay muted loop class="video">
+        <source src="static/2.mp4" type="video/mp4" class="v"></source>
+      </video>
+    <div class="container">
+      <form action="{{ url_for('login') }}" method="POST">
+        <label for="username">Username:</label>
+        <input type="text" id="username" placeholder="Username here..." name="username" required/><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" placeholder="Password here..."name="paswd" required/><br>
+        <button>Login</button>
+        <a href="{{ url_for('register') }}">Don't have account ?</a>
+        <a href="{{ url_for('forget') }}">forgot password</a>
+      </form>
+      <div class="ear-l"></div>
+      <div class="ear-r"></div>
+      <div class="panda-face">
+        <div class="blush-l"></div>
+        <div class="blush-r"></div>
+        <div class="eye-l">
+          <div class="eyeball-l"></div>
+        </div>
+        <div class="eye-r">
+          <div class="eyeball-r"></div>
+        </div>
+        <div class="nose"></div>
+        <div class="mouth"></div>
+      </div>
+      <div class="hand-l"></div>
+      <div class="hand-r"></div>
+      <div class="paw-l"></div>
+      <div class="paw-r"></div>
+    </div>
+    <div class="back-button" style="display: block;"></div>
+<a href="{{ url_for('index') }}"><button id="backButton" class="back-button">Back</button></a>
+    <!-- Script -->
+    <script src="static/login.js"></script>
+  </body>
+</html>

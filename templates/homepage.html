@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lawyer Booking Service</title>
+    <link rel="stylesheet" href="static/homepage.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e9ecef; /* Background color */
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #007bff;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            animation: fadeIn 1s;
+        }
+        h1, h2 {
+            margin: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        .lawyer-grid {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .lawyer-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 10px;
+            padding: 20px;
+            transition: transform 0.3s;
+            flex: 1 1 30%; /* Responsive card size */
+            position: relative;
+            overflow: hidden;
+        }
+        .lawyer-card:hover {
+            transform: scale(1.05);
+        }
+        .lawyer-card .card-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #007bff;
+            color: white;
+            border-radius: 10px;
+            transform: rotateY(180deg);
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.6s;
+        }
+        .lawyer-card:hover .card-back {
+            transform: rotateY(0);
+        }
+        .lawyer-card:hover .card-front {
+            transform: rotateY(180deg);
+        }
+        .card-front {
+            backface-visibility: hidden;
+        }
+        form {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 20px 0;
+            animation: slideIn 0.5s;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background: #007bff;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .back-button {
+    background-color: #101212; /* Blue background */
+    color: rgb(251, 237, 237); /* White text */
+    border: none; /* No border */
+    padding: 20px 25px; /* Padding for the button */
+    border-radius: 15px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition */
+    position: absolute; /* Position it absolutely */
+    top: 25px; /* Adjust the top position */
+    left: 20px; /* Adjust the left position */
+}
+
+.back-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Legal Expert Booking</h1>
+        <p>Find and book the right lawyer for your case</p>
+    </header>
+
+    <div class="container">
+        <main>
+            <section id="lawyer-types">
+                <h2>Types of Lawyers</h2>
+                <div class="lawyer-grid">
+                    <div class="lawyer-card" data-type="criminal">
+                        <div class="card-front">
+                            <h3>Criminal Lawyer</h3>
+                            <p>Specializes in criminal defense cases</p>
+                            <p class="fee">Starting at 200 Rs/hour</p>
+                        </div>
+                        <div class="card-back">
+                            <p>Contact for more details!</p>
+                        </div>
+                    </div>
+                    <div class="lawyer-card" data-type="family">
+                        <div class="card-front">
+                            <h3>Family Lawyer</h3>
+                            <p>Handles divorce, custody, and family-related cases</p>
+                            <p class="fee">Starting at 150 Rs/hour</p>
+                        </div>
+                        <div class="card-back">
+                            <p>Contact for more details!</p>
+                        </div>
+                    </div>
+                    <div class="lawyer-card" data-type="corporate">
+                        <div class="card-front">
+                            <h3>Corporate Lawyer</h3>
+                            <p>Deals with business and corporate law</p>
+                            <p class="fee">Starting at 250 Rs/hour</p>
+                        </div>
+                        <div class="card-back">
+                            <p>Contact for more details!</p>
+                        </div>
+                    </div>
+                    <div class="lawyer-card" data-type="civil">
+                        <div class="card-front">
+                            <h3>Civil Litigation Lawyer</h3>
+                            <p>Handles various civil disputes and lawsuits</p>
+                            <p class="fee">Starting at 180 Rs/hour</p>
+                        </div>
+                        <div class="card-back">
+                            <p>Contact for more details!</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="booking-form">
+                <h2>Book a Lawyer</h2>
+                <form id="bookingForm" action="{{ url_for('homepage') }}" method="POST">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                    
+                    <label for="lawyer_type">Lawyer Type:</label>
+                    <input type="text" id="lawyer_type" name="lawyer_type" required>
+                    
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    
+                    <label for="case_description">Case Description:</label>
+                    <textarea id="case_description" name="case_description" required></textarea>
+                    
+                    <label for="appointment_date">Appointment Date:</label>
+                    <input type="date" id="appointment_date" name="appointment_date" required>
+                    
+                    <label for="time_of_booking">Time of Booking:</label>
+                    <input type="time" id="time_of_booking" name="time_of_booking" required>
+                    
+                    <label for="date_of_booking">Date of Booking:</label>
+                    <input type="date" id="date_of_booking" name="date_of_booking" required>
+                    
+                    <button type="submit">Submit Booking</button>
+                </form>
+            </section>
+        </main>
+    </div>
+    <div class="back-button" style="display: block;"></div>
+  <a href="{{ url_for('index') }}"><button id="backButton" class="back-button">Back</button></a>
+
+    <footer>
+        <p>&copy; 2023 Legal Expert Booking. All rights reserved.</p>
+    </footer>
+
+    <script src="static/homepage.js"></script>
+    <script src="https://smtpjs.com/"></script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <script>
+    // Smooth scrolling for internal links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+
+// Form submission feedback
+document.getElementById('bookingForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // Prevent default form submission
+
+    // Show SweetAlert and submit form after user clicks 'OK'
+    Swal.fire({
+        title: 'Booking Submitted!',
+        text: 'Thank you for your booking. We will contact you soon.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Submit the form after SweetAlert confirmation
+            e.target.submit();  // Manually submit the form
+        }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const now = new Date();
+    const dateInput = document.getElementById('date_of_booking');
+    const timeInput = document.getElementById('time_of_booking');
+
+    // Set the current date
+    dateInput.value = now.toISOString().split('T')[0]; // YYYY-MM-DD format
+
+    // Set the current time
+    timeInput.value = now.toTimeString().split(' ')[0].substring(0, 5); // HH:MM format
+});
+
+   </script>
+</body>
+</html>
