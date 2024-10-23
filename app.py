@@ -341,12 +341,10 @@ def profile():
 
 @app.route('/about')
 def about():
-    return render_template('about.html')  
+    return render_template('about.html') 
 
-# ... existing imports ...
 
-# app.py
-# ... existing imports ...
+
 
 def connect_to_database():
     try:
@@ -401,6 +399,10 @@ initialize_database()
 def forget():
     return render_template('forget.html')
 
+
+@app.route('/sid')
+def sid():
+    return render_template('sid.html')
 
 if __name__ == '__main__': # Initialize the database when the app starts
     app.run(debug=True,port=5001)

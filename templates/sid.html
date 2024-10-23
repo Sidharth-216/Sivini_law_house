@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Penal Code</title>
+    <style>
+        /* Full-page background image */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column; /* Stack elements vertically */
+            align-items: center; /* Center horizontally */
+            position: relative; /* Enable positioning for child elements */
+            background-image: url('static/supreme-court.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            animation: fadeIn 2s forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Styling the description and disclaimer */
+        .description, .disclaimer {
+            color: white;
+            font-size: 18px; /* Font size for description */
+            margin-bottom: 10px; /* Space between elements */
+            text-align: center; /* Center the text */
+            background-color: rgba(0, 0, 0, 0.5); /* Translucent background */
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 80%; /* Max width for better readability */
+        }
+
+        /* Styling the buttons */
+        button {
+            background-color: rgba(0, 0, 0, 0.7); /* Dark translucent background */
+            color: white;
+            border: none;
+            padding: 15px 30px; /* Adjusted size */
+            font-size: 20px; /* Adjusted font size */
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: 0.4s ease;
+            margin: 10px; /* Margin between buttons */
+        }
+
+        /* Hover effect */
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.8); /* Lighter translucent background */
+            color: black;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Button press effect */
+        button:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Back button style */
+        .back-button {
+            background-color: rgba(255, 0, 0, 0.7); /* Red for Back button */
+            position: absolute; /* Absolute positioning */
+            top: 20px; /* Adjust as needed */
+            left: 20px; /* Leftmost corner */
+        }
+
+        /* Container for buttons */
+        .button-container {
+            display: flex; /* Use flexbox for button alignment */
+            flex-direction: column; /* Stack buttons vertically */
+            align-items: center; /* Center buttons horizontally */
+            justify-content: center; /* Center buttons vertically */
+            height: calc(100vh - 150px); /* Adjust height to position buttons */
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="{{ url_for('index') }}">
+        <button id="backButton" class="back-button">Back</button>
+    </a>
+
+    <!-- Description at the top -->
+    <div class="description">
+        This page will redirect to the official page of Devgan.
+    </div>
+
+    <!-- Educational Disclaimer -->
+    <div class="disclaimer">
+        This is done for educational purposes only, not for any other reason. 
+        Please refer to the Indian Penal Code, 1860 for official information.
+    </div>
+
+    <!-- Centered Button Container -->
+    <div class="button-container">
+        <!-- Redirect Button -->
+        <button onclick="redirectWithDelay()">INDIAN PENAL CODE</button>
+    </div>
+
+    <script>
+        // Adding a slight delay before redirect for a smooth transition
+        function redirectWithDelay() {
+            setTimeout(function() {
+                window.location.href = 'https://devgan.in/all_sections_ipc.php';
+            }, 300); // 300ms delay before redirection
+        }
+    </script>
+</body>
+</html>
