@@ -109,8 +109,6 @@ def initialize_contact_table():
 # Call this function when your application starts
 initialize_contact_table()
 
-
-
 # Email sending function using SMTP
 def send_email(to_email, subject, body):
     msg = Message(subject, recipients=[to_email])
