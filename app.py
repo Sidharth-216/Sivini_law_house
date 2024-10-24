@@ -404,6 +404,10 @@ def forget():
 def sid():
     return render_template('sid.html')
 
+@app.route('/bns')
+def bns():
+    return render_template('bns.html')
+
 if __name__ == '__main__': # Initialize the database when the app starts
     app.run(debug=True,port=5001)
     #app.run()
