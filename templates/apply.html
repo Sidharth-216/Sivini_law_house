@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Application Form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='apply.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div class="back-button">
+        <a href="{{ url_for('index') }}">
+            <button id="backButton">Back</button>
+        </a>
+    </div>
+    <div class="container">
+        <h2>Job Application Form</h2>
+        <form id="applicationForm" action="{{ url_for('apply') }}" method="POST" enctype="multipart/form-data">
+            <div class="input-box">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="input-box">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-box">
+                <label for="number">Phone Number:</label>
+                <input type="text" id="number" name="number" required>
+            </div>
+            <div class="input-box">
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" required>
+            </div>
+            <div class="input-box">
+                <span class="details">Position Applying For:</span>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="position" value="Intern"> Intern</label>
+                    <label><input type="checkbox" name="position" value="Junior Lawyer"> Junior Lawyer</label>
+                    <label><input type="checkbox" name="position" value="Senior Lawyer"> Senior Lawyer</label>
+                </div>
+            </div>
+            <div class="input-box">
+                <label for="resume">Upload Resume:</label>
+                <input type="file" id="resume" name="resume" required>
+            </div>
+            <div class="input-box">
+                <label for="about">Tell About Yourself:</label>
+                <textarea id="about" name="about" required></textarea>
+            </div>
+            <div class="button">
+                <input type="submit" value="Submit Application">
+            </div>
+        </form>
+        
+    </div>
+
+    <script src="{{ url_for('static', filename='apply.js') }}"></script>
+    <script>
+        // Form submission feedback
+        document.getElementById('applicationForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+
+            // Show SweetAlert and submit form after user clicks 'OK'
+            Swal.fire({
+                title: 'Application Submitted!',
+                text: 'Thank you for your application. We will contact you soon.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    e.target.submit(); // Manually submit the form
+                }
+            });
+        });
+    </script>
+</body>
+</html>

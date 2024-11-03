@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client-Lawyer Video Call</title>
+    <link rel="stylesheet" href="static/call.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Client-Lawyer Video Call</h1>
+        <div class="video-container">
+            <video id="localVideo" autoplay muted></video>
+            <video id="remoteVideo" autoplay></video>
+        </div>
+        <div class="controls">
+            <button id="muteMic" class="control-button">Mute Mic</button>
+            <button id="muteVideo" class="control-button">Mute Video</button>
+            <button id="endCall" class="control-button">End Call</button>
+        </div>
+        <div id="roomIdDisplay" class="room-id">Room ID: </div>
+        <button class="back-button" onclick="goBack()">Back</button>
+    </div>
+
+    <div id="loading">Connecting...</div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.min.js"></script>
+    <script src="static/call.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lawyer Profile</title>
+    <link rel="stylesheet" href="static/lawyer_profile.css">
+</head>
+<body>
+    <div class="profile-container">
+        <h2>Profile</h2>
+        <form id="profileForm" class="profile-form">
+            <div class="input-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" value="John Doe" required>
+            </div>
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" value="johndoe@example.com" required>
+            </div>
+            <div class="input-group">
+                <label for="license">License Number</label>
+                <input type="text" id="license" value="LAW123456" required>
+            </div>
+            <div class="input-group">
+                <label for="specialization">Specialization</label>
+                <input type="text" id="specialization" value="Corporate Law" required>
+            </div>
+            <button type="submit" class="submit-btn">Update Profile</button>
+        </form>
+    </div>
+
+    <script src="static/lawyer_profile.js"></script>
+</body>
+</html>

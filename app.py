@@ -1,5 +1,5 @@
 # app.py
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session,flash
 import sqlite3
 import secrets
 import smtplib
@@ -11,8 +11,12 @@ import time
 from flask_mail import Mail,Message
 import datetime
 from flask_ngrok import run_with_ngrok
+from flask_socketio import SocketIO, emit,join_room
+from flask import jsonify,abort
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'secret!'
+socketio = SocketIO(app)
 #run_with_ngrok(app)
 @app.route('/')
 def home():
@@ -82,9 +86,6 @@ mail = Mail(app)  # Initialize the Mail object
 app.secret_key = secrets.token_hex(16)  # Generates a random 32-character hex string
 print("Secret key set:", app.secret_key)  # Debugging output
 
-# app.py
-# ... existing imports ...
-
 def initialize_contact_table():
     conn = connect_to_database()
     cursor = conn.cursor()
@@ -149,7 +150,7 @@ def homepage():
 
 
 def connect_to_database():
-    return sqlite3.connect('lawfirm.db', timeout=30)  # Increased timeout
+    return sqlite3.connect('lawfirm.db', timeout=70)  # Increased timeout
 
 def execute_with_retry(query, params=(), retries=5):
     for attempt in range(retries):
@@ -206,14 +207,36 @@ def initialize_database():
                 message TEXT NOT NULL      
             );
         ''')
+        execute_with_retry('''
+        CREATE TABLE IF NOT EXISTS job (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL,
+            number TEXT NOT NULL,
+            address TEXT NOT NULL,
+            position TEXT NOT NULL,
+            resume BLOB,
+            about TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+        ''')
+        execute_with_retry('''
+                CREATE TABLE IF NOT EXISTS lawyers (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT NOT NULL,
+                    email TEXT NOT NULL,
+                    law_firm TEXT NOT NULL,
+                    expertise TEXT NOT NULL,
+                    password TEXT NOT NULL,
+                    exprience TEXT NOT NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
+            ''')
         
     except Exception as e:
         print(f"An error occurred while initializing the database: {e}")
 # Call this function when your application starts
 initialize_database()
-
-
-# ... existing code ...
 
 @app.route('/register', methods=['GET','POST'])
 def register():
@@ -247,11 +270,18 @@ def register():
             ''')
 
             # Insert user data into the database
-            query = "INSERT INTO clients (username, name,cnfpas,paswd, gender, email, number) VALUES (?,?,?,?,?,?,?)"
+            #query = "INSERT INTO clients (username, name,cnfpas,paswd, gender, email, number) VALUES (?,?,?,?,?,?,?)"
 
-            cursor.execute(query, (username, name,cnfpas, paswd, gender, email, number))  # Added parameters for the query
-            conn.commit()  # Commit the transaction
+            #cursor.execute(query, (username, name,cnfpas, paswd, gender, email, number))  # Added parameters for the query
+            #conn.commit()  # Commit the transaction
 
+            cursor.execute('''
+        INSERT INTO clients (username,name,cnfpas,paswd,gender,email, number)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        ''', (username, name, cnfpas, paswd,gender, email,number ))
+            
+            conn.commit()
+            
             # Verify if the data is inserted correctly
             cursor.execute("SELECT * FROM clients WHERE username = ?", (username,))
             user = cursor.fetchone()
@@ -270,14 +300,12 @@ def register():
         
     return render_template('register.html')
 
-# ... existing code ...
+
 @app.route('/team')
 def team():
     return render_template('team.html')
 
 from flask import session  # Import session to manage user sessions
-
-# ... existing code ...
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -336,7 +364,7 @@ def profile():
             conn.close()
 
     return render_template('profile.html', username=username, email=email, number=number, bookings=bookings)
-# ... existing code ...
+
 
 
 @app.route('/about')
@@ -344,11 +372,9 @@ def about():
     return render_template('about.html') 
 
 
-
-
 def connect_to_database():
     try:
-        conn = sqlite3.connect('lawfirm.db', timeout=30)  # Ensure the path is correct
+        conn = sqlite3.connect('lawfirm.db', timeout=70)  # Ensure the path is correct
         print("Database connection established.")
         return conn
     except Exception as e:
@@ -407,6 +433,218 @@ def sid():
 @app.route('/bns')
 def bns():
     return render_template('bns.html')
+
+def get_db_connection():
+    conn = sqlite3.connect('lawfirm.db', timeout=70)  # Set timeout to 10 seconds
+    conn.row_factory = sqlite3.Row
+    return conn
+
+
+@app.route('/apply', methods=['GET', 'POST'])
+def apply():
+    if request.method == 'POST':
+        # Get form data
+        name = request.form.get('name')
+        email = request.form.get('email')
+        number = request.form.get('number')
+        address = request.form.get('address')
+        position = request.form.getlist('position')  # Get all selected positions
+        resume = request.files['resume']  # Handle file upload
+        about = request.form.get('about')
+
+        # You can save the resume file if needed
+        # resume.save('path_to_save_resume/' + resume.filename)
+
+        # Connect to the database
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        # Create the "job" table if it doesn't exist
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS job_application (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL,
+            number TEXT NOT NULL,
+            address TEXT NOT NULL,
+            position TEXT NOT NULL,
+            resume BLOB,
+            about TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+        ''')
+
+        # Insert the application into the job_application table
+        cursor.execute('''
+        INSERT INTO job_application (name, email, number, address, position, resume, about)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        ''', (name, email, number, address, ', '.join(position), resume.read(), about))
+
+        # Commit changes and close the connection
+        conn.commit()
+        conn.close()
+
+        flash('Application submitted successfully!', 'success')
+        return redirect(url_for('index'))  # Redirect to the index or success page
+
+    return render_template('apply.html')  # Render the job application form
+
+
+# Route for the video call page
+@app.route('/video')
+def video_call():
+    room = request.args.get('room')
+    return render_template('video.html', room=room)
+
+# Socket event for a user joining a room
+@socketio.on('join')
+def handle_join(data):
+    room = data['room']
+    join_room(room)
+    emit('user-joined', room=room)
+
+# Signaling events for WebRTC within a specific room
+@socketio.on('offer')
+def handle_offer(data):
+    room = data['room']
+    emit('offer', data, room=room)
+
+@socketio.on('answer')
+def handle_answer(data):
+    room = data['room']
+    emit('answer', data, room=room)
+
+@socketio.on('ice-candidate')
+def handle_ice_candidate(data):
+    room = data['room']
+    emit('ice-candidate', data, room=room)
+
+
+@app.route('/send_message', methods=['POST','GET'])
+def send_message():
+    # Check if the request's Content-Type is application/json
+    if request.content_type != 'application/json':
+        abort(415)  # Unsupported Media Type if the content type is incorrect
+    
+    # Get the JSON data from the request
+    data = request.get_json()
+    user_message = data.get('message')
+    
+    # Process the user message (for now, we respond with a static message)
+    response_message = "This is a response from the lawyer."
+    
+    # Return the response as JSON
+    return jsonify({"response": response_message})
+
+@app.route('/lawyer_register',methods=['GET','POST'])
+def lawyer_register():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        email = request.form.get('email')
+        law_firm = request.form.get('law_firm')
+        expertise = request.form.get('expertise')
+        password = request.form.get('password')
+        exprience= request.form.get('exprience')
+        
+        if password != password:
+            return "Passwords do not match."
+        
+        conn = connect_to_database()
+        cursor = conn.cursor()
+        try:
+            # Create clients table if it doesn't exist
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS lawyers (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT NOT NULL,
+                    email TEXT NOT NULL,
+                    law_firm TEXT NOT NULL,
+                    expertise TEXT NOT NULL,
+                    password TEXT NOT NULL,
+                    exprience TEXT NOT NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
+            ''')
+
+            # Insert user data into the database
+            #query = "INSERT INTO clients (username, name,cnfpas,paswd, gender, email, number) VALUES (?,?,?,?,?,?,?)"
+
+            #cursor.execute(query, (username, name,cnfpas, paswd, gender, email, number))  # Added parameters for the query
+            #conn.commit()  # Commit the transaction
+
+            cursor.execute('''
+        INSERT INTO lawyers (name,email,law_firm, expertise,password,exprience)
+        VALUES (?, ?, ?, ?, ?,?)
+        ''', ( name, email,law_firm,expertise,password,exprience))
+            
+            conn.commit()
+            
+            # Verify if the data is inserted correctly
+            cursor.execute("SELECT * FROM lawyers WHERE email = ?", (email,))
+            user = cursor.fetchone()
+
+            if user:
+                return redirect(url_for('lawyer_login'))
+            else:
+                return "Registration failed. Please try again."
+        except Exception as e:
+            conn.rollback()  # Rollback in case of an error
+            print(f"An error occurred: {e}")  # Log the exact error for debugging
+            return f"An error occurred: {e}"
+        finally:
+            cursor.close()
+            conn.close()
+        
+    return render_template('lawyer_register.html')
+
+@app.route('/lawyer_login',methods=['GET','POST'])
+def lawyer_login():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        conn = connect_to_database()  # Ensure this connects to the correct database
+        cursor = conn.cursor()
+        try:
+            # Check if the user exists with the provided username and password
+            cursor.execute("SELECT * FROM lawyers WHERE email = ? AND password = ?", (email, password))
+            user = cursor.fetchone()
+
+            if user:
+                # Store user information in session
+                #session['username'] = user[1]  #  username is the first column
+                #session['email'] = user[6]      #  email is the sixth column
+                #session['number'] = user[7]  # phone number is the seventh column
+                #session['profile_picture'] = user[0]  # Assuming profile picture is the zero column
+                print("Login successful for user:", email)  # Debugging output
+                return redirect(url_for('dashboard'))  # Redirect to profile after login
+            else:
+                print("Login failed for user:", email)  # Debugging output
+                return redirect(url_for('lawyer_register'))
+        except Exception as e:
+            print(f"An error occurred during login: {e}")  # Log the exact error for debugging
+            return f"An error occurred during login: {e}"  # Return the error message
+        finally:
+            cursor.close()
+            conn.close()
+
+    return render_template('lawyer_login.html')
+
+@app.route('/laywer_dashboard')
+def dashboard():
+    return render_template('lawyer_dashboard.html')
+
+@app.route('/client_management')
+def client_management():
+    return render_template('client_management.html')
+
+@app.route('/apointment_management')
+def apointment_management():
+    return render_template('apointment_management.html')
+
+@app.route('/message_management')
+def message_management():
+    return render_template('message_management.html')
 
 if __name__ == '__main__': # Initialize the database when the app starts
     app.run(debug=True,port=5001)

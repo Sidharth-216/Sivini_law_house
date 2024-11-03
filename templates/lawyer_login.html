@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lawyer Login</title>
+    <link rel="stylesheet" href="static/lawyer_login.css">
+</head>
+<body>
+    <div class="back-button" style="display: block;"></div>
+<a href="{{ url_for('index') }}"><button id="backButton" class="back-button">Back</button></a>
+    <div class="container">
+        <form action="{{ url_for('lawyer_login') }}" method="POST">
+            <h2>Lawyer Login</h2>
+            <div class="input-group">
+                <input type="email" id="email"name="email" required>
+                <label for="email">Email</label>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password"name="password"required>
+                <label for="password">Password</label>
+            </div>
+            <button type="submit" class="submit-btn">Login</button>
+            <p class="switch">Don’t have an account? <a href="{{ url_for('lawyer_register') }}">Register here</a>.</p>
+        </form>
+    </div>
+    <script src="static/lawyer_login.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lawyer Dashboard</title>
+    <link rel="stylesheet" href="static/lawyer_dashboard.css">
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="{{ url_for('lawyer_login') }}">
+        <button id="backButton" class="back-button">Back</button>
+    </a>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar">
+            <h2 class="logo">LawyerPro</h2>
+            <ul class="nav-links">
+                <li><a href="#overview" class="active">Dashboard Overview</a></li>
+                <li><a href="{{ url_for('client_management') }}"class="link">Client Management</a></li>
+                <li><a href="{{ url_for('apointment_management') }}"class="link">Appointments</a></li>
+                <li><a href="{{ url_for('message_management') }}"class="link">Messages</a></li>
+                <li><a href="{{ url_for('about') }}"class="link">Documents</a></li>
+                <li><a href="{{ url_for('about') }}"class="link">Notifications</a></li>
+                <li><a href="{{ url_for('about') }}"class="link">Profile</a></li> <!-- Link to Profile Section -->
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <header>
+                <h1>Welcome to Your Dashboard</h1>
+                <p>Stay updated with your tasks and appointments.</p>
+            </header>
+
+            <!-- Overview Cards -->
+            <div class="overview-cards">
+                <div class="card" id="activeCases">
+                    <h3>Active Cases</h3>
+                    <p>12</p>
+                </div>
+                <div class="card" id="appointments">
+                    <h3>Upcoming Appointments</h3>
+                    <p>5</p>
+                </div>
+                <div class="card" id="messages">
+                    <h3>New Messages</h3>
+                    <p>3</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="static/lawyer_dashboard.js"></script>
+</body>
+</html>

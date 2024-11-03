@@ -402,7 +402,7 @@ nav .menu .menu_icon:hover .icon:after {
   }
 }
 .wrapper .container .text article p {
-  color: white;
+  color: rgb(233, 227, 227);
   font-size: 18px;
   letter-spacing: 0.6px;
   margin-bottom: 40px;
@@ -416,7 +416,7 @@ nav .menu .menu_icon:hover .icon:after {
   box-shadow: 0px 15px 20px rgba(54, 24, 79, 0.5);
   z-index: 3;
   color: #695681;
-  background-color: white;
+  background-color: rgb(247, 238, 238);
   text-transform: uppercase;
   font-weight: 600;
   font-size: 12px;
@@ -429,14 +429,18 @@ nav .menu .menu_icon:hover .icon:after {
   color: white;
 }
 .wrapper .container .p404 {
-  font-size: 200px;
+  font-size: 170px; /* Adjust font size as desired */
   font-weight: 700;
   letter-spacing: 4px;
   color: white;
   display: flex !important;
   justify-content: center;
   align-items: center;
+  text-align: center; /* Ensures centered text */
   position: absolute;
+  top: 50%; /* Centers vertically */
+  left: 50%; /* Centers horizontally */
+  transform: translate(-50%, -50%); /* Ensures precise centering */
   z-index: 2;
   animation: anime404 0.6s cubic-bezier(0.3, 0.8, 1, 1.05) both;
   animation-delay: 1.2s;

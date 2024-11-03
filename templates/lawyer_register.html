@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lawyer Registration</title>
+    <link rel="stylesheet" href="static/lawyer_register.css">
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="{{ url_for('index') }}">
+        <button id="backButton" class="back-button">Back</button>
+    </a>
+
+    <div class="container">
+        <form action="{{ url_for('lawyer_register') }}" method="post">
+            <h2>Lawyer Registration</h2>
+            <div class="input-group">
+                <input type="text" id="name" name="name"required>
+                <label for="name">Full Name</label>
+            </div>
+            <div class="input-group">
+                <input type="email" id="email" name="email" required>
+                <label for="email">Email</label>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password"name="password" required>
+                <label for="password">Password</label>
+            </div>
+            <div class="input-group">
+                <input type="text" id="license" name="law_firm"required>
+                <label for="license">License Number</label>
+            </div>
+            <div class="input-group">
+                <input type="text" id="specialization"name="expertise"required>
+                <label for="specialization">Specialization</label>
+            </div>
+            <div class="input-group">
+                <input type="text" id="experience"name="exprience" required>
+                <label for="experience">Years of Experience</label>
+            </div>
+            <button type="submit" class="submit-btn">Register</button>
+            <p class="switch">Already have an account? <a href="{{ url_for('lawyer_login') }}">Login here</a>.</p>
+        </form>
+    </div>
+    <script src="static/lawyer_register.js"></script>
+</body>
+</html>

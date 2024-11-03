@@ -25,15 +25,18 @@
  
      <nav>
          <div class="menu">
-             <p class="website_name">SIVINI LAW HOUSE</p>
+             <!--<p class="website_name">SIVINI LAW HOUSE</p>-->
              <div class="menu_links">
+                 <a href="{{ url_for('send_message') }}" class="link">CHAT</a>
+                 <a href="{{ url_for('video_call') }}" class="link">CALL</a>
                  <a href="{{ url_for('team') }} "class="link">TEAM</a>
                  <a href="{{ url_for('login') }}" class="link">LOGIN</a>
                  <a href="{{ url_for('homepage') }}" class="link">BOOK</a>
-                 <a href="{{ url_for('homepage') }}" class="link">LEGAL ADVISE</a>
+                 <a href="{{ url_for('apply') }}" class="link">JOB APPLY</a>
                  <a href="{{ url_for('sid') }}" class="link">IPC SECTION</a>
                  <a href="{{ url_for('bns') }}" class="link">BNS SECTION</a>
                  <a href="{{ url_for('about') }}" class="link">ABOUT</a>
+                 <a href="{{ url_for('lawyer_login') }}" class="link">LAWYER LOGIN</a>
                  <a href="{{ url_for('contact') }}" class="link">CONTACT US</a>
              </div>
              <div class="menu_icon">
@@ -86,6 +89,7 @@
                      <a href="{{ url_for('register') }}"><button>Register</button></a>
 
                  </article>
+                 <p class="website_name">SIVINI LAW HOUSE</p>
              </div>
  
          </div>
@@ -94,7 +98,4 @@
      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
      <script src="static/script.js"></script>
 </body>
-</html>Patnaik
-Lawyer Type: criminal lawyer
-Case Description: sidupatnaik216@gmail.com
-Appointment Date: 
+</html>

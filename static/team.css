@@ -65,7 +65,7 @@ body {
 /* Lawyer card image */
 .lawyer-card img {
     width: 100%; /* Full width */
-    height: auto; /* Maintain aspect ratio */
+    height: 45%; /* Maintain aspect ratio */
     max-width: 200px; /* Maximum width for the image */
     margin: 0 auto; /* Center the image */
 }

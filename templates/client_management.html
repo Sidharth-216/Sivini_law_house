@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Management</title>
+    <link rel="stylesheet" href="static/client_management.css"> <!-- Link to CSS -->
+</head>
+<body>
+    <h1>Client Management</h1>
+
+    <form action="/clients" method="POST">
+        <input type="text" name="name" placeholder="Client Name" required>
+        <input type="email" name="email" placeholder="Client Email" required>
+        <input type="text" name="phone" placeholder="Client Phone" required>
+        <button type="submit">Add Client</button>
+    </form>
+
+    <h2>Existing Clients</h2>
+    <ul>
+        {% for client in clients %}
+            <li>
+                {{ client.name }} - {{ client.email }} - {{ client.phone }}
+                <a href="{{ url_for('delete_client', client_id=client.id) }}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <script src="static/client_management.js"></script> <!-- Link to JS -->
+</body>
+</html>
