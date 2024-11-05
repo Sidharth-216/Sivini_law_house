@@ -1,35 +1,109 @@
-/* send_message.css */
 body {
     font-family: Arial, sans-serif;
+    background-color: #f4f8fb;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin: 0;
 }
 
-header, footer {
-    text-align: center;
-    margin: 10px;
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.5em;
 }
 
-#chat-container {
+.messages-container {
     width: 100%;
     max-width: 600px;
-    margin: 20px auto;
+    height: 400px;
+    overflow-y: auto;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    scroll-behavior: smooth;
+}
+
+.message {
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    border-radius: 15px;
+    animation: fadeIn 0.4s ease-out;
+    max-width: 80%;
+    line-height: 1.4;
+    font-size: 1em;
+}
+
+.message.you {
+    background-color: #007bff;
+    color: white;
+    align-self: flex-end;
+}
+
+.message.client {
+    background-color: #e9ecef;
+    color: #333;
+    align-self: flex-start;
+}
+
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+.chat-input {
+    display: flex;
+    width: 100%;
+    max-width: 600px;
+    align-items: center;
+    gap: 10px;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px;
     border: 1px solid #ddd;
-    padding: 10px;
+    border-radius: 20px;
+    outline: none;
+    font-size: 1em;
+    transition: border-color 0.3s;
 }
 
-#messages {
-    height: 300px;
-    overflow-y: scroll;
-    border-bottom: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
+.chat-input input:focus {
+    border-color: #007bff;
 }
 
-#user-input {
-    width: 80%;
-    padding: 10px;
+Button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
 }
 
-#send-button {
-    width: 18%;
-    padding: 10px;
+Button:hover {
+    background-color: #0056b3;
+}
+
+Button:active {
+    transform: scale(0.95);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

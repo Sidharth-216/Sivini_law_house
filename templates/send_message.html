@@ -3,28 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Law Firm Chat</title>
-    <link rel="stylesheet" href="static/send_message.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Send Message</title>
+    <link rel="stylesheet" href="static/send_message.css"> <!-- Link to CSS -->
 </head>
 <body>
-    <header>
-        <h1>Your Law Firm</h1>
-    </header>
+    <h1>Send Message</h1>
 
-    <main>
-        <h2>Chat with Us</h2>
-        <div id="chat-container">
-            <div id="messages"></div>
-            <input type="text" id="user-input" placeholder="Type your message here...">
-            <button id="send-button">Send</button>
-        </div>
-    </main>
+    <div class="messages-container">
+        <!-- Messages will be dynamically populated here -->
+    </div>
 
-    <footer>
-        <p>&copy; 2024 Your Law Firm. All rights reserved.</p>
-    </footer>
+    <div class="chat-input">
+        <input type="text" id="messageInput" placeholder="Type your message..." required>
+        <button type="button" id="sendMessageButton">Send</button>
+    </div>
 
-    <script src="static/send_message.js"></script> <!-- Link to the JavaScript file -->
+    <script src="static/send_message.js"></script> <!-- Link to JS -->
 </body>
 </html>

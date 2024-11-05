@@ -1,28 +1,60 @@
-$(document).ready(function() {
-    $('#send-button').on('click', function(event) {
-        event.preventDefault(); // Prevent the default form submission
+// send_message.js
 
-        const userMessage = $('#user-input').val();
-        if (userMessage.trim() !== '') {
-            $('#messages').append(`<div class="user-message">You: ${userMessage}</div>`);
+document.addEventListener('DOMContentLoaded', function() {
+    const messagesContainer = document.querySelector('.messages-container');
+    const sendButton = document.querySelector('#sendMessageButton');
+    const chatInput = document.querySelector('#messageInput');
 
-            // Send message to the Flask server
-            $.ajax({
-                url: '/send_message',
-                type: 'POST',  // This must be POST
-                contentType: 'application/json',  // Ensure this is set to application/json
-                data: JSON.stringify({ message: userMessage }),  // Send data as JSON
-                success: function(data) {
-                    $('#messages').append(`<div class="lawyer-message">Lawyer: ${data.response}</div>`);
-                    $('#messages').scrollTop($('#messages')[0].scrollHeight); // Scroll to the bottom
+    const senderId = "client_id"; // Replace with actual client ID
+    const receiverId = "lawyer_id"; // Replace with actual lawyer ID
+
+    // Function to append a new message to the chat
+    function appendMessage(text) {
+        const messageElement = document.createElement('div');
+        messageElement.className = 'message';
+        messageElement.innerHTML = `
+            <div class="message-header">
+                <h4>You</h4>
+                <small>${new Date().toLocaleTimeString()}</small>
+            </div>
+            <p>${text}</p>
+        `;
+        messagesContainer.appendChild(messageElement);
+        chatInput.value = '';
+        messagesContainer.scrollTop = messagesContainer.scrollHeight; // Scroll to the bottom
+    }
+
+    // Function to send a new message
+    async function sendMessage() {
+        const messageText = chatInput.value.trim();
+        if (messageText) {
+            const messageData = {
+                sender_id: senderId,
+                receiver_id: receiverId,
+                message: messageText
+            };
+
+            const response = await fetch('/send_message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error('Error:', textStatus, errorThrown);
-                }
+                body: JSON.stringify(messageData)
             });
-            
 
-            $('#user-input').val(''); // Clear the input
+            if (response.ok) {
+                appendMessage(messageText); // Append message to chat
+            } else {
+                console.error('Failed to send message');
+            }
+        }
+    }
+
+    // Event listeners
+    sendButton.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            sendMessage();
         }
     });
 });

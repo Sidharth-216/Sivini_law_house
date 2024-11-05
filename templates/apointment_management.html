@@ -7,9 +7,11 @@
     <link rel="stylesheet" href="static/apointment_management.css"> <!-- Link to CSS -->
 </head>
 <body>
+    <div class="back-button" style="display: block;"></div>
+    <a href="{{ url_for('dashboard') }}"><button id="backButton" class="back-button">Back</button></a>
     <h1>Appointment Management</h1>
 
-    <form action="/appointments" method="POST">
+    <form action="/apointment_management" method="POST"> <!-- Ensure action matches backend route -->
         <input type="text" name="client_name" placeholder="Client Name" required>
         <input type="date" name="date" required>
         <input type="time" name="time" required>
@@ -26,8 +28,11 @@
     <ul>
         {% for appointment in appointments %}
             <li>
-                {{ appointment.client_name }} - {{ appointment.date }} at {{ appointment.time }} - Status: {{ appointment.status }}
-                <a href="{{ url_for('delete_appointment', appointment_id=appointment.id) }}">Delete</a>
+                <strong>Name:</strong> {{ appointment[1] }} - <!-- Adjust index based on your bookings table structure -->
+                <strong>Appointment Date:</strong> {{ appointment[5] }} at 
+                <strong>Case Type:</strong> {{ appointment[4] }} - 
+                <strong>Lawyer:</strong> {{ appointment[2] }} <!-- Adjust index based on your bookings table structure -->
+                <a href="{{ url_for('delete_appointment', appointment_id=appointment[0]) }}">Delete</a> <!-- Add delete link -->
             </li>
         {% endfor %}
     </ul>

@@ -87,3 +87,19 @@ a {
 a:hover {
     color: #e63946;
 }
+.back-button {
+    background-color: #101212; /* Blue background */
+    color: rgb(251, 237, 237); /* White text */
+    border: none; /* No border */
+    padding: 20px 25px; /* Padding for the button */
+    border-radius: 15px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition */
+    position: absolute; /* Position it absolutely */
+    top: 25px; /* Adjust the top position */
+    left: 20px; /* Adjust the left position */
+}
+
+.back-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}

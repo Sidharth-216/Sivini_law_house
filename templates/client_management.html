@@ -7,24 +7,33 @@
     <link rel="stylesheet" href="static/client_management.css"> <!-- Link to CSS -->
 </head>
 <body>
+    <div class="back-button" style="display: block;"></div>
+  <a href="{{ url_for('dashboard') }}"><button id="backButton" class="back-button">Back</button></a>
     <h1>Client Management</h1>
 
-    <form action="/clients" method="POST">
+    <!-- Form to add a new client -->
+    <form action="/client_management" method="POST">
         <input type="text" name="name" placeholder="Client Name" required>
         <input type="email" name="email" placeholder="Client Email" required>
         <input type="text" name="phone" placeholder="Client Phone" required>
         <button type="submit">Add Client</button>
     </form>
+    
 
-    <h2>Existing Clients</h2>
-    <ul>
-        {% for client in clients %}
-            <li>
-                {{ client.name }} - {{ client.email }} - {{ client.phone }}
-                <a href="{{ url_for('delete_client', client_id=client.id) }}">Delete</a>
-            </li>
-        {% endfor %}
-    </ul>
+    <!-- Section to display existing clients -->
+    <section class="clients">
+        <h2>Existing Clients</h2>
+        <ul>
+            {% for client in clients %}
+                <li>
+                    <strong>Name:</strong> {{ client.name }}<br>
+                    <strong>Email:</strong> {{ client.email }}<br>
+                    <strong>Phone:</strong> {{ client.number }}<br>
+                    <a href="{{ url_for('delete_client', client_id=client['id']) }}">Delete</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
 
     <script src="static/client_management.js"></script> <!-- Link to JS -->
 </body>

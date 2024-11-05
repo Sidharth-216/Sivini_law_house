@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification Management</title>
+    <link rel="stylesheet" href="static/notification_management.css">
+</head>
+<body>
+    <h1>Notifications</h1>
+
+    <form action="/notifications" method="POST">
+        <input type="text" name="message" placeholder="New Notification" required>
+        <button type="submit">Add Notification</button>
+    </form>
+
+    <h2>Your Notifications</h2>
+    <ul>
+        {% for notification in notifications %}
+            <li>
+                <strong>{{ notification[2] }}</strong> - {{ notification[4] }} <!-- Adjust index based on your notifications table structure -->
+                <a href="{{ url_for('delete_notification', notification_id=notification[0]) }}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <script src="static/notification_management.js"></script>
+</body>
+</html>
