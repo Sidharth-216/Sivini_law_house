@@ -4,37 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Client Management</title>
+    <link rel="icon" type="image/png" href="static/logoback.avif">
     <link rel="stylesheet" href="static/client_management.css"> <!-- Link to CSS -->
 </head>
 <body>
-    <div class="back-button" style="display: block;"></div>
-  <a href="{{ url_for('dashboard') }}"><button id="backButton" class="back-button">Back</button></a>
-    <h1>Client Management</h1>
+    <!-- Back Button -->
+    <div class="back-button" style="display: block;">
+        <a href="{{ url_for('dashboard') }}">
+            <button id="backButton" class="back-button">Back</button>
+        </a>
+    </div>
 
-    <!-- Form to add a new client -->
-    <form action="/client_management" method="POST">
-        <input type="text" name="name" placeholder="Client Name" required>
-        <input type="email" name="email" placeholder="Client Email" required>
-        <input type="text" name="phone" placeholder="Client Phone" required>
-        <button type="submit">Add Client</button>
-    </form>
-    
+    <!-- Main Container -->
+    <div class="main-container">
+        <header>
+            <h1>Client Management</h1>
+        </header>
 
-    <!-- Section to display existing clients -->
-    <section class="clients">
-        <h2>Existing Clients</h2>
-        <ul>
-            {% for client in clients %}
-                <li>
-                    <strong>Name:</strong> {{ client.name }}<br>
-                    <strong>Email:</strong> {{ client.email }}<br>
-                    <strong>Phone:</strong> {{ client.number }}<br>
-                    <a href="{{ url_for('delete_client', client_id=client['id']) }}">Delete</a>
-                </li>
-            {% endfor %}
-        </ul>
-    </section>
+        <!-- Button to redirect to Registration Page -->
+        <div class="add-client">
+            <a href="{{ url_for('register') }}">
+                <button class="add-client-button">Add New Client</button>
+            </a>
+        </div>
+
+        <!-- Section to display existing clients -->
+        <section class="clients">
+            <h2>Existing Clients</h2>
+            <ul id="clientList">
+                {% for client in clients %}
+                    <li class="client-item">
+                        <strong>Name:</strong> {{ client[2] }}<br>
+                        <strong>Email:</strong> {{ client[6] }}<br>
+                        <strong>Phone:</strong> {{ client[7] }}<br>
+                        <!-- Corrected delete URL reference -->
+                        <a href="{{ url_for('delete_client', client_id=client[0]) }}" class="delete-btn">Delete</a>
+
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    </div>
 
     <script src="static/client_management.js"></script> <!-- Link to JS -->
+    <script>
+        // JavaScript function for Back Button
+        function goToDashboard() {
+            window.location.href = "{{ url_for('dashboard') }}";
+        }
+
+        document.getElementById('backButton').addEventListener('click', goToDashboard);
+    </script>
 </body>
 </html>

@@ -1,105 +1,234 @@
-/* appointments.css */
-body {
-    font-family: Arial, sans-serif;
+/* General Reset */
+* {
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: #1c1c1c;
+    color: #f1f1f1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    padding: 20px 0;
+    width: 100%;
 }
 
 h1 {
-    text-align: center;
-    margin: 20px 0;
-    color: #333;
+    font-size: 36px;
+    color: #f1c40f;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 20px;
 }
 
-form {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    margin: 20px auto;
-}
-
-input, select {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    transition: border-color 0.3s ease;
-}
-
-input:focus, select:focus {
-    border-color: #007BFF;
-    outline: none;
-}
-
-button {
-    background-color: #007BFF;
-    color: white;
-    padding: 10px;
+/* Back Button */
+.back-btn {
+    background-color: #8b14ed;
+    color: #fff;
     border: none;
-    border-radius: 4px;
+    position: absolute;
+    left: 20px;
+    padding: 15px 25px;
+    font-size: 18px;
+    border-radius: 5px;
     cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+    text-transform: uppercase;
+}
+
+.back-btn:hover {
+    background-color: #2ecc71;
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Appointment Form */
+.appointment-form {
+    margin-top: 50px;
+    background-color: #2d3436;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     width: 100%;
-    transition: background-color 0.3s ease;
+    max-width: 500px;
 }
 
-button:hover {
-    background-color: #0056b3;
+.appointment-form input,
+.appointment-form select,
+.appointment-form button {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    font-size: 16px;
+    border: 1px solid #aaa;
+    outline: none;
+    background-color: #34495e;
+    color: #fff;
+    transition: all 0.3s ease;
 }
 
-h2 {
+.appointment-form input:focus,
+.appointment-form select:focus {
+    border-color: #f1c40f;
+    background-color: #2c3e50;
+}
+
+.appointment-form button {
+    background-color: #e67e22;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.appointment-form button:hover {
+    background-color: #d35400;
+    transform: scale(1.05);
+}
+
+/* Appointments List Section */
+.appointments-list {
+    width: 100%;
+    max-width: 800px;
+    margin-top: 40px;
+}
+
+.appointments-list h2 {
+    font-size: 28px;
+    color: #f1c40f;
     text-align: center;
-    margin: 20px 0;
-    color: #333;
+    margin-bottom: 20px;
 }
 
+/* Appointment Items */
 ul {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
 }
 
-li {
-    background-color: #fff;
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 4px;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+.appointment-item {
+    background-color: #34495e;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: transform 0.2s;
+    flex-wrap: wrap;
 }
 
-li:hover {
-    transform: scale(1.02);
+.appointment-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
-a {
+/* Appointment Details */
+.appointment-details {
+    font-size: 14px;
+    color: #ecf0f1;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    margin-right: 15px;
+}
+
+.appointment-details div {
+    margin-bottom: 8px;
+}
+
+.appointment-details strong {
+    color: #f1c40f;
+}
+
+/* Delete Button */
+.delete-btn {
+    background-color: #e74c3c;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 5px;
     text-decoration: none;
-    color: #ff4d4d;
-    font-weight: bold;
-    transition: color 0.3s;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease-in-out;
+    display: inline-block;
 }
 
-a:hover {
-    color: #e63946;
-}
-.back-button {
-    background-color: #101212; /* Blue background */
-    color: rgb(251, 237, 237); /* White text */
-    border: none; /* No border */
-    padding: 20px 25px; /* Padding for the button */
-    border-radius: 15px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s; /* Smooth transition */
-    position: absolute; /* Position it absolutely */
-    top: 25px; /* Adjust the top position */
-    left: 20px; /* Adjust the left position */
+.delete-btn:hover {
+    background-color: #c0392b;
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
 }
 
-.back-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+/* Animation for input fields */
+input,
+select {
+    background-color: #2c3e50;
+}
+
+input:focus,
+select:focus {
+    background-color: #34495e;
+    border-color: #f1c40f;
+}
+
+input::placeholder,
+select::placeholder {
+    color: #bdc3c7;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .appointment-form {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .appointments-list {
+        width: 100%;
+        margin-top: 30px;
+    }
+
+    h1, .appointments-list h2 {
+        font-size: 28px;
+    }
+}
+
+/* Add Appointment Button Section */
+.add-appointment-section {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.add-appointment-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.add-appointment-btn:hover {
+    background-color: #0056b3;
 }

@@ -3,21 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Messages Management</title>
-    <link rel="stylesheet" href="static/message_management.css"> <!-- Link to CSS -->
+    <title>Lawyer Chat</title>
+    <link rel="icon" type="image/png" href="static/logoback.avif">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .chat-container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h2 {
+            margin: 0;
+        }
+        #backButton {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #backButton:hover {
+            background-color: #0056b3;
+        }
+        .messages {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            animation: slideIn 0.5s ease-in-out;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        .message.lawyer {
+            background-color: #e0f7fa;
+            text-align: left;
+        }
+        .message.client {
+            background-color: #ffe0b2;
+            text-align: right;
+        }
+        .form-container {
+            margin-top: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 80px;
+            resize: none;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
 <body>
-    <h1>Messages Management</h1>
-
-    <div class="messages-container">
-        <!-- Messages will be dynamically populated here -->
+    <div class="chat-container">
+        <div class="header">
+            <h2>Lawyer Chat</h2>
+            <a href="{{ url_for('dashboard') }}">
+                <button id="backButton" class="back-button">Back</button>
+            </a>
+        </div>
+        <div id="messages" class="messages">
+            {% for msg in messages %}
+                <div class="message {{ msg['sender_role'] }}">
+                    <strong>{{ msg['sender_role'].capitalize() }}:</strong>
+                    {{ msg['message'] }}
+                    <small>({{ msg['timestamp'] }})</small>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="form-container">
+            <form action="/message_management" method="POST">
+                <input type="hidden" name="sender_id" value="{{ user_id }}">
+                <input type="hidden" name="sender_role" value="lawyer">
+                <input type="hidden" name="receiver_id" value="2">
+                <input type="hidden" name="receiver_role" value="client">
+                <textarea name="message" placeholder="Type your message here..." required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </div>
     </div>
-
-    <div class="chat-input">
-        <input type="text" placeholder="Type a message..." required>
-        <button type="button" id="sendButton">Send</button>
-    </div>
-
-    <script src="static/message_management.js"></script> <!-- Link to JS -->
 </body>
 </html>

@@ -1,9 +1,169 @@
 *{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+  width: 90%;
+  height: auto;
   }
+  form {
+  width: 100%;
+  padding: 1em;
+  }
+  .panda-face {
+  height: 5em;
+  width: 5.6em;
+  top: 1em;
+  }
+  .ear-l, .ear-r {
+  height: 1.5em;
+  width: 1.81em;
+  top: 1em;
+  }
+  .ear-l {
+  left: 7em;
+  }
+  .ear-r {
+  right: 7em;
+  }
+  .blush-l, .blush-r {
+  height: 0.8em;
+  width: 1em;
+  top: 3em;
+  }
+  .eye-l, .eye-r {
+  height: 1.5em;
+  width: 1.5em;
+  top: 1.5em;
+  }
+  .eye-l {
+  left: 1em;
+  }
+  .eye-r {
+  right: 1em;
+  }
+  .eyeball-l, .eyeball-r {
+  height: 0.4em;
+  width: 0.4em;
+  left: 0.4em;
+  top: 0.4em;
+  }
+  .nose {
+  height: 0.8em;
+  width: 0.8em;
+  top: 3.5em;
+  }
+  .mouth {
+  top: 4.5em;
+  left: 2.5em;
+  }
+  .hand-l, .hand-r {
+  height: 2em;
+  width: 2em;
+  top: 6em;
+  }
+  .hand-l {
+  left: 5em;
+  }
+  .hand-r {
+  right: 5em;
+  }
+  .paw-l, .paw-r {
+  height: 2.5em;
+  width: 2.5em;
+  top: 20em;
+  }
+  .paw-l {
+  left: 7em;
+  }
+  .paw-r {
+  right: 7em;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+  width: 100%;
+  height: auto;
+  }
+  form {
+  width: 100%;
+  padding: 0.5em;
+  }
+  .panda-face {
+  height: 4em;
+  width: 4.5em;
+  top: 0.5em;
+  }
+  .ear-l, .ear-r {
+  height: 1em;
+  width: 1.31em;
+  top: 0.5em;
+  }
+  .ear-l {
+  left: 5em;
+  }
+  .ear-r {
+  right: 5em;
+  }
+  .blush-l, .blush-r {
+  height: 0.6em;
+  width: 0.8em;
+  top: 2em;
+  }
+  .eye-l, .eye-r {
+  height: 1em;
+  width: 1em;
+  top: 1em;
+  }
+  .eye-l {
+  left: 0.8em;
+  }
+  .eye-r {
+  right: 0.8em;
+  }
+  .eyeball-l, .eyeball-r {
+  height: 0.3em;
+  width: 0.3em;
+  left: 0.3em;
+  top: 0.3em;
+  }
+  .nose {
+  height: 0.6em;
+  width: 0.6em;
+  top: 2.5em;
+  }
+  .mouth {
+  top: 3.5em;
+  left: 2em;
+  }
+  .hand-l, .hand-r {
+  height: 1.5em;
+  width: 1.5em;
+  top: 5em;
+  }
+  .hand-l {
+  left: 4em;
+  }
+  .hand-r {
+  right: 4em;
+  }
+  .paw-l, .paw-r {
+  height: 2em;
+  width: 2em;
+  top: 15em;
+  }
+  .paw-l {
+  left: 5em;
+  }
+  .paw-r {
+  right: 5em;
+  }
+}
   
 .video{
 	position: fixed;

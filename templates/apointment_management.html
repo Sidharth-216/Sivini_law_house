@@ -4,39 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Appointment Management</title>
-    <link rel="stylesheet" href="static/apointment_management.css"> <!-- Link to CSS -->
+    <link rel="icon" type="image/png" href="static/logoback.avif">
+    <link rel="stylesheet" href="static/apointment_management.css">
 </head>
 <body>
-    <div class="back-button" style="display: block;"></div>
-    <a href="{{ url_for('dashboard') }}"><button id="backButton" class="back-button">Back</button></a>
-    <h1>Appointment Management</h1>
+    <!-- Header Section with Back Button -->
+    <header class="header">
+        <a href="{{ url_for('dashboard') }}">
+            <button class="back-btn">Back</button>
+        </a>
+        <h1>Appointment Management</h1>
+    </header>
 
-    <form action="/apointment_management" method="POST"> <!-- Ensure action matches backend route -->
-        <input type="text" name="client_name" placeholder="Client Name" required>
-        <input type="date" name="date" required>
-        <input type="time" name="time" required>
-        <select name="status" required>
-            <option value="">Select Status</option>
-            <option value="Scheduled">Scheduled</option>
-            <option value="Completed">Completed</option>
-            <option value="Cancelled">Cancelled</option>
-        </select>
-        <button type="submit">Add Appointment</button>
-    </form>
+    <!-- Add Appointment Button -->
+    <section class="add-appointment-section">
+        <a href="{{ url_for('appointment_by_lawyer') }}">
+            <button class="add-appointment-btn">Add Appointment</button>
+        </a>
+    </section>
 
-    <h2>Upcoming Appointments</h2>
-    <ul>
-        {% for appointment in appointments %}
-            <li>
-                <strong>Name:</strong> {{ appointment[1] }} - <!-- Adjust index based on your bookings table structure -->
-                <strong>Appointment Date:</strong> {{ appointment[5] }} at 
-                <strong>Case Type:</strong> {{ appointment[4] }} - 
-                <strong>Lawyer:</strong> {{ appointment[2] }} <!-- Adjust index based on your bookings table structure -->
-                <a href="{{ url_for('delete_appointment', appointment_id=appointment[0]) }}">Delete</a> <!-- Add delete link -->
-            </li>
-        {% endfor %}
-    </ul>
+    <!-- Appointments List -->
+    <section class="appointments-list">
+        <h2>Upcoming Appointments</h2>
+        <ul id="appointmentList">
+            {% for appointment in appointments %}
+                <li class="appointment-item">
+                    <div class="appointment-details">
+                        <div><strong>Name:</strong> {{ appointment[1] }}</div>
+                        <div><strong>Email:</strong> {{ appointment[3] }}</div>
+                        <div><strong>Date:</strong> {{ appointment[5] }}</div>
+                        <div><strong>Lawyer:</strong> {{ appointment[2] }}</div>
+                        <div><strong>Description:</strong> {{ appointment[4] }}</div>
+                    </div>
+                    <a href="{{ url_for('delete_appointment', appointment_id=appointment[0]) }}" class="delete-btn">Delete</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
 
-    <script src="static/apointment_management.js"></script> <!-- Link to JS -->
+    <script src="static/apointment_management.js"></script>
 </body>
 </html>

@@ -1,101 +1,537 @@
 <!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .scroll-down {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 20px;
+            z-index: 1000;
+            cursor: pointer;
+            font-size: 24px;
+            color: rgb(246, 244, 244);
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollDown = document.createElement('div');
+            scrollDown.classList.add('scroll-down');
+            scrollDown.innerHTML = 'Swipe Down';
+            document.body.appendChild(scrollDown);
+
+            scrollDown.addEventListener('click', function() {
+            window.scrollBy({
+                top: window.innerHeight,
+                behavior: 'smooth'
+            });
+            });
+        });
+    </script>
+    <style>
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+        .popup-content {
+            background-color: white;
+            padding: 20px;
+            margin-top: 20px;
+            margin-left: auto;
+            margin: auto;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 500px;
+            width: 80%;
+        }
+        .popup-content button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: rgb(248, 57, 15);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+  <!--<div class="popup" id="disclaimer-popup">
+        <div class="popup-content">
+            <h2>Disclaimer</h2>
+            <p style="text-align: center;">By using this website, you agree to our terms and conditions.</p>
+            <ul style="text-align: left; margin-top: 20px;">
+                <li><strong>General Information:</strong> This chat platform is provided solely for informational purposes and is not intended as legal advice or to establish an attorney-client relationship. Any information exchanged on this platform does not constitute legal advice.</li>
+                <br>
+                <li><strong>Confidentiality:</strong> While this platform takes measures to secure communications, please avoid sharing sensitive or confidential information unless a formal attorney-client relationship has been established.</li>
+                <br>
+                <li><strong>Accuracy of Information:</strong> The information provided by the lawyers is based on the details shared during this chat. It may vary depending on additional facts or legal developments.</li>
+                <br>
+                <li><strong>Limitation of Liability:</strong> The law firm and its representatives will not be held liable for any decisions made based on the information provided during these chats.</li>
+                <br>
+                <li><strong>Consent to Terms:</strong> By using this platform, you agree to the terms mentioned above and acknowledge that you have read and understood this disclaimer.</li>
+                <br>
+                <li><strong>Consent to Terms:</strong> By using this platform, you agree to the terms mentioned above and acknowledge that you have read and understood this disclaimer.</li>
+            </ul>
+            <button onclick="closePopup()">I Agree</button>
+        </div>
+    </div>-->
+<script>
+    function closePopup() {
+        document.getElementById('disclaimer-popup').style.display = 'none';
+        document.getElementById('login-register-popup').style.display = 'flex';
+    }
+    window.onload = function() {
+        document.getElementById('disclaimer-popup').style.display = 'flex';
+    }
+      document.addEventListener('DOMContentLoaded', function() {
+                    if (!localStorage.getItem('disclaimerAccepted')) {
+                        document.getElementById('disclaimer-popup').style.display = 'flex';
+                    }
+                });
+
+                function closePopup() {
+                    document.getElementById('disclaimer-popup').style.display = 'none';
+                    document.getElementById('login-register-popup').style.display = 'flex';
+                    localStorage.setItem('disclaimerAccepted', 'true');
+                }
+</script>
+
+<div class="popup" id="login-register-popup" style="display: none;">
+    <div class="popup-content">
+        <h2>Welcome</h2>
+        <p style="text-align: center;">Please register to continue or ignore if already registered .</p>
+        <div style="position: relative;">
+            <button onclick="rejectOptions()" style="position: absolute; top: -10px; right: 10px; background: none; border: none; font-size: 20px; cursor: pointer; color: black;">X</button>
+        </div>
+            <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+                <a href="{{ url_for('register') }}" class="link glowing-button" style="font-weight: bold; color: rgb(228, 222, 222); background-color: rgb(248, 57, 15); padding: 10px; border-radius: 5px;">REGISTER</a>
+            </div>
+        </div>
+        <script>
+            function rejectOptions() {
+                document.getElementById('login-register-popup').style.display = 'none';
+            }
+        </script>
+    </div>
+</div>
+</body>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="static/style.css">
-    <title>LawFirm</title>
+    <title>Law House </title>
+    <link rel="icon" type="image/png" href="static/logoback.avif">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax.js/1.5.0/parallax.min.js"></script>
 </head>
 <body>
+    {% if session['logged_in'] %}
+        <div class="user-info">
+            <a href="{{ url_for('logout') }}" class="link" style="font-weight: bold; color: rgb(228, 222, 222); background-color: rgb(248, 57, 15); padding: 10px; border-radius: 5px;">LOGOUT</a>
+        </div>
+    {% endif %}
     <!-- about -->
-<div class="about">
-    <a class="bg_links social portfolio" href="" target="_blank">
-       <span class="icon"></span>
-    </a>
-    <a class="bg_links social dribbble" href="" target="_blank">
-       <span class="icon"></span>
-    </a>
-    <a class="bg_links social linkedin" href="" target="_blank">
-       <span class="icon"></span>
-    </a>
-    <a class="bg_links logo"></a>
- </div>
- <!-- end about -->
- 
-     <nav>
-         <div class="menu">
-             <!--<p class="website_name">SIVINI LAW HOUSE</p>-->
-             <div class="menu_links">
-                 <a href="{{ url_for('send_message') }}" class="link">CHAT</a>
-                 <a href="{{ url_for('video_call') }}" class="link">CALL</a>
-                 <a href="{{ url_for('team') }} "class="link">TEAM</a>
-                 <a href="{{ url_for('login') }}" class="link">LOGIN</a>
-                 <a href="{{ url_for('login') }}" class="link">BOOK</a>
-                 <a href="{{ url_for('apply') }}" class="link">JOB APPLY</a>
-                 <a href="{{ url_for('sid') }}" class="link">IPC SECTION</a>
-                 <a href="{{ url_for('bns') }}" class="link">BNS SECTION</a>
-                 <a href="{{ url_for('about') }}" class="link">ABOUT</a>
-                 <a href="{{ url_for('lawyer_login') }}" class="link">LAWYER LOGIN</a>
-                 <a href="{{ url_for('contact') }}" class="link">CONTACT US</a>
-             </div>
-             <div class="menu_icon">
-                 <span class="icon"></span>
-             </div>
-         </div>
-     </nav>
- 
-     <section class="wrapper">
- 
-         <div class="container">
- 
-             <div id="scene" class="scene" data-hover-only="false">
- 
- 
-                 <div class="circle" data-depth="1.2"></div>
- 
-                 <div class="one" data-depth="0.9">
-                     <div class="content">
-                         <span class="piece"></span>
-                         <span class="piece"></span>
-                         <span class="piece"></span>
-                     </div>
-                 </div>
- 
-                 <div class="two" data-depth="0.60">
-                     <div class="content">
-                         <span class="piece"></span>
-                         <span class="piece"></span>
-                         <span class="piece"></span>
-                     </div>
-                 </div>
- 
-                 <div class="three" data-depth="0.40">
-                     <div class="content">
-                         <span class="piece"></span>
-                         <span class="piece"></span>
-                         <span class="piece"></span>
-                     </div>
-                 </div>
- 
-                 <p class="p404" data-depth="0.50">LAW HOUSE</p>
-                 <p class="p404" data-depth="0.10">LAW HOUSE</p>
- 
-             </div>
- 
-             <div class="text">
-                 <article>
-                     <p>Looks like you are looking for a advocate <br>Register Now</p>
-                     <a href="{{ url_for('register') }}"><button>Register</button></a>
+    <div class="about">
+        <a class="bg_links social portfolio" href="" target="_blank">
+           <span class="icon"></span>
+        </a>
+        <a class="bg_links social dribbble" href="" target="_blank">
+           <span class="icon"></span>
+        </a>
+        <a class="bg_links social linkedin" href="" target="_blank">
+           <span class="icon"></span>
+        </a>
+        <a class="bg_links logo"></a>
+    </div>
+    <!-- end about -->
+    
+    <nav style="position: sticky; top: 0; z-index: 1000">
+        <div class="menu">
+            <!--<p class="website_name">SIVINI LAW HOUSE</p>-->
+            <div class="menu_links">
+                <a href="{{ url_for('login') }}" class="link glowing-button" style="font-weight: bold; color: rgb(228, 222, 222); background-color: rgb(248, 57, 15); padding: 10px; border-radius: 5px;">LOGIN</a>
+                <a href="{{ url_for('whatsapp') }}" class="link">CHAT</a><!-- Updated Chat Room link -->
+                <a href="{{ url_for('new_video') }}" class="link">CALL</a>
+                <a href="{{ url_for('team') }}" class="link">TEAM</a>
+                <a href="{{ url_for('login') }}" class="link">BOOK</a>
+                <a href="{{ url_for('apply') }}" class="link">JOB APPLY</a>
+                <a href="{{ url_for('sid') }}" class="link">IPC SECTION</a>
+                <a href="{{ url_for('bns') }}" class="link">BNS SECTION</a>
+                <a href="{{ url_for('about') }}" class="link">ABOUT</a>
+                <a href="{{ url_for('contact') }}" class="link">CONTACT US</a>
+                <a href="{{ url_for('help') }}" class="link">HELP</a>
+                <a href="{{ url_for('lawyer_login') }}" class="link" style="font-weight: bold; color: rgb(228, 222, 222); background-color: rgb(248, 57, 15); padding: 10px; border-radius: 5px;">LAWYER LOGIN</a>
+                
+            </div>
+            <div class="menu_icon">
+                <span class="icon"></span>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">Services</button>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('reviews') }}">Reviews</a>
+                    <a href="{{ url_for('books_page') }}">Books</a>
+                    <a href="{{ url_for('chatbot') }}">AI Chat</a>
+                    <a href="{{ url_for('courtroom') }}">Court Room</a>
+                    <nav class="navbar">
+                        <div class="logo">
+                            <img src="static/logoback3.png" alt="Your Logo" style="height: 50px;">
+                        </div>
+                        <ul class="nav-links">
+                          <li><a href="#">Home</a></li>
+                          <li class="dropdown">
+                            <a href="#" class="dropdown-toggle">Services</a>
+                            <div class="dropdown-menu">
+                              <div class="menu-section">
+                                <h3>Civil / Debt Matters</h3>
+                                <a href="#">Cheque Bounce</a>
+                                <a href="#">Civil Litigation</a>
+                                <a href="#">Consumer Court</a>
+                                <a href="#">Documentation</a>
+                                <a href="#">Recovery</a>
+                              </div>
+                              <div class="menu-section">
+                                <h3>Corporate Law</h3>
+                                <a href="#">Banking / Finance</a>
+                                <a href="#">Corporate</a>
+                                <a href="#">GST</a>
+                                <a href="#">Startup</a>
+                                <a href="#">Tax</a>
+                              </div>
+                              <div class="menu-section">
+                                <h3>Criminal / Property</h3>
+                                <a href="#">Criminal</a>
+                                <a href="#">Cyber Crime</a>
+                                <a href="#">Landlord / Tenant</a>
+                                <a href="#">Revenue</a>
+                              </div>
+                              <div class="menu-section">
+                                <h3>Digital Asset</h3>
+                                <a href="#">Blockchain</a>
+                                <a href="#">Crypto</a>
+                                <a href="#">NFT</a>
+                              </div>
+                              <div class="menu-section">
+                                <h3>General</h3>
+                                <a href="#">juvinile</a>
+                                <a href="#">Loan Realted work</a>
+                                <a href="#">N.I.A 138</a>
+                                <a href="#">Police Station work</a>
+                                <a href="#">RTI Consultant</a>
+                                <a href="#">Session Cases</a>
+                              </div>
+                              <div class="menu-section">
+                                <h3>Others</h3>
+                                <a href="#">Armed Force tribunal</a>
+                                <a href="#">Immigration</a>
+                                <a href="#">Insurance</a>
+                                <a href="#">International Law</a>
+                                <a href="#">Notary</a>
+                                <a href="#">Property Redevlopment</a>
+                                <a href="#">Supreme Court</a>
+                              </div>
+                              <div class="menu-section">
+                                <h3>Personal/family</h3>
+                                <a href="#">Child Custody</a>
+                                <a href="#">Divorce</a>
+                                <a href="#">Family Dispute</a>
+                                <a href="#">Labour & Services</a>
+                                <a href="#">Medical Negiligance</a>
+                                <a href="#">Motor Accidents</a>
+                                <a href="#">Muslim Law</a>
+                                <a href="#">Wills/Trusts</a>
+                              </div>
+                            </div>
+                          </li>
+                          <li><a href="#">Jobs</a></li>
+                          <li><a href="#">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <style>
+                .dropdown {
+                    position: relative;
+                    display: inline-block;
+                }
+                .dropbtn {
+                    background-color: rgb(50, 15, 228);
+                    color: white;
+                    padding: 10px;
+                    font-size: 16px;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                }
+                .dropdown-content {
+                    display: none;
+                    position: absolute;
+                    background-color: #f9f9f9;
+                    min-width: 160px;
+                    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                    z-index: 1;
+                }
+                .dropdown-content a {
+                    color: black;
+                    padding: 12px 16px;
+                    text-decoration: none;
+                    display: block;
+                }
+                .dropdown-content a:hover {
+                    background-color: #f1f1f1;
+                }
+                .dropdown:hover .dropdown-content {
+                    display: block;
+                }
+                .dropdown:hover .dropbtn {
+                    background-color: rgb(223, 18, 89);
+                }
+            </style>
+            <a href="{{ url_for('user') }}" class="link"><img src="static/new_profile1.png" alt="Profile" style="height: 75px; vertical-align: middle;"></a>
+        </div>
+    </nav>
 
-                 </article>
-                 <p class="website_name">SIVINI LAW HOUSE</p>
-             </div>
- 
-         </div>
-     </section>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-     <script src="static/script.js"></script>
+    <section class="wrapper">
+        <div class="container">
+            <div id="scene" class="scene" data-hover-only="false">
+                <div class="circle" data-depth="1.2"></div>
+                <div class="one" data-depth="0.9">
+                    <div class="content">
+                        <span class="piece"></span>
+                        <span class="piece"></span>
+                        <span class="piece"></span>
+                    </div>
+                </div>
+                <div class="two" data-depth="0.60">
+                    <div class="content">
+                        <span class="piece"></span>
+                        <span class="piece"></span>
+                        <span class="piece"></span>
+                    </div>
+                </div>
+                <div class="three" data-depth="0.40">
+                    <div class="content">
+                        <span class="piece"></span>
+                        <span class="piece"></span>
+                        <span class="piece"></span>
+                    </div>
+                </div>
+                <p class="p404" data-depth="0.50">LAW HOUSE</p>
+                <p class="p404" data-depth="0.10">LAW HOUSE</p>
+            </div>
+            <div class="text">
+                <article>
+                    <p>Looks like you are looking for an advocate <br>Register Now</p>
+                    <a href="{{ url_for('register') }}"><button>Register</button></a>
+                </article>
+                <p class="website_name">SIVINI LAW HOUSE</p>
+            </div>
+        </div>
+    </section>
+    <!-- Existing Content -->
+    <!-- Client Reviews Section -->
+<section id="client-reviews" style="background-color: rgb(175, 232, 247); color: white; padding: 20px;">
+    <h2 style="color: black; margin-bottom: 60px;">What Our Clients Say</h2>
+    <div class="reviews-container" style="display: flex; overflow: hidden; position: relative;">
+        <div class="reviews-slider" style="display: flex; transition: transform 0.5s ease-in-out;">
+            {% if reviews %}
+                {% for review in reviews %}
+                <div class="review-card" style="min-width: 50%; box-sizing: border-box; padding: 20px;">
+                    <p><strong>{{ review['name'] }}</strong></p>
+                    <p>{{ review['review'] }}</p>
+                    <p>{{ '⭐' * review['rating'] }}</p>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="review-card" style="min-width: 100%; box-sizing: border-box; padding: 20px;">
+                    <p>No reviews yet. Be the first to leave one!</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <a href="{{ url_for('reviews') }}" class="more-reviews" style="color: black;">See More Reviews</a>
+    <div class="slider-controls" style="text-align: center; margin-top: 20px;">
+        <button id="prev" style="padding: 10px; margin-right: 10px;">&#10094;</button>
+        <button id="next" style="padding: 10px;">&#10095;</button>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slider = document.querySelector('.reviews-slider');
+            const slides = document.querySelectorAll('.review-card');
+            const prevButton = document.getElementById('prev');
+            const nextButton = document.getElementById('next');
+            let currentIndex = 0;
+
+            function showSlide(index) {
+                const offset = -index * 100;
+                slider.style.transform = `translateX(${offset}%)`;
+            }
+
+            prevButton.addEventListener('click', function() {
+                currentIndex = (currentIndex > 0) ? currentIndex - 1 : slides.length - 1;
+                showSlide(currentIndex);
+            });
+
+            nextButton.addEventListener('click', function() {
+                currentIndex = (currentIndex < slides.length - 1) ? currentIndex + 1 : 0;
+                showSlide(currentIndex);
+            });
+
+            setInterval(function() {
+                currentIndex = (currentIndex < slides.length - 1) ? currentIndex + 1 : 0;
+                showSlide(currentIndex);
+            }, 2500); // Reduced relay time to 3000ms (3 seconds)
+        });
+    </script>
+</section>
+
+
+<section id="blogs" style="padding: 50px; background-color: black; color: white;">
+    <h2 style="text-align: center; color: white; font-size: 2.5rem;">Latest Blogs</h2>
+    <div style="display: flex; justify-content: space-around; margin-top: 50px;">
+        <div style="width: 40%; text-align: center; padding: 20px; border: 1px solid lightgray; border-radius: 10px;">
+            <h3 style="color: lightgray; font-size: 1.5rem;">Understanding Your Rights</h3>
+            <p style="font-size: 1.2rem;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. <a href="#" style="color: #1e90ff;">Read More...</a></p>
+        </div>
+        <div style="width: 40%; text-align: center; padding: 20px; border: 1px solid lightgray; border-radius: 10px;">
+            <h3 style="color: lightgray; font-size: 1.5rem;">Why Hire a Lawyer?</h3>
+            <p style="font-size: 1.2rem;">Quisque convallis turpis id orci gravida, at euismod est tincidunt. <a href="#" style="color: #1e90ff;">Read More...</a></p>
+        </div>
+        <div style="width: 40%; text-align: center; padding: 20px; border: 1px solid lightgray; border-radius: 10px;">
+            <h3 style="color: lightgray; font-size: 1.5rem;">Trends in Legal Cases</h3>
+            <p style="font-size: 1.2rem;">Morbi sit amet vestibulum urna. Aliquam erat volutpat. <a href="#" style="color: #1e90ff;">Read More...</a></p>
+        </div>
+    </div>
+</section>
+
+<!-- News Section -->
+<section id="news" style="background-color: #ced9f0; padding: 40px 20px;">
+    <div class="container" style="max-width: 1200px; margin: auto; text-align: center;">
+        <h2 style="margin-bottom: 20px; color: #333;">Latest News</h2>
+        <div class="news-container" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+            <!-- News Item 1 -->
+            <div class="news-item" style="width: 300px; background: rgb(244, 246, 246); box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); border-radius: 5px; overflow: hidden;">
+                <img src="static/indianexpress.png" alt="News 1" style="width: 100%; height: auto;">
+                <div style="padding: 15px;">
+                    <h3 style="font-size: 18px; margin-bottom: 10px; color: #555;">Indian express</h3>
+                    <p style="font-size: 14px; color: #777; margin-bottom: 10px;">A short summary of the news article goes here. This is a placeholder for the content.</p>
+                    <a href="https://indianexpress.com/" target="_blank" style="text-decoration: none; color: #007BFF; font-size: 14px;">Read More</a>
+                </div>
+            </div>
+
+            <!-- News Item 2 -->
+            <div class="news-item" style="width: 300px; background: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); border-radius: 5px; overflow: hidden;">
+                <img src="static/hindustantimes.png" alt="News 2" style="width: 100%; height: auto;">
+                <div style="padding: 15px;">
+                    <h3 style="font-size: 18px; margin-bottom: 10px; color: #555;">Hindustan Times</h3>
+                    <p style="font-size: 14px; color: #777; margin-bottom: 10px;">A short summary of the news article goes here. This is a placeholder for the content.</p>
+                    <a href="https://www.hindustantimes.com/" target="_blank" style="text-decoration: none; color: #007BFF; font-size: 14px;">Read More</a>
+                </div>
+            </div>
+
+            <!-- News Item 3 -->
+            <div class="news-item" style="width: 300px; background: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); border-radius: 5px; overflow: hidden;">
+                <img src="static/timesofindia.png" alt="News 3" style="width: 100%; height: auto;">
+                <div style="padding: 15px;">
+                    <h3 style="font-size: 18px; margin-bottom: 10px; color: #555;">The Times of India</h3>
+                    <p style="font-size: 14px; color: #777; margin-bottom: 10px;">A short summary of the news article goes here. This is a placeholder for the content.</p>
+                    <a href="https://timesofindia.indiatimes.com/" target="_blank" style="text-decoration: none; color: #007BFF; font-size: 14px;">Read More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section id="address" style="padding: 50px; background-color: #d1effb; color: #333;">
+    <h2 style="text-align: center; color: #222; font-size: 2.5rem;">Our Address</h2>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 50px; gap: 20px;">
+        <!-- Address Details -->
+        <div style="width: 50%; font-size: 1.2rem; line-height: 1.8;">
+            <p><strong>Sivini Law House</strong></p>
+            <p><strong>S Babu Rao</strong></p>
+            <p>Narayan nivas,near post office,writer street</p>
+            <p>Bissam Cuttack,Odisha,765019</p>
+            <p>Phone:+91 9040358266</p>
+            <p>Email: sidupatnaik216@gmail.com</p>
+        </div>
+
+        <!-- Map -->
+        <!--<div class="address-section">
+            <div class="address-details">
+                <h2>Our Address</h2>
+                <p>123 Example Street, City, Country</p>
+            </div>-->
+        
+            <!-- Embedded Google Map -->
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3760.651976413136!2d83.50668379999999!3d19.513603399999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a24ad67b8f279df%3A0x7237b40b054dddcf!2sS.Babu%20Rao%20G.P.%20Rayagada%20dist.!5e0!3m2!1sen!2sin!4v1733127987966!5m2!1sen!2sin"
+                    width="100%" 
+                    height="300" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+        
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section about">
+            <h2>Sivini Law House</h2>
+            <p>Your trusted partner in legal matters. We provide expert legal advice and services for individuals and businesses alike.</p>
+        </div>
+        <div class="footer-section links">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="{{ url_for('about') }}">About Us</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+                <li><a href="{{ url_for('reviews') }}">Client Reviews</a></li>
+                <li><a href="{{ url_for('team') }}">Our Team</a></li>
+                <li><a href="{{ url_for('help') }}">Help</a></li>
+            </ul>
+        </div>
+        <div class="footer-section contact">
+            <h3>Contact Information</h3>
+            <p><strong>Email:</strong> info@sivini-lawhouse.com</p>
+            <p><strong>Phone:</strong>+91 9040358266</p>
+            <p><strong>Address:</strong>near post office writer Street, bissam cuttack, LC 56789</p>
+        </div>
+        <div class="footer-section social">
+            <h3>Follow Us</h3>
+            <a href="https://www.linkedin.com" target="_blank"><img src="static/linkedin-icon.png" alt="LinkedIn" /></a>
+            <a href="https://www.facebook.com" target="_blank"><img src="static/facebook-icon.png" alt="Facebook" /></a>
+            <a href="https://twitter.com" target="_blank"><img src="static/twitter-icon.png" alt="Twitter" /></a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 Sivini Law House. All Rights Reserved.</p>
+    </div>
+</footer>
+
+<!-- Additional Sections can be added similarly -->
+
+<script>
+    // Additional scripts if needed
+</script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="static/script.js"></script>
 </body>
 </html>

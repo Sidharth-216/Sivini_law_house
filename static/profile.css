@@ -1,164 +1,252 @@
-/* General Styles */
+/* Body and Background */
+/* Edit Profile Button Styling */
+.editProfileButton {
+    position: absolute;
+    top: 20px;
+    left: 100px;
+    z-index: 1000;
+}
+
+#editProfileButton {
+    background-color: #1612f1;
+    color: #fff;
+    position: absolute;
+    top: 20px;
+    right: 100px;
+    border: none;
+    padding: 10px 20px;
+    right: 150px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#editProfileButton:hover {
+    background-color: #555;
+}
+/* Logout Button Styling */
+.logoutButton {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+}
+
+#logoutButton {
+    background-color: #1612f1;
+    color: #fff;
+    margin-left: 80px;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: absolute;
+    top: 20px;
+    left: 60px;
+}
+
+#logoutButton:hover {
+    background-color: #555;
+}
+/* Home Button Styling */
+.homeButton {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+#homeButton {
+    background-color: #1612f1;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#homeButton:hover {
+    background-color: #555;
+}
 body {
-    font-family: 'Arial', sans-serif;
-    background-image: url('static/logoback.avif'); /* Background image */
-    background-size: cover;
-    background-color: #f0f0f0;
-    background-position: center;
+    font-family: Arial, sans-serif;
+    background-color: #462863; /* Dark background */
+    color: #ffffff; /* White text color */
     margin: 0;
-    padding: 20px;
-    color: #333; /* Text color */
+    padding: 0;
 }
 
+/* Back Button Styling */
+.backButton {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+}
+
+#backButton {
+    background-color: #1612f1;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#backButton:hover {
+    background-color: #555;
+}
+
+/* Container Styling */
 .container {
-    max-width: 900px;
-    margin: auto;
-    background: rgba(255, 255, 255, 0.95); /* Semi-transparent white background */
-    padding: 30px;
+    max-width: 1000px;
+    margin: 100px auto;
+    background-color: #1e1e1e; /* Dark container background */
+    padding: 40px;
     border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
 }
 
-/* Header Styles */
+/* Header Styling */
 header {
     text-align: center;
-    margin-bottom: 30px;
 }
 
 header img {
     width: 100%;
-    border-radius: 10px;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
 }
 
-/* Section Styles */
 h1 {
-    color: #007bff; /* Main title color */
-    margin-bottom: 10px;
+    font-size: 32px;
+    color: #ff9800; /* Accent color for the title */
 }
 
-h2 {
-    color: #0056b3; /* Section title color */
-    border-bottom: 2px solid #0056b3; /* Underline for section titles */
-    padding-bottom: 5px;
-    margin-top: 20px;
-}
-
-/* Personal Information Styles */
+/* Profile Information */
 .profile-info {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
+}
+
+.profile-info h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #ff9800;
 }
 
 .info-item {
     margin-bottom: 20px;
 }
 
-.info-item label {
+label {
+    font-size: 18px;
     display: block;
     margin-bottom: 5px;
-    font-weight: bold;
+    color: #bbb;
 }
 
-.info-item input[type="text"],
-.info-item input[type="email"],
-.info-item input[type="tel"] {
+input[type="text"],
+input[type="email"],
+input[type="tel"] {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
     border-radius: 5px;
-    transition: border-color 0.3s;
+    border: 1px solid #444;
+    background-color: #333;
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 10px;
 }
 
-.info-item input[type="text"]:focus,
-.info-item input[type="email"]:focus,
-.info-item input[type="tel"]:focus {
-    border-color: #007bff; /* Focus border color */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus {
+    outline: none;
+    border-color: #ff9800;
+    background-color: #444;
 }
 
-/* Booking Card Styles */
-.bookings {
-    margin-top: 30px;
+/* Profile Image */
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 20px auto;
+    display: block;
+    border: 5px solid #ff9800;
 }
 
-.booking-card {
-    background: white;
-    border: 1px solid #e0e0e0; /* Light border for each booking card */
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
-}
-
-.booking-card:hover {
-    transform: translateY(-5px); /* Lift effect on hover */
-}
-
-.booking-item {
-    margin-bottom: 15px;
-}
-
-.booking-item label {
-    font-weight: bold;
-}
-
-.booking-item input {
-    width: calc(100% - 20px); /* Adjust width for padding */
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-/* Button Styles */
+/* Buttons */
 button {
-    background-color: #28a745;
-    color: white;
-    border: none;
+    background-color: #ff9800;
+    color: #fff;
     padding: 12px 20px;
-    border-radius: 5px;
+    border: none;
+    font-size: 16px;
     cursor: pointer;
+    border-radius: 8px;
     transition: background-color 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 button:hover {
-    background-color: #218838; /* Darker green on hover */
+    background-color: #e68900;
 }
 
-/* Add Booking Section */
-.add-booking {
-    margin-top: 20px;
+/* Centered Buttons (Payment, Booking) */
+.payment-button,
+.booking-button {
+    display: inline-block;
+    vertical-align: middle;
+}
+.booking-button {
+    text-align: center;
+    margin: 20px 0;
 }
 
-/* Responsive Styles */
-@media (max-width: 600px) {
-    .container {
-        padding: 15px;
-    }
-
-    header img {
-        width: 100%; /* Adjust the width as needed */
-    max-width: 800px; /* Set a maximum width */
-    height: 10px; /* Set a specific height */
-    object-fit: cover;
-    }
+.payment-button a,
+.booking-button a {
+    text-decoration: none;
 }
 
-.back-button {
-    background-color: #007bff; /* Blue background */
-    color: white; /* White text */
-    border: none; /* No border */
-    padding: 10px 15px; /* Padding for the button */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s; /* Smooth transition */
+.payment-button button,
+.booking-button button {
+    margin: 0 10px;
+    width: 200px;
+    font-size: 18px;
 }
 
-.back-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+/* Booking Details */
+.bookings {
+    margin-top: 40px;
 }
 
-/* Add this CSS to your profile.css file */
-.backButton {
-    position: absolute; /* Position it absolutely */
-    top: 10px; /* Adjust the top position */
-    left: 10px; /* Adjust the left position */
+.bookings h2 {
+    font-size: 24px;
+    color: #ff9800;
+}
+
+.bookings ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.bookings li {
+    background-color: #333;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.bookings li strong {
+    color: #ff9800;
+}
+
+.bookings li p {
+    color: #bbb;
 }

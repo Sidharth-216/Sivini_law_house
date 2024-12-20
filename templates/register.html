@@ -1,82 +1,63 @@
 <!DOCTYPE html>
-<!-- Created By CodingLab - www.codinglabweb.com -->
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8">
-    <!---<title> Responsive Registration Form | CodingLab </title>--->
-    <link rel="stylesheet" href="static/style2.css">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Registration Form</title>
-     
-   </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animated Registration Form</title>
+  <link rel="icon" type="image/png" href="static/logoback.avif">
+  <!-- Link to CSS -->
+  <link rel="stylesheet" href="static/style2.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+</head>
 <body>
-  
-  <div class="square">
-    
-  <form action="{{ url_for('register') }}" method="post">
-    <div class="container">
-    
-      <div class="title">Registration</div>
-      <div class="content">
-        <form action="#" enctype="multipart/form-data">
-          <div class="user-details">
-            <div class="input-box">
-              <span class="details">Full Name</span>
-              <input type="text" id="Enter your name" placeholder="Full name" autocomplete="on" name="name" required>
-            </div>
-            <div class="input-box">
-              <span class="details">Username</span>
-              <input type="text" id="Enter your username" placeholder="Username here"autocomplete="on" name ="username" required>
-            </div>
-            <div class="input-box">
-              <span class="details">Email</span>
-              <input type="text" id="Enter your email"placeholder="enter your email" autocomplete="on" name ="email" required>
-            </div>
-            <div class="input-box">
-              <span class="details">Phone Number</span>
-              <input type="text" id="Enter your number" placeholder="enter your number" autocomplete="on" name ="number" required>
-            </div>
-            <div class="input-box">
-              <span class="details">Password</span>
-              <input type="password" id="Enter your password" placeholder="enter  your password"  name ="paswd"required>
-            </div>
-            <div class="input-box">
-              <span class="details">Confirm Password</span>
-              <input type="password" id="Confirm your password" placeholder="same as password" name ="cnfpas" required>
-            </div>
-          </div>
-        <div class="input-box"></div>
-          <span class="gender-title">Gender</span>
-          <div class="gender-details">
-            <label><input type="checkbox" name="gender" value="male"> Male</label>
-            <label><input type="checkbox" name="gender" value="Female">Female</label>
-            <label><input type="checkbox" name="gender" value="notsay">Prefer Not to say</label>>
-          </div>
+  <!-- Back Button -->
+  <a href="{{ url_for('index') }}" class="back-button">
+    <button id="backButton" class="btn back-btn">Back</button>
+  </a>
+
+  <div class="main-container">
+    <div class="glass-box">
+      <h2>Register</h2>
+      <form action="{{ url_for('register') }}" method="post" enctype="multipart/form-data">
+        <div class="input-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" placeholder="Enter your full name" required>
         </div>
-          <div class="button">
-            <input type="submit" value="Register">
-          </form>
-            <a href="{{ url_for('login') }}">Already registered</a>
-          </div>
-  </form>
+        <div class="input-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" placeholder="Choose a username" required>
+        </div>
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        </div>
+        <div class="input-group">
+          <label for="number">Phone Number</label>
+          <input type="tel" id="number" name="number" placeholder="Enter your phone number" required>
+        </div>
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="paswd" placeholder="Create a password" required>
+        </div>
+        <div class="input-group">
+          <label for="cnfpassword">Confirm Password</label>
+          <input type="password" id="cnfpassword" name="cnfpas" placeholder="Confirm your password" required>
+        </div>
+        <div class="gender-group">
+          <span>Gender:</span>
+          <label><input type="radio" name="gender" value="male"> Male</label>
+          <label><input type="radio" name="gender" value="female"> Female</label>
+          <label><input type="radio" name="gender" value="notsay"> Prefer not to say</label>
+        </div>
+        <div class="btn-container">
+          <button type="submit" class="btn register-btn">Register</button>
+          <a href="{{ url_for('login') }}" class="btn link-btn">Already Registered? Login</a>
+        </div>
+      </form>
     </div>
   </div>
-  <div class="back-button" style="display: block;"></div>
-  <a href="{{ url_for('index') }}"><button id="backButton" class="back-button">Back</button></a>
-
-   <!-- Flash Messages -->
-   {% with messages = get_flashed_messages(with_categories=true) %}
-   {% if messages %}
-       <ul>
-           {% for category, message in messages %}
-               <li class="{{ category }}">{{ message }}</li>
-           {% endfor %}
-       </ul>
-   {% endif %}
-{% endwith %}
-
-<!-- Page-specific content goes here -->
-{% block content %}{% endblock %}
-
+  <!-- Link to JavaScript -->
+  <script src="static/script2.js" defer></script>
 </body>
 </html>

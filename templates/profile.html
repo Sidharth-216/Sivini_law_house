@@ -4,40 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Page</title>
+    <link rel="icon" type="image/png" href="static/logoback.avif">
     <link rel="stylesheet" href="static/profile.css">
 </head>
 <body>
+    <!-- Home Button (Placed outside of container, top-right corner) -->
+    <div class="homeButton">
+        <a href="{{ url_for('index') }}"><button id="homeButton">Home</button></a>
+    </div>
+    <!-- Back Button (Placed outside of container, top-left corner) -->
+    <div class="backButton">
+        <a href="{{ url_for('login') }}"><button id="backButton">Back</button></a>
+    </div>
+
     <div class="container">
         <header>
-            
             <img src="static/banner.jpg" alt="Banner">
             <h1>Welcome, {{ username }}!</h1>
         </header>
+        
         <section class="profile-info">
             <h2>Personal Information</h2>
             <div class="info-item">
                 <label>Profile Picture:</label>
-               <img src="static/mypic(1).jpeg" alt="Profile Picture" class="profile-image">
+                <!-- Display profile image dynamically -->
+                {% if profile_image %}
+                    <img src="{{ url_for('static', filename='uploads/' + profile_image) }}" alt="Profile Picture" class="profile-image">
+                {% else %}
+                    <img src="static/default.jpg" alt="Default Profile Picture" class="profile-image">
+                {% endif %}
+            </div>
+            <div class="info-item">
                 <label>Username:</label>
-                <input type="text" value="{{ username }}" name="username">
+                <input type="text" value="{{ username }}" name="username" class="animated-input">
             </div>
             <div class="info-item">
                 <label>Email:</label>
-                <input type="email" value="{{ email }}"name="email">
+                <input type="email" value="{{ email }}" name="email" class="animated-input">
             </div>
             <div class="info-item">
                 <label>Phone Number:</label>
-                <input type="tel" value="{{number}}"name="number">
+                <input type="tel" value="{{ number }}" name="number" class="animated-input">
             </div>
         </section>
+
+        <!-- Payment and Booking Buttons (Centered) -->
+        <div class="payment-button">
+            <a href="{{ url_for('payment') }}">
+                <button id="paymentButton">Make a Payment</button>
+            </a>
+        </div>
+
+        <div class="booking-button">
+            <a href="{{ url_for('homepage') }}">
+                <button id="bookButton">Book Again</button>
+            </a>
+        </div>
+
+        <!-- Booking Details Section -->
         <section class="bookings">
             <h2>Booking Details</h2>
-           
             {% if bookings %}
                 <ul>
                     {% for booking in bookings %}
                         <li>
-                            <strong>Name:</strong> {{ booking[1] }}<br> <!-- Adjust index based on your table structure -->
+                            <strong>Name:</strong> {{ booking[1] }}<br>
                             <strong>Lawyer Type:</strong> {{ booking[2] }}<br>
                             <strong>Case Description:</strong> {{ booking[4] }}<br>
                             <strong>Appointment Date:</strong> {{ booking[5] }}<br>
@@ -49,13 +80,21 @@
             {% else %}
                 <p>No bookings found.</p>
             {% endif %}
+        <!-- Logout Button (Centered) -->
+        <div class="logout-button">
+            <a href="{{ url_for('logout') }}">
+            <button id="logoutButton">Logout</button>
+            </a>
+        </div>
         </section>
-        <div class="booking-button">
-            <a href="{{ url_for('homepage') }}"><button id="bookButton">Book Again</button></a>
-        </div>
-        <div class="backButton" style="display: block;">
-            <a href="{{ url_for('index') }}"><button id="backButton">Back</button></a> 
-        </div>
+    <!-- Edit Profile Button (Centered) -->
+    <div class="edit-profile-button">
+        <a href="{{ url_for('update_profile') }}">
+        <button id="editProfileButton">Edit Profile</button>
+        </a>
+    </div>
+    </div>
+
     <script src="static/profile.js"></script>
 </body>
 </html>

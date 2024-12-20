@@ -1,67 +1,80 @@
-/* General Styling */
-* {
-    box-sizing: border-box;
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-}
-
-body {
+    background: linear-gradient(to right, #4facfe, #00f2fe);
+    color: #333;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background: linear-gradient(120deg, #4a90e2, #145374);
+    height: 100vh;
+}
+
+/* Back Button */
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background: #092741;
+    border: none;
+    border-radius: 20px;
     color: #fff;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.back-button:hover {
+    transform: scale(1.1);
+    background: #00c6ff;
 }
 
 /* Profile Container */
 .profile-container {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    padding: 30px;
     width: 90%;
     max-width: 600px;
-    background: #fff;
-    border-radius: 8px;
-    padding: 2rem;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    color: #123456;
+    text-align: center;
+    animation: fadeIn 1s ease;
 }
 
 .profile-container h2 {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-    color: #145374;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: bold;
 }
 
-.profile-form .input-group {
-    margin-bottom: 1.5rem;
+/* Profile Info */
+.profile-info {
+    line-height: 1.8;
+    text-align: left;
 }
 
-.profile-form label {
-    display: block;
-    font-size: 1rem;
-    color: #666;
-    margin-bottom: 0.5rem;
+.profile-info p {
+    font-size: 18px;
+    margin: 10px 0;
 }
 
-.profile-form input {
-    width: 100%;
-    padding: 0.8rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
+.profile-info strong {
+    color: #0078d4;
+    font-weight: bold;
 }
 
-.profile-form .submit-btn {
-    background: #145374;
-    color: #fff;
-    padding: 0.8rem 1.2rem;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.profile-form .submit-btn:hover {
-    background: #1b8ec4;
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

@@ -1,105 +1,201 @@
-/* clients.css */
+/* General Body Styling */
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle, #0f2027, #203a43, #2c5364);
+    color: #e0e0e0;
 }
 
-h1 {
-    text-align: center;
-    margin: 20px 0;
-    color: #333;
-}
-
-form {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    margin: 20px auto;
-}
-
-input {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    transition: border-color 0.3s ease;
-}
-
-input:focus {
-    border-color: #007BFF;
-    outline: none;
-}
-
-button {
-    background-color: #007BFF;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100%;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-h2 {
-    text-align: center;
-    margin: 20px 0;
-    color: #333;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    background-color: #fff;
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 4px;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: transform 0.2s;
-}
-
-li:hover {
-    transform: scale(1.02);
-}
-
-a {
-    text-decoration: none;
-    color: #ff4d4d;
-    font-weight: bold;
-    transition: color 0.3s;
-}
-
-a:hover {
-    color: #e63946;
-}
+/* Back Button */
 .back-button {
-    background-color: #101212; /* Blue background */
-    color: rgb(251, 237, 237); /* White text */
-    border: none; /* No border */
-    padding: 20px 25px; /* Padding for the button */
-    border-radius: 15px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s; /* Smooth transition */
-    position: absolute; /* Position it absolutely */
-    top: 25px; /* Adjust the top position */
-    left: 20px; /* Adjust the left position */
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background: #ff007f; /* Vivid pink for accent */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
 }
 
 .back-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background: #ff4da6; /* Slightly lighter pink on hover */
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(255, 0, 127, 0.7);
+}
+
+/* Main Container */
+.main-container {
+    max-width: 900px;
+    margin: 80px auto;
+    padding: 20px;
+    background: rgba(33, 33, 33, 0.9); /* Slightly transparent dark background */
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    animation: slideIn 1s ease-in-out;
+}
+
+/* Header */
+header h1 {
+    text-align: center;
+    font-size: 2.8rem;
+    color: #ffcb45; /* Vibrant golden accent */
+    text-shadow: 2px 2px 10px rgba(255, 203, 69, 0.7);
+    margin-bottom: 20px;
+}
+
+/* Client Form */
+.client-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.client-form input {
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: none;
+    background: #2b2b2b; /* Darker background for inputs */
+    color: #e0e0e0;
+    font-size: 1rem;
+    transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
+
+.client-form input::placeholder {
+    color: #9e9e9e; /* Placeholder color */
+}
+
+.client-form input:focus {
+    border-color: #ffcb45; /* Gold accent on focus */
+    box-shadow: 0 0 10px rgba(255, 203, 69, 0.8);
+}
+
+.client-form button {
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: none;
+    background: #00bfa5; /* Teal accent */
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.client-form button:hover {
+    background: #26ffe6; /* Bright cyan on hover */
+    box-shadow: 0 0 15px rgba(38, 255, 230, 0.6);
+    transform: translateY(-3px);
+}
+
+/* Clients Section */
+.clients h2 {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 2rem;
+    color: #00bfa5; /* Teal accent for headings */
+}
+
+.clients ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.client-item {
+    background: rgba(43, 43, 43, 0.8); /* Darker background for list items */
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.client-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.7);
+}
+
+.client-item strong {
+    color: #ffcb45; /* Gold for labels */
+}
+
+/* Delete Button */
+/* Delete Button Styling */
+.delete-btn {
+    display: inline-block;
+    padding: 8px 15px;
+    background: #ff4d4d; /* Vivid red for delete */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    font-weight: bold;
+}
+
+.delete-btn:hover {
+    background: #ff6666; /* Lighter red on hover */
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(255, 77, 77, 0.7);
+}
+
+.delete-btn:focus {
+    outline: 2px solid #ff6666; /* Highlighted border on focus */
+    box-shadow: 0 0 12px rgba(255, 77, 77, 0.9);
+}
+
+/* Adjust Form in Client List */
+.client-item form {
+    margin-top: 10px;
+}
+
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* Add Client Button */
+.add-client {
+    display: inline-block;
+    padding: 12px 20px;
+    background: #4caf50; /* Green primary color */
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    text-align: center;
+    text-decoration: none; /* In case it's used as a link */
+    box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3); /* Subtle shadow */
+}
+
+.add-client:hover {
+    background: #66bb6a; /* Lighter green on hover */
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.7);
+}
+
+.add-client:focus {
+    outline: 2px solid #66bb6a; /* Highlighted border on focus */
+    box-shadow: 0 0 12px rgba(76, 175, 80, 0.9);
+}
+
+.add-client:active {
+    transform: scale(0.98); /* Slight press effect */
+    box-shadow: 0 2px 6px rgba(76, 175, 80, 0.5);
 }

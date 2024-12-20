@@ -4,30 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lawyer Profile</title>
+    <link rel="icon" type="image/png" href="static/logoback.avif">
     <link rel="stylesheet" href="static/lawyer_profile.css">
 </head>
 <body>
+    <!-- Back Button -->
+    <a href="{{ url_for('dashboard') }}">
+        <button id="backButton" class="back-button">Back to Dashboard</button>
+    </a>
+
     <div class="profile-container">
-        <h2>Profile</h2>
-        <form id="profileForm" class="profile-form">
-            <div class="input-group">
-                <label for="name">Full Name</label>
-                <input type="text" id="name" value="John Doe" required>
-            </div>
-            <div class="input-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" value="johndoe@example.com" required>
-            </div>
-            <div class="input-group">
-                <label for="license">License Number</label>
-                <input type="text" id="license" value="LAW123456" required>
-            </div>
-            <div class="input-group">
-                <label for="specialization">Specialization</label>
-                <input type="text" id="specialization" value="Corporate Law" required>
-            </div>
-            <button type="submit" class="submit-btn">Update Profile</button>
-        </form>
+        <h2>Lawyer Profile</h2>
+        <div class="profile-info">
+            <p><strong>Name:</strong> {{ lawyer.name }}</p>
+            <p><strong>Email:</strong> {{ lawyer.email }}</p>
+            <p><strong>License Number:</strong> {{ lawyer.license }}</p>
+            <p><strong>Specialization:</strong> {{ lawyer.expertise }}</p>
+            <p><strong>Experience:</strong> {{ lawyer.exprience }} years</p>
+            <p><strong>Bio:</strong> "Dedicated legal professional committed to excellence and justice."</p>
+        </div>
     </div>
 
     <script src="static/lawyer_profile.js"></script>

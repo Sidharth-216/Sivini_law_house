@@ -3,26 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notification Management</title>
+    <title>Notifications</title>
+    <link rel="icon" type="image/png" href="static/logoback.avif">
     <link rel="stylesheet" href="static/notification_management.css">
 </head>
 <body>
-    <h1>Notifications</h1>
+    <div class="dashboard-container">
+        <div class="notifications-section">
+            <h2>Notifications</h2>
 
-    <form action="/notifications" method="POST">
-        <input type="text" name="message" placeholder="New Notification" required>
-        <button type="submit">Add Notification</button>
-    </form>
+            <!-- Back Button -->
+            <a href="{{ url_for('dashboard') }}" class="back-button">← Back</a>
 
-    <h2>Your Notifications</h2>
-    <ul>
-        {% for notification in notifications %}
-            <li>
-                <strong>{{ notification[2] }}</strong> - {{ notification[4] }} <!-- Adjust index based on your notifications table structure -->
-                <a href="{{ url_for('delete_notification', notification_id=notification[0]) }}">Delete</a>
-            </li>
-        {% endfor %}
-    </ul>
+            <div class="notifications">
+                {% for notification in notifications %}
+                    <div class="notification {% if notification['seen'] %}seen{% else %}unseen{% endif %}">
+                        <p>{{ notification['message'] }}</p>
+                        <small>{{ notification['timestamp'] }}</small>
+
+                        <!-- Mark as Read Form -->
+                        {% if not notification['seen'] %}
+                            <form action="{{ url_for('mark_as_read', notification_id=notification['id']) }}" method="POST">
+                                <button type="submit">Mark as Read</button>
+                            </form>
+                        {% endif %}
+
+                        <!-- Delete Notification Form -->
+                        <form action="{{ url_for('delete_notification', notification_id=notification['id']) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="delete-button">Delete</button>
+                        </form>
+                    </div>
+                {% else %}
+                    <p>No new notifications</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 
     <script src="static/notification_management.js"></script>
 </body>
