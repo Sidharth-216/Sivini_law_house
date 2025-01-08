@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Notes</title>
+    <link rel="icon" type="image/png" href="static/logoback.avif">
+    <link rel="stylesheet" href="static/case_notes.css">
+</head>
+<body>
+    <div class="container">
+        <a href="{{ url_for('new_dashboard') }}">
+            <button class="back-button">Back to Dashboard</button>
+        </a>
+        <header>
+            <h1>Case Notes</h1>
+        </header>
+        
+        <form action="{{ url_for('add_case_note') }}" method="POST" class="note-form">
+            <input type="text" name="note" placeholder="Enter case note" required>
+            <input type="hidden" name="lawyer_id" value="{{ lawyer_id }}">
+            <input type="hidden" name="case_id" value="{{ case_id }}">
+            <button type="submit" class="submit-btn">Add Note</button>
+        </form>
+
+        <h2>Existing Notes</h2>
+        <ul class="notes-list">
+            {% for note in notes %}
+                <li class="note-item">
+                    <p>{{ note[3] }}</p> <!-- Assuming the note content is in the third column -->
+                    <div class="note-actions">
+                        <form action="{{ url_for('edit_case_note', note_id=note[0]) }}" method="POST">
+                            <input type="text" name="note" value="{{ note[2] }}" required>
+                            <button type="submit" class="edit-btn">Edit</button>
+                        </form>
+                        <form action="{{ url_for('delete_case_note', note_id=note[0]) }}" method="POST">
+                            <button type="submit" class="delete-btn">Delete</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script src="static/case_notes.js"></script>
+</body>
+</html>

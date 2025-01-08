@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Editor</title>
+    <link rel="icon" type="image/png" href="static/logoback.avif">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            width: 70%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .btn-template {
+            padding: 15px 30px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .btn-template:hover {
+            background-color: #45a049;
+        }
+        select {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            width: 200px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<a href="{{ url_for('new_dashboard') }}" class="btn-template">Back</a>
+<div class="container">
+    <h1>Select Document Template</h1>
+    <p>Choose a template to generate a document.</p>
+
+    <!-- Button Method -->
+    <a href="{{ url_for('pitison') }}">
+        <button id="btn-template" class="btn-template">Generate pitison</button>
+    </a>
+    <button class="btn-template" onclick="window.location.href='fir.html'">Generate FIR</button>
+    <button class="btn-template" onclick="window.location.href='affidavit.html'">Generate AFFIDAVIT</button>
+
+    <!-- OR, Use Dropdown -->
+    <p>OR Select from here to type Manually:</p>
+    <select onchange="window.location.href=this.value">
+        <option value="#">Select </option>
+        <option value="{{ url_for('editor') }}">PITISON</option>
+        <option value="fir.html">FIR</option>
+        <option value="affidavit.html">AFFIDAVIT</option>
+    </select>
+</div>
+
+</body>
+</html>

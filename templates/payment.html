@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make a Payment</title>
+    <link rel="icon" type="image/png" href="static/logoback.avif">
+    <style>
+        /* Basic styling for the payment page */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .payment-container {
+            width: 400px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .payment-container h2 {
+            margin-top: 0;
+            color: #333;
+            text-align: center;
+        }
+        .payment-form label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        .payment-form input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .payment-button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .payment-button:hover {
+            background-color: #45a049;
+        }
+        .back-button {
+            margin-top: 20px;
+            display: block;
+            text-align: center;
+        }
+        .back-button a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .back-button a:hover {
+            text-decoration: underline;
+        }
+        .qr-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        .qr-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <h2>Make a Payment</h2>
+        <form class="payment-form" action="{{ url_for('payment') }}" method="POST">
+            <label for="outstanding_balance">Outstanding Balance:</label>
+            <input type="text" id="outstanding_balance" value="₹{{ outstanding_balance }}" readonly>
+
+            <label for="payment_amount">Payment Amount:</label>
+            <input type="number" id="payment_amount" name="payment_amount" placeholder="Enter amount" required>
+
+            <label for="card_number">Card Number:</label>
+            <input type="text" id="card_number" name="card_number" placeholder="XXXX-XXXX-XXXX-XXXX" required>
+
+            <label for="expiry_date">Expiry Date:</label>
+            <input type="text" id="expiry_date" name="expiry_date" placeholder="MM/YY" required>
+
+            <label for="cvv">CVV:</label>
+            <input type="password" id="cvv" name="cvv" placeholder="CVV" required>
+
+            <button type="submit" class="payment-button">Pay Now</button>
+        </form>
+
+        <!-- QR Code Payment Link -->
+        <div class="qr-link">
+            <a href="{{ url_for('qr_payment') }}">Or pay by QR code</a>
+        </div>
+
+        <div class="back-button">
+            <a href="{{ url_for('profile') }}">Back to Profile</a>
+        </div>
+    </div>
+</body>
+</html>

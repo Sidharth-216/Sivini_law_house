@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing and Invoicing</title>
+    <link rel="icon" type="image/png" href="static/logoback.avif">
+    <link rel="stylesheet" href="static/billing_invoicing.css">
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="{{ url_for('new_dashboard') }}"><button id="backButton">Back</button></a>
+
+    <h1>Billing and Invoicing</h1>
+    <h2>Invoices</h2>
+
+    <!-- Invoice Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Client Name</th>
+                <th>Total Amount</th>
+                <th>Amount Paid</th>
+                <th>Remaining Balance</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for invoice in invoices %}
+            <tr>
+                <td>{{ invoice.client_name }}</td> <!-- client_name -->
+                <td>₹{{ invoice.total_amount }}</td> <!-- total_amount -->
+                <td>₹{{ invoice.amount_paid }}</td> <!-- amount_paid -->
+                <td>₹{{ invoice.total_amount - invoice.amount_paid }}</td> <!-- remaining_balance -->
+                <td>{{ invoice.status }}</td> <!-- status -->
+                <td>
+                    <a href="{{ url_for('update_invoice', invoice_id=invoice.id) }}">Update Status</a> |
+                    <form action="{{ url_for('make_payment', invoice_id=invoice.id) }}" method="POST" style="display:inline;">
+                        <input type="number" name="installment" placeholder="Installment Amount" required>
+                        <button type="submit">Make Payment</button>
+                    </form> |
+                    <a href="{{ url_for('delete_invoice', invoice_id=invoice.id) }}" onclick="return confirm('Are you sure you want to delete this invoice?')">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Add Invoice Form -->
+    <h2>Add New Invoice</h2>
+    <form action="{{ url_for('add_invoice') }}" method="POST">
+        <label for="client_name">Client Name:</label>
+        <input type="text" id="client_name" name="client_name" required>
+
+        <label for="total_amount">Total Amount:</label>
+        <input type="number" id="total_amount" name="total_amount" required>
+
+        <label for="amount_paid">Amount Paid:</label>
+        <input type="number" id="amount_paid" name="amount_paid" required>
+
+        <label for="status">Status:</label>
+        <select id="status" name="status" required>
+            <option value="Paid">Paid</option>
+            <option value="Pending">Pending</option>
+            <option value="Overdue">Overdue</option>
+        </select>
+
+        <button type="submit">Add Invoice</button>
+    </form>
+</body>
+</html>

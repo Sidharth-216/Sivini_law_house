@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Case</title>
+    <link rel="icon" type="image/png" href="static/logoback.avif">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .back-button {
+            background: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .back-button:hover {
+            background: #0056b3;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #eef2f3;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input, select, textarea, button {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        textarea {
+            resize: none;
+            height: 100px;
+        }
+
+        button {
+            background: #28a745;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #218838;
+        }
+
+        .success-message {
+            text-align: center;
+            padding: 10px;
+            margin-top: 10px;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .error-message {
+            text-align: center;
+            padding: 10px;
+            margin-top: 10px;
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="{{ url_for('new_dashboard') }}">
+            <button id="backButton" class="back-button">Back</button>
+        </a>
+    </div>
+
+
+    <div style="text-align: center; margin-top: 20px;"></div>
+        </div>
+    <div class="container">
+        <h1>Create a New Case</h1>
+
+        <!-- Success Message -->
+        <div id="success-message" class="success-message">
+            Case successfully created!
+        </div>
+
+        <!-- Error Message -->
+        <div id="error-message" class="error-message">
+            Failed to create the case. Please try again.
+        </div>
+
+        <!-- Create Case Form -->
+        <form method="POST" action="/create_case">
+            <label for="case_name">Case Name:</label>
+            <input type="text" id="case_name" name="case_name" placeholder="Enter case name" required>
+
+            <label for="client_name">Client Name:</label>
+            <input type="text" id="client_name" name="client_name" placeholder="Enter client name" required>
+
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date" required>
+
+            <label for="status">Case Status:</label>
+            <select id="status" name="status" required>
+                <option value="Open">Open</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Closed">Closed</option>
+            </select>
+
+            <label for="description">Case Description:</label>
+            <textarea id="description" name="description" placeholder="Provide details about the case..." required></textarea>
+
+            <button type="submit">Create Case</button>
+        </form>
+    </div>
+    </div>
+    
+
+    <script>
+        // Simulated success or error message display (based on server response)
+        const urlParams = new URLSearchParams(window.location.search);
+        const success = urlParams.get('success');
+
+        if (success === 'true') {
+            document.getElementById('success-message').style.display = 'block';
+        } else if (success === 'false') {
+            document.getElementById('error-message').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

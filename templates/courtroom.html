@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courtroom Practice</title>
+    <link rel="icon" type="image/png" href="static/logoback.avif">
+    <link rel="stylesheet" href="static/courtroom.css">
+</head>
+<body>
+    <button onclick="window.history.back()">Back</button>
+    <div class="courtroom-container">
+        <h1>Practice Courtroom</h1>
+
+        <div class="case-section">
+            <h2>Case Title: {{ case['case_title'] }}</h2>
+            <p>{{ case['case_description'] }}</p>
+        </div>
+
+        <div class="argument-section">
+            <textarea id="lawyer-argument" placeholder="Write your argument here..."></textarea>
+            <button id="submit-argument">Submit Argument</button>
+        </div>
+
+        <div class="judge-response">
+            <h3>Judge's Response:</h3>
+            <p id="judge-response-text">Awaiting your argument...</p>
+        </div>
+
+        <div class="result-section">
+            <h3>Case Result</h3>
+            <p id="case-rating"></p>
+            <p id="case-verdict"></p>
+        </div>
+    </div>
+
+    <script src="static/courtroom.js"></script>
+</body>
+</html>

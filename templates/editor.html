@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Editor</title>
+    <link rel="icon" type="image/png" href="static/logoback.avif">
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.0-beta.2/dist/quill.snow.css" rel="stylesheet">
+    <style>
+        /* Global styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f0f4f8;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        .container {
+            width: 70%;
+            margin: 0 auto;
+            padding-top: 50px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .editor-container {
+            border: 1px solid #ccc;
+            height: 300px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            overflow-y: auto;
+        }
+
+        /* Back Button Styling */
+        .back-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: background-color 0.3s, transform 0.2s ease-in-out;
+        }
+
+        .back-btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .back-btn:active {
+            transform: scale(1);
+        }
+
+        /* Button Styling */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        button {
+            padding: 12px 24px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s ease-in-out;
+        }
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            transform: scale(1);
+        }
+
+        select, #editor {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        select {
+            background-color: #fff;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        /* Custom Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Back Button -->
+        <button class="back-btn" onclick="window.history.back();">Back</button>
+
+        <h1>Create a Legal Document</h1>
+
+        <!-- Dropdown for pre-typed templates -->
+        <div class="tooltip">
+            <label for="document-select">Select Document Type:</label>
+            <span class="tooltiptext">Choose a pre-typed template to get started</span>
+        </div>
+        <select id="document-select" name="document-type">
+            <option value="petition">Petition</option>
+            <option value="fir">FIR</option>
+            <option value="affidavit">Affidavit</option>
+        </select>
+
+        <!-- Quill Text Editor -->
+        <div id="editor" class="editor-container"></div>
+
+        <!-- Buttons for saving and printing -->
+        <div class="button-container">
+            <button id="save-btn">Save Document</button>
+            <button id="download-btn">Download PDF</button>
+            <button id="print-btn">Print Document</button>
+        </div>
+    </div>
+
+    <!-- Include Quill JS and jsPDF for PDF download -->
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.0-beta.2/dist/quill.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        // Initialize Quill editor
+        var quill = new Quill('#editor', {
+            theme: 'snow',
+            placeholder: 'Type your document here...',
+            modules: {
+                toolbar: [
+                    [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    ['bold', 'italic', 'underline'],
+                    [{ 'align': [] }],
+                    ['link'],
+                    ['blockquote']
+                ]
+            }
+        });
+
+        // Handle document selection for pre-typed templates
+        document.getElementById('document-select').addEventListener('change', function(e) {
+            let selectedDocument = e.target.value;
+            let template = "";
+
+            // Example templates, you can fetch them from backend or store as predefined data
+            if (selectedDocument === "petition") {
+                template = "<h2>Petition</h2><p>Type your petition here...</p>";
+            } else if (selectedDocument === "fir") {
+                template = "<h2>FIR</h2><p>Type your FIR here...</p>";
+            } else if (selectedDocument === "affidavit") {
+                template = "<h2>Affidavit</h2><p>Type your affidavit here...</p>";
+            }
+
+            // Set the template in the editor
+            quill.root.innerHTML = template;
+        });
+
+        // Save document functionality
+        document.getElementById('save-btn').addEventListener('click', function() {
+            var documentContent = quill.root.innerHTML;
+            console.log("Document Saved: ", documentContent);
+            // You can send this data to backend and save in database or file system
+        });
+
+        // Download document as PDF using jsPDF
+        document.getElementById('download-btn').addEventListener('click', function() {
+            const { jsPDF } = window.jspdf;
+            var doc = new jsPDF();
+            doc.html(quill.root, {
+                callback: function (doc) {
+                    doc.save('document.pdf');
+                }
+            });
+        });
+
+        // Print document functionality
+        document.getElementById('print-btn').addEventListener('click', function() {
+            var content = quill.root.innerHTML;
+            var printWindow = window.open('', '', 'height=600,width=800');
+            printWindow.document.write('<html><head><title>Print Document</title></head><body>');
+            printWindow.document.write(content);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        });
+    </script>
+</body>
+</html>

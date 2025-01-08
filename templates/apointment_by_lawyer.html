@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book an Appointment with Lawyer</title>
+    <link rel="icon" type="image/png" href="static/logoback.avif">
+    <link rel="stylesheet" href="static/homepage.css">
+</head>
+<body>
+    <header>
+        <h1>Legal Expert Booking</h1>
+        <p>Book a session with a lawyer for your legal case</p>
+    </header>
+
+    <div class="container">
+        <main>
+            <section id="booking-form">
+                <h2>Book a Lawyer Appointment</h2>
+                <form action="{{ url_for('appointment_by_lawyer') }}" method="POST">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                    
+                    <label for="lawyer_type">Lawyer Type:</label>
+                    <input type="text" id="lawyer_type" name="lawyer_type" required>
+                    
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    
+                    <label for="case_description">Case Description:</label>
+                    <textarea id="case_description" name="case_description" required></textarea>
+                    
+                    <label for="appointment_date">Appointment Date:</label>
+                    <input type="date" id="appointment_date" name="appointment_date" required>
+                    
+                    <label for="time_of_booking">Time of Booking:</label>
+                    <input type="time" id="time_of_booking" name="time_of_booking" required>
+                    
+                    <label for="date_of_booking">Date of Booking:</label>
+                    <input type="date" id="date_of_booking" name="date_of_booking" required>
+                    
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                    
+                    <button type="submit">Submit Booking</button>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Legal Expert Booking. All rights reserved.</p>
+    </footer>
+
+    <script src="static/homepage.js"></script>
+</body>
+</html>

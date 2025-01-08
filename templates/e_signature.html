@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Signature</title>
+    <link rel="icon" type="image/png" href="static/logoback.avif">
+    <link rel="stylesheet" href="static/e_signature.css">
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+</head>
+<body>
+    <div class="back-button">
+        <a href="{{ url_for('new_dashboard') }}">Back</a>
+    </div>
+    <div class="container">
+        <h1>Digital Signature</h1>
+        
+        <div class="form-container">
+            <form id="uploadForm" method="POST" enctype="multipart/form-data">
+                <label for="file">Upload Document</label>
+                <input type="file" name="file" id="file" required />
+                <button type="submit" class="btn-submit">Upload Document</button>
+            </form>
+        </div>
+
+        <div class="signature-container">
+            <h2>Sign the Document</h2>
+            <canvas id="signatureCanvas" width="600" height="200"></canvas>
+            <button id="clearButton">Clear</button>
+            <button id="saveButton">Save Signature</button>
+        </div>
+
+        <div class="signature-details">
+            <h3>Your Signature</h3>
+            <div id="signatureResult"></div>
+        </div>
+    </div>
+    
+    <script src="static/e_signature.js"></script>
+</body>
+</html>

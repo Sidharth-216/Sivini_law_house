@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Chat</title>
+    <link rel="icon" type="image/png" href="static/logoback.avif">
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            padding: 20px;
+        }
+        #chat-box {
+            max-width: 600px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        #messages {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+        #messages p {
+            background-color: #e1ffc7;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+        #message-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-box">
+        <div id="messages">
+            {% for chat in chats %}
+                <p>{{ chat[4] }}: {{ chat[3] }}</p> <!-- chat[4] is sender_role, chat[3] is message -->
+            {% endfor %}
+        </div>
+        <input type="text" id="message-input" placeholder="Type your message here...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+        var room_id = 'some_room_id';  // Set room dynamically from backend
+        socket.emit('join', { room_id: room_id });
+        
+        function sendMessage() {
+            var message = document.getElementById('message-input').value;
+            var sender_id = '{{ session["user_id"] }}';  // Get user ID from session
+            var recipient_id = '{{ session["lawyer_id"] }}';  // Get lawyer ID from session
+            var sender_role = 'client';  // 'client' for client messages
+
+            socket.emit('send_message', {
+                message: message,
+                sender_id: sender_id,
+                recipient_id: recipient_id,
+                sender_role: sender_role
+            });
+
+            // Display the message
+            var messageDiv = document.createElement('div');
+            messageDiv.innerHTML = message;
+            document.getElementById('messages').appendChild(messageDiv);
+            document.getElementById('message-input').value = ''; // Clear input field
+        }
+    </script>
+</body>
+</html>

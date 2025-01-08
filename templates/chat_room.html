@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Room - Lawyer & Client</title>
+    <link rel="icon" type="image/png" href="static/logoback.avif">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+        .header .logout-btn {
+            padding: 8px 16px;
+            background-color: #ff4b5c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .messages {
+            height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .messages .message {
+            margin-bottom: 10px;
+        }
+
+        .messages .message .sender {
+            font-weight: bold;
+        }
+
+        .messages .message .content {
+            margin-left: 10px;
+        }
+
+        .message-form input[type="text"] {
+            width: 85%;
+            padding: 10px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .message-form button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .message-form button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Chat Room with {{ client_username }}</h1>
+            <a href="{{ url_for('lawyer_login') }}" class="logout-btn">Logout</a>
+        </div>
+
+        <div class="messages">
+            {% for chat in chats %}
+            <div class="message">
+                {% if chat[1] == lawyer_id %}
+                <div class="sender">Lawyer:</div>
+                <div class="content">{{ chat[3] }}</div>
+                {% else %}
+                <div class="sender">{{ client_username }}:</div>
+                <div class="content">{{ chat[3] }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="message-form">
+            <form method="POST">
+                <input type="text" name="message" placeholder="Type your message..." required>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>

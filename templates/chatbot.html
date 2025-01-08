@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Lawyer Chatbot</title>
+    <link rel="icon" type="image/png" href="static/logoback.avif">
+    <link rel="stylesheet" href="/static/chatbot.css">
+</head>
+<body>
+    <div class="chatbot-container">
+        <h1 class="title">AI Lawyer Chatbot</h1>
+        <form method="POST" action="/chatbot" class="chat-form">
+            <label for="user_input" class="form-label">Enter your question:</label>
+            <textarea id="user_input" name="user_input" rows="4" cols="50" placeholder="Type your question here..."></textarea>
+            <button type="submit" class="submit-button">Submit</button>
+        </form>
+        {% if reply %}
+        <div class="response-section">
+            <h2>AI Reply:</h2>
+            <p class="response">{{ reply }}</p>
+        </div>
+        {% endif %}
+    </div>
+    <script src="/static/chatbot.js"></script>
+</body>
+</html>

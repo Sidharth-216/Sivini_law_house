@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Applications</title>
+  <link rel="icon" type="image/png" href="static/logoback.avif">
+  <!-- Linking CSS correctly using url_for -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='get_applications.css') }}">
+</head>
+<body>
+
+  <!-- Back Button -->
+  <button class="back-button" onclick="goBack()">&#8592; Back</button>
+
+  <div class="container">
+    <h2>Job Applications</h2>
+    
+    {% for application in applications %}
+      <div class="application">
+        <div class="application-info">
+          <strong>Name:</strong> {{ application[1] }}<br>
+          <strong>Email:</strong> {{ application[2] }}<br>
+          <strong>Position:</strong> {{ application[3] }}<br>
+          <strong>Date:</strong> {{ application[4] }}
+        </div>
+        <div class="application-buttons">
+          <button class="btn accept" data-id="{{ application[0] }}" onclick="updateStatus(this, 'Accepted')">Accept</button>
+          <button class="btn reject" data-id="{{ application[0] }}" onclick="updateStatus(this, 'Rejected')">Reject</button>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Linking JavaScript correctly using url_for -->
+  <script src="{{ url_for('static', filename='get_applications.js') }}"></script>
+
+</body>
+</html>

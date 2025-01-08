@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Task</title>
+    <link rel="icon" type="image/png" href="static/logoback.avif">
+    <style>
+        /* Update Task Form Styling */
+        .update-task-form {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            width: 80%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .update-task-form h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .update-task-form label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .update-task-form input, .update-task-form select, .update-task-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .update-task-form button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .update-task-form button:hover {
+            background-color: #45a049;
+        }
+
+        #backButton {
+            margin-top: 20px;
+            background-color: #f44336;
+            color: white;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        #backButton:hover {
+            background-color: #d32f2f;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <a href="{{ url_for('task_management') }}">
+        <button id="backButton" class="back-button">Back</button>
+    </a>
+    
+    <div class="task-management-container">
+        <h1>Update Task</h1>
+        <form action="{{ url_for('update_task', task_id=task['id']) }}" method="POST" class="update-task-form">
+            <label for="title">Task Title</label>
+            <input type="text" id="title" name="title" value="{{ task['title'] }}" required>
+
+            <label for="description">Description</label>
+            <textarea id="description" name="description">{{ task['description'] }}</textarea>
+
+            <label for="deadline">Deadline</label>
+            <input type="date" id="deadline" name="deadline" value="{{ task['deadline'] }}">
+
+            <label for="status">Status</label>
+            <select id="status" name="status">
+                <option value="Pending" {% if task['status'] == 'Pending' %}selected{% endif %}>Pending</option>
+                <option value="In Progress" {% if task['status'] == 'In Progress' %}selected{% endif %}>In Progress</option>
+                <option value="Completed" {% if task['status'] == 'Completed' %}selected{% endif %}>Completed</option>
+            </select>
+
+            <button type="submit" class="add-task-button">Update Task</button>
+        </form>
+    </div>
+
+    <script src="static/task_management.js"></script>
+</body>
+</html>

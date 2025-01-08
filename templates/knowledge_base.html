@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Base</title>
+    <link rel="icon" type="image/png" href="static/logoback.avif">
+    <link rel="stylesheet" href="static/knowledge_base.css">
+</head>
+<body>
+    <div class="knowledge-base-container">
+        <a href="{{ url_for('new_dashboard') }}">
+            <button class="back-button">Back to Dashboard</button>
+        </a>
+        <h1>Knowledge Base</h1>
+        <input type="text" id="searchBar" placeholder="Search articles..." />
+        <div id="articlesList" class="articles-list">
+            <!-- Articles will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <script src="static/knowledge_base.js"></script>
+</body>
+</html>

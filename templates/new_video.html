@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join a Meeting</title>
+  <link rel="icon" type="image/png" href="static/logoback.avif">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      width: 400px;
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin: 20px 0;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      background-color: #34a853; /* Google Meet Green */
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      display: inline-block;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background-color: #287233;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Join a Meeting</h2>
+    <form id="joinForm" action="#" method="POST">
+      <input type="text" id="meetingLink" name="meetingLink" placeholder="Enter Meeting URL" required />
+      <a id="joinButton" class="btn">Join Now</a>
+    </form>
+  </div>
+
+  <script>
+    const joinButton = document.getElementById('joinButton');
+    const meetingLinkInput = document.getElementById('meetingLink');
+
+    joinButton.addEventListener('click', () => {
+      const link = meetingLinkInput.value.trim();
+      if (link) {
+        window.open(link, '_blank'); // Opens the meeting link in a new tab
+      } else {
+        alert('Please enter a valid meeting link!');
+      }
+    });
+  </script>
+</body>
+</html>

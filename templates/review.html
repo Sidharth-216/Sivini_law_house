@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Reviews</title>
+    <link rel="icon" type="image/png" href="static/logoback.avif">
+    <link rel="stylesheet" href="/static/reviews.css">
+</head>
+<body>
+    <h1>Client Reviews</h1>
+    <form method="POST" action="/reviews">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br>
+        <label for="review">Review:</label>
+        <textarea id="review" name="review" rows="4" required></textarea>
+        <br>
+        <label for="rating">Rating:</label>
+        <select id="rating" name="rating" required>
+            <option value="1">⭐</option>
+            <option value="2">⭐⭐</option>
+            <option value="3">⭐⭐⭐</option>
+            <option value="4">⭐⭐⭐⭐</option>
+            <option value="5">⭐⭐⭐⭐⭐</option>
+        </select>
+        <br>
+        <button type="submit">Submit Review</button>
+    </form>
+    <hr>
+    <h2>All Reviews</h2>
+    <div>
+        {% for review in reviews %}
+        <div>
+            <strong>{{ review['name'] }}</strong> - 
+            <span>{{ '⭐' * review['rating'] }}</span>
+            <p>{{ review['review'] }}</p>
+        </div>
+        <hr>
+        {% endfor %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Invoice</title>
+    <link rel="icon" type="image/png" href="static/logoback.avif">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            animation: fadeIn 2s ease-out;
+        }
+
+        /* Form Styles */
+        form {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            animation: slideUp 1s ease-out;
+        }
+
+        label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.6);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 1s 0.5s forwards;
+        }
+
+        button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        /* Link Styling */
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #4CAF50;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #388e3c;
+        }
+
+        /* Fade In Animation */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Slide Up Animation */
+        @keyframes slideUp {
+            0% {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Input Animation */
+        input, select {
+            animation: bounceIn 0.6s ease-in-out;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Update Invoice</h1>
+    
+    <form action="{{ url_for('update_invoice', invoice_id=invoice[0]) }}" method="POST">
+        <label for="client_name">Client Name:</label>
+        <input type="text" id="client_name" name="client_name" value="{{ invoice[1] }}" required>
+
+        <label for="total_amount">Total Amount:</label>
+        <input type="number" id="total_amount" name="total_amount" value="{{ invoice[2] }}" required>
+
+        <label for="amount_paid">Amount Paid:</label>
+        <input type="number" id="amount_paid" name="amount_paid" value="{{ invoice[3] }}" required>
+
+        <label for="status">Status:</label>
+        <select id="status" name="status" required>
+            <option value="Paid" {% if invoice[5] == 'Paid' %}selected{% endif %}>Paid</option>
+            <option value="Pending" {% if invoice[5] == 'Pending' %}selected{% endif %}>Pending</option>
+            <option value="Overdue" {% if invoice[5] == 'Overdue' %}selected{% endif %}>Overdue</option>
+        </select>
+
+        <button type="submit">Update Invoice</button>
+    </form>
+    
+    <a href="{{ url_for('billing_invoicing') }}">Back to Billing and Invoicing</a>
+</body>
+</html>

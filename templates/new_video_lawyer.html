@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create a Meeting</title>
+  <link rel="icon" type="image/png" href="static/logoback.avif">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      width: 400px;
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      background-color: #2d8cff; /* Zoom Blue */
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      display: inline-block;
+      margin: 10px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .btn.google-meet {
+      background-color: #34a853; /* Google Meet Green */
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    .share-link {
+      margin-top: 20px;
+      word-wrap: break-word;
+      font-size: 14px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Create a Meeting</h2>
+    <div>
+      <!-- Manual Meeting Links -->
+      <a href="https://meet.google.com/new" target="_blank" class="btn google-meet">Create Google Meet</a>
+      <a href="https://zoom.us/start/videomeeting" target="_blank" class="btn">Create Zoom Meeting</a>
+    </div>
+    <div class="share-link">
+      <p>After creating a meeting, copy and share the link with your clients.</p>
+    </div>
+  </div>
+</body>
+</html>

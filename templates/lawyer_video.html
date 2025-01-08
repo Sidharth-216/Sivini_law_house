@@ -1,0 +1,42 @@
+<!--lawyer side-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lawyer Client Video Call</title>
+    <link rel="icon" type="image/png" href="static/logoback.avif">
+    <link rel="stylesheet" href="static/client_video.css">
+</head>
+<body>
+    <div class="container">
+        <div id="video-call-container">
+            <h2>Video Call</h2>
+
+            <div id="room-info">
+                <button id="createRoomBtn">Create Room</button>
+                <p id="roomIdDisplay" class="room-id"></p>
+                <input type="text" id="roomIdInput" placeholder="Enter Room ID" />
+                <input type="text" id="nameInput" placeholder="Enter Your Name" />
+                <button id="joinRoomBtn">Join Room</button>
+            </div>
+
+            <div id="video-chat" style="display:none;">
+                <div class="video-container">
+                    <video id="localVideo" autoplay muted></video>
+                    <video id="remoteVideo" autoplay></video>
+                </div>
+
+                <div id="controls">
+                    <button id="muteAudioBtn">Mute Audio</button>
+                    <button id="muteVideoBtn">Mute Video</button>
+                    <button id="endCallBtn">End Call</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script src="static/new_video.js"></script>
+</body>
+</html>

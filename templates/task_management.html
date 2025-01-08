@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management</title>
+    <link rel="icon" type="image/png" href="static/logoback.avif">
+    <link rel="stylesheet" href="static/task_management.css">
+</head>
+<body>
+    <a href="{{ url_for('new_dashboard') }}">
+        <button id="backButton" class="back-button">Back</button>
+    </a>
+    <div class="task-management-container">
+        <h1>Task Management</h1>
+        <p>Manage your tasks, set deadlines, and keep track of progress.</p>
+
+        <div class="task-list">
+            {% for task in tasks %}
+            <div class="task {% if task.status == 'Pending' %}pending-task{% endif %}">
+                <h3>{{ task.title }}</h3>
+                <p>{{ task.description }}</p>
+                <span class="deadline">Deadline: {{ task.deadline }}</span>
+                <span class="status">Status: {{ task.status }}</span>
+                <a href="{{ url_for('update_task', task_id=task.id) }}" class="update-button">Update</a>
+                <a href="{{ url_for('delete_task', task_id=task.id) }}" class="delete-button">Delete</a>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="add-task-form">
+            <h3>Add New Task</h3>
+            <form action="{{ url_for('add_task') }}" method="POST">
+                <label for="title">Task Title</label>
+                <input type="text" id="title" name="title" required>
+
+                <label for="description">Description</label>
+                <textarea id="description" name="description"></textarea>
+
+                <label for="deadline">Deadline</label>
+                <input type="date" id="deadline" name="deadline">
+
+                <label for="status">Status</label>
+                <select id="status" name="status">
+                    <option value="Pending">Pending</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                </select>
+
+                <button type="submit" class="add-task-button">Add Task</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="static/task_management.js"></script>
+</body>
+</html>

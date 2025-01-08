@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/help.css">
+    <title>Help - Law Firm</title>
+    <link rel="icon" type="image/png" href="static/logoback.avif">
+    <script src="static/help.js" defer></script>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="menu">
+            <div class="menu_links">
+                <a href="{{ url_for('index') }}" class="link">BACK</a>
+                <a href="#register" class="link">REGISTER</a>
+                <a href="#login" class="link">LOGIN</a>
+                <a href="#profile" class="link">PROFILE PAGE</a>
+                <a href="#booking" class="link">BOOKING</a>
+                <a href="#job_apply" class="link">JOB APPLY</a>
+                <a href="#video_call" class="link">VIDEO CALL</a>
+                <a href="#chat" class="link">CHAT</a>
+                <a href="#contact" class="link">CONTACT US</a>
+                <a href="{{ url_for('lawyer_help') }}" class="link">LAWYER GUIDELINES</a>
+                <button id="backButton" class="back-button">Back</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Help Content Section -->
+    <section class="help-section">
+
+        <!-- Step 1: Register -->
+        <div class="step" id="register">
+            <h2>Step 1: Register an Account</h2>
+            <p>Click "Register" from the navbar and fill in the required details to create your account.</p>
+            <img src="static/register.png" alt="Register page screenshot">
+        </div>
+
+        <!-- Step 2: Login -->
+        <div class="step" id="login">
+            <h2>Step 2: Login</h2>
+            <p>After registering, click on "Login" in the navbar and enter your credentials to access your account.</p>
+            <img src="static/login.png" alt="Login page screenshot">
+        </div>
+
+        <!-- Step 3: Profile Page -->
+        <div class="step" id="profile">
+            <h2>Step 3: Profile Page</h2>
+            <p>Once logged in, you will be redirected to your profile page where you can view and update your personal details.</p>
+            <img src="static/profile.png" alt="Profile page screenshot">
+        </div>
+
+        <!-- Step 4: Booking -->
+        <div class="step" id="booking">
+            <h2>Step 4: Booking</h2>
+            <p>Navigate to the "Book" section from the navbar to schedule a consultation with a lawyer. Select your desired date and time, then confirm the booking.</p>
+            <img src="static/booking.png" alt="Booking page screenshot">
+        </div>
+
+        <!-- Step 5: Job Apply -->
+        <div class="step" id="job_apply">
+            <h2>Step 5: Job Apply (Client Feature)</h2>
+            <p>If you're a client, click on the "Job Apply" option in the navbar, fill out the application form, and submit it to apply for job opportunities.</p>
+            <img src="static/job.png" alt="Job Apply page screenshot">
+        </div>
+
+        <!-- Step 6: Video Call -->
+        <div class="step" id="video_call">
+            <h2>Step 6: Video Call</h2>
+            <p>To initiate a video call, click on the "Call" option from the navbar. Choose the lawyer you want to call, and the video call interface will appear. You can start the call once the connection is made.</p>
+            <img src="static/video.png" alt="Video Call page screenshot">
+        </div>
+        <!-- Step 7:Chat-->
+        <div class="step" id="chat">
+            <h2>Step 6: Chat</h2>
+            <p>To initiate a Chat, click on the "Chat" option from the navbar. Choose the lawyer you want to call, and the video call interface will appear. You can start the call once the connection is made.</p>
+            <img src="static/chat.png" alt="chat page screenshot">
+        </div>
+        <!-- Step 7: Contact Us -->
+        <div class="step" id="contact">
+            <h2>Step 7: Contact Us</h2>
+            <p>To contact the firm, go to the "Contact Us" page via the navbar. Fill out the form with your inquiry or request, and submit it to get in touch with the team.</p>
+            <img src="static/contact.png" alt="Contact Us page screenshot">
+        </div>
+    </section>
+
+</body>
+</html>
