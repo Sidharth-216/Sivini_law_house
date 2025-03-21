@@ -232,3 +232,45 @@ select::placeholder {
 .add-appointment-btn:hover {
     background-color: #0056b3;
 }
+/* Search Bar */
+.search-bar {
+    width: 100%;
+    max-width: 500px;
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.search-bar input {
+    width: 80%;
+    padding: 10px;
+    border-radius: 5px 0 0 5px;
+    border: 1px solid #0c0a0a;
+    outline: none;
+    font-size: 16px;
+    background-color: #1c78ef;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.search-bar input:focus {
+    border-color: #f1c40f;
+    background-color: #18191b;
+}
+
+.search-bar button {
+    width: 20%;
+    padding: 10px;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    background-color: #e67e22;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease-in-out;
+}
+
+.search-bar button:hover {
+    background-color: #d35400;
+    transform: scale(1.05);
+}

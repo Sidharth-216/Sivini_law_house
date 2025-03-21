@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="back-button-container">
-        <a href="{{ url_for('dashboard') }}">
+        <a href="{{ url_for('new_dashboard') }}">
             <button id="backButton" class="back-button">Back</button>
         </a>
     </div>

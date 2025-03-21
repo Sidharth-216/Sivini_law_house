@@ -21,8 +21,8 @@ from string import ascii_uppercase
 import jwt
 import openai
 from openai import OpenAIError
-#from flask_login import current_user, login_required
-
+#from flask_login import current_user, login_requir
+del_count=0
 app = Flask(__name__)
 CORS(app)
 app.config['SECRET_KEY'] = 'secret!'
@@ -54,7 +54,7 @@ def android_compatibility():
 # Email sending function using SMTP
 def send_email(to_email, subject, body):
     from_email = os.environ.get('sidupatnaik216@gmail.com')  # Your email address
-    password = os.environ.get('lnxuhhlinbyrgnvw ')  # Your email password
+    password = os.environ.get('sidu21605')  # Your email password
 
     msg = MIMEMultipart()
     msg['From'] = from_email
@@ -75,7 +75,7 @@ def send_email(to_email, subject, body):
 # Test email function
 def send_test_email():
     from_email = os.environ.get('sidupatnaik216@gmail.com')
-    password = os.environ.get('lnxuhhlinbyrgnvw ')
+    password = os.environ.get('sidu21605 ')
     to_email = 'sidupatnaik216@gmail.com'  # Replace with your email
 
     msg = MIMEMultipart()
@@ -99,12 +99,14 @@ def send_test_email():
 send_test_email()
 
 # Configure Flask-Mail
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = os.environ.get('sidupatnaik216@gmail.com')  # Your email address
-app.config['MAIL_PASSWORD'] = os.environ.get('lnxuhhlinbyrgnvw')  # Your email password
-app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('rohitptnk216@gmail.com')  # Default sender
+app.config.update(
+MAIL_SERVER = 'smtp.gmail.com',
+MAIL_PORT = '465',
+MAIL_USE_TLS = True,
+MAIL_USERNAME = os.environ.get('sidupatnaik216@gmail.com') , # Your email address
+MAIL_PASSWORD= os.environ.get('sidupatnaik21605') , # Your email password
+MAIL_DEFAULT_SENDER= os.environ.get('sidupatnaik216@gmail.com')  # Default sender
+)
 
 mail = Mail(app)  # Initialize the Mail object
 
@@ -137,7 +139,7 @@ initialize_contact_table()
 
 # Email sending function using SMTP
 def send_email(to_email, subject, body):
-    msg = Message(subject, recipients=[to_email])
+    msg = Message(subject, sender=app.config['MAIL_DEFAULT_SENDER'], recipients=[to_email])
     msg.body = body
     try:
         mail.send(msg)
@@ -182,6 +184,14 @@ def homepage():
             ''', (username, 'New booking for lawyer: {} by {} at {}'.format(lawyer_type, name, appointment_date)))
             conn.commit()
             conn.close()
+            # Send confirmation email to the user
+            subject = "Booking Confirmation"
+            body = f"Dear {name},\n\nYour booking for a {lawyer_type} on {appointment_date} has been confirmed.\n\nThank you for choosing our service.\n\nBest regards,\nLaw Firm"
+            try:
+                send_email(email, subject, body)
+                flash("Email sent successfully!", "success")
+            except Exception as e:
+                    flash(f"Failed to send email: {e}", "error")
             return redirect(url_for('profile'))  # Redirect after successful submission
         except Exception as e:
             return f"An error occurred: {e}"
@@ -224,6 +234,12 @@ def initialize_database():
                 gender TEXT,
                 email TEXT NOT NULL,
                 number TEXT NOT NULL
+            );
+        ''')
+        execute_with_retry('''
+            CREATE TABLE IF NOT EXISTS del_counts (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                count INTEGER NOT NULL
             );
         ''')
 
@@ -388,6 +404,43 @@ def login():
 
     return render_template('login.html')
 
+"""@app.route('/new_login', methods=['GET', 'POST'])
+def new_login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        paswd = request.form.get('paswd')
+
+        conn = connect_to_database()  # Ensure this connects to the correct database
+        cursor = conn.cursor()
+        try:
+            # Check if the user exists with the provided username and password
+            cursor.execute("SELECT * FROM clients WHERE username = ? AND paswd = ?", (username, paswd))
+            user = cursor.fetchone()
+
+            if user:
+                # Store user information in session
+                session['user_id'] = user[0]  # Assuming the first column is user ID
+                session['username'] = user[1]  # Assuming the second column is username
+                session['email'] = user[6]    # Assuming the seventh column is email
+                session['number'] = user[7]   # Assuming the eighth column is phone number # Assuming the ninth column is profile picture path
+
+                print("Login successful for user:", username)  # Debugging output
+
+                # Redirect to the intended page if it exists, otherwise go to profile
+                next_page = session.pop('next', None)  # Remove 'next' after using it
+                return redirect(next_page or url_for('profile'))  # Redirect after login
+            else:
+                print("Login failed for user:", username)  # Debugging output
+                return redirect(url_for('register'))
+        except Exception as e:
+            print(f"An error occurred during login: {e}")  # Log the exact error for debugging
+            return f"An error occurred during login: {e}"  # Return the error message
+        finally:
+            cursor.close()
+            conn.close()
+
+    return render_template('new_login.html')"""
+
 
 # Add the profile route here
 
@@ -400,19 +453,23 @@ def profile():
 
     # Retrieve booking details from the database
     bookings = []  # Initialize an empty list for bookings
+    invoices=[]
     if username:  # Ensure the user is logged in
         conn = connect_to_database()
         cursor = conn.cursor()
         try:
             cursor.execute("SELECT * FROM bookings WHERE username = ?", (username,))
             bookings = cursor.fetchall()  # Fetch all bookings for the user
+             # Fetch invoices for the logged-in user
+            cursor.execute("SELECT * FROM invoices WHERE client_name = ?", (username,))
+            invoices = cursor.fetchall()  # Fetch all invoices for the user
         except Exception as e:
             print(f"An error occurred while fetching bookings: {e}")
         finally:
             cursor.close()
             conn.close()
-
-    return render_template('profile.html', username=username, email=email, number=number, bookings=bookings)
+         
+    return render_template('profile.html', username=username, email=email, number=number, bookings=bookings,invoices=invoices)
 
 
 
@@ -484,7 +541,37 @@ initialize_database()
 @app.route('/forget')
 def forget():
     return render_template('forget.html')
+"""@app.route('/forget',methods=['GET', 'POST'])
+def forgot_password():
+    if request.method == "POST":
+        data = request.json
+        username = data.get("username")
+        phone = data.get("phone")
 
+        # Connect to database
+        conn = sqlite3.connect("lawfirm.db")
+        cursor = conn.cursor()
+
+        # Check if user exists
+        cursor.execute("SELECT * FROM clients WHERE username = ? AND phone = ?", (username, phone))
+        user = cursor.fetchone()
+        conn.close()
+
+        if user:
+            # Generate reset token
+            reset_token = generate_reset_token()
+            reset_tokens[reset_token] = username  # Store token
+
+            # WhatsApp API integration (Placeholder)
+            whatsapp_message = f"Hello {username}, click the link to reset your password: http://127.0.0.1:5000/reset-password/{reset_token}"
+            print(f"WhatsApp Message: {whatsapp_message}")  # Replace with actual WhatsApp API
+
+            return jsonify({"message": "Reset link sent via WhatsApp!"}), 200
+        else:
+            return jsonify({"error": "Invalid username or phone number!"}), 400
+
+    return render_template('forget.html')
+"""
 # Route for the client video call page
 @app.route('/client_video')
 def client_video():
@@ -713,7 +800,7 @@ def lawyer_login():
             flash('Login successful!', 'success')
             
             # Redirect to the intended page (default to dashboard if not specified)
-            next_page = request.args.get('next', 'dashboard')
+            next_page = request.args.get('next', 'new_dashboard')
             return redirect(url_for(next_page))
         else:
             flash('Invalid credentials.', 'error')
@@ -773,6 +860,7 @@ def delete_client(client_id):
     try:
         conn.execute('DELETE FROM clients WHERE id = ?', (client_id,))
         conn.commit()
+        del_count+=1
     except Exception as e:
         print(f"An error occurred while deleting a client: {e}")
     finally:
@@ -824,10 +912,23 @@ def appointment_management():
 # Route to delete an appointment by ID
 @app.route('/delete_appointment/<int:appointment_id>', methods=['GET'])
 def delete_appointment(appointment_id):
+    global del_count
     conn = get_db_connection()
     conn.execute('DELETE FROM bookings WHERE id = ?', (appointment_id,))
     conn.commit()
     conn.close()
+    del_count += 1
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('INSERT INTO del_counts (count_value) VALUES (?)', (del_count,))
+        print("Delete count successfully inserted into del_counts table.")
+        conn.commit()
+    except Exception as e:
+        print(f"An error occurred while storing the delete count: {e}")
+    finally:
+        cursor.close()
+        conn.close()
     return redirect(url_for('appointment_management'))  # Redirect to appointment management page
 
 def get_db_connection():
@@ -954,7 +1055,7 @@ def get_messages():
 
 @app.route('/enquiry_management', methods=['GET'])
 def enquiry_management():
-    conn = get_db_connection()
+    conn = get_db_connection()                                              
     enquiries = conn.execute('SELECT * FROM contact').fetchall()  # Adjust this query based on your contact table structure
     conn.close()
     return render_template('enquiry_management', enquiries=enquiries)
@@ -2446,6 +2547,48 @@ def seed_cases():
     connection.commit()
     connection.close()
 
+@app.route('/new_dashboard')
+def new_dashboard():
+    global clients,delete
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM bookings')
+    appointments = cursor.fetchall()
+    total_bookings = len(appointments)
+    cursor.execute('SELECT * FROM clients')
+    clients = cursor.fetchall()
+    total_clients=len(clients)
+    cursor.execute('SELECT * FROM del_counts')
+    delete=cursor.fetchall()
+    total_deleted_records = len(delete)
+    #fetch the id of the last booking 
+    cursor.execute('SELECT id FROM bookings ORDER BY id DESC LIMIT 1')
+    last_booking_id=cursor.fetchone()[0]
+    #calculate completed bookings
+    completed_bookings=last_booking_id-total_bookings
+    #Count the total number of deleted data from bookings table
+    #cursor.execute('SELECT COUNT(*) FROM bookings WHERE deleted = 1')
+    #total_deleted_bookings = cursor.fetchone()[0]
+    # Fetch the total number of deleted records from the del_counts table
+    # Fetch the total number of clients from the clients table
+    conn.commit()
+    conn.close()
+    print("deleted data:", del_count)
+    return render_template('new_dashboard.html', appointments=appointments, total_bookings=total_bookings, clients=clients ,total_clients=total_clients ,delete=delete, total_deleted_records=total_deleted_records,last_booking_id=last_booking_id,completed_bookings=completed_bookings)
+
+@app.route('/blog_1')
+def blog_1():
+    return render_template('blog_1.html')
+@app.route('/blog_2')
+def blog_2():
+    return render_template('blog_2.html')
+@app.route('/blog_3')
+def blog_3():
+    return render_template('blog_3.html')
+
+@app.route('/reset_password')
+def reset():
+    return render_template('reset_password.html')
 
 if __name__ == '__main__': # Initialize the database when the app starts
     app.run(debug=True,port=5001)

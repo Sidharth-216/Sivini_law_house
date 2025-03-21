@@ -47,7 +47,23 @@
                 <input type="tel" value="{{ number }}" name="number" class="animated-input">
             </div>
         </section>
-
+ <!-- Invoice Details Section -->
+ <section class="invoices">
+    <h2>Invoice Details</h2>
+    {% if invoices %}
+    <ul>
+        {% for invoice in invoices %}
+        <li>
+            <strong>Total Amount:</strong> ₹ {{ invoice[2] }}<br>
+            <strong>Amount Paid:</strong> ₹ {{ invoice[3]}}<br>
+            <strong>Due:</strong> ₹ {{ invoice[4] }}<br>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No invoices found.</p>
+    {% endif %}
+</section>
         <!-- Payment and Booking Buttons (Centered) -->
         <div class="payment-button">
             <a href="{{ url_for('payment') }}">
@@ -60,7 +76,7 @@
                 <button id="bookButton">Book Again</button>
             </a>
         </div>
-
+       
         <!-- Booking Details Section -->
         <section class="bookings">
             <h2>Booking Details</h2>

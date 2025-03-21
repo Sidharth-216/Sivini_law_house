@@ -87,3 +87,20 @@ function showAddAppointmentForm() {
     const form = document.getElementById('addAppointmentForm');
     form.style.display = form.style.display === 'none' ? 'block' : 'none';
 }
+// Functionality for the Search Bar
+const searchBar = document.getElementById('searchBar');
+if (searchBar) {
+    searchBar.addEventListener('input', function () {
+        const filter = searchBar.value.toLowerCase();
+        const appointmentItems = document.querySelectorAll('.appointment-item');
+
+        appointmentItems.forEach((item) => {
+            const appointmentText = item.textContent.toLowerCase();
+            if (appointmentText.includes(filter)) {
+                item.style.display = '';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+}

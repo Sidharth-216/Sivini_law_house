@@ -250,3 +250,37 @@ button:hover {
 .bookings li p {
     color: #bbb;
 }
+/* Invoices Section */
+.invoices {
+    margin-top: 40px;
+    background-color: #1e1e1e; /* Dark background for invoices section */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.invoices h2 {
+    font-size: 24px;
+    color: #ff9800; /* Accent color for the section title */
+    margin-bottom: 20px;
+}
+
+.invoices ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.invoices li {
+    background-color: #333;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.invoices li strong {
+    color: #ff9800;
+}
+
+.invoices li p {
+    color: #bbb;
+}

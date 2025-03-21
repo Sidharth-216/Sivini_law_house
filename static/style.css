@@ -1,4 +1,4 @@
-@media screen and (max-width: 799px) {
+/*@media screen and (max-width: 799px) {
   .user-logo {
     position: absolute;
     top: 10px;
@@ -214,7 +214,7 @@ nav .menu {
 
 .user-info .logout:hover {
   background-color: #FF6F61;
-}
+}*/
 @import url("https://fonts.googleapis.com/css?family=Barlow+Condensed:300,400,500,600,700,800,900|Barlow:300,400,500,600,700,800,900&display=swap");
 .about {
   position: fixed;
