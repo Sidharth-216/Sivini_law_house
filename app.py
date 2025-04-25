@@ -21,12 +21,57 @@ from string import ascii_uppercase
 import jwt
 import openai
 from openai import OpenAIError
-#from flask_login import current_user, login_required
+import sqlite3
+import cv2
+import numpy as np
+from email.mime.text import MIMEText
+from dotenv import load_dotenv
 
+load_dotenv()  # Loads variables from .env
+# Define the function to create the dummy model
+def create_dummy_face_model():
+    # Generate dummy data for training
+    face_data = [np.random.randint(0, 255, (50, 50), dtype=np.uint8) for _ in range(10)]
+    labels = list(range(1, 11))  # Dummy labels from 1 to 10
+
+    # Initialize the LBPH face recognizer
+    face_recognizer = cv2.face.LBPHFaceRecognizer_create()
+
+    # Train the recognizer with dummy data
+    face_recognizer.train(face_data, np.array(labels))
+
+    # Save the trained model to a file
+    face_recognizer.save('face_recognizer.yml')
+    print("Dummy face recognizer model created and saved as 'face_recognizer.yml'.")
+
+
+
+# Call the function to create the dummy model
+create_dummy_face_model()
+#from flask_login import current_user, login_requir
+del_count=0
 app = Flask(__name__)
 CORS(app)
-app.config['SECRET_KEY'] = 'secret!'
+sec=app.config['SECRET_KEY'] = 'secret!'
+app.secret_key = sec
+otp_storage = {}
+
 socketio = SocketIO(app)
+mail=Mail(app)
+
+
+
+# Configure Flask-Mail
+app.config['MAIL_SERVER']= 'smtp.gmail.com'
+app.config['MAIL_PORT']= 587 #465 #587
+app.config['MAIL_USERNAME']= os.getenv('DEL_EMAIL')
+app.config['MAIL_PASSWORD']= os.getenv('PASSWORD')
+app.config['MAIL_USE_TLS']= True
+app.config['MAIL_USE_SSL']= False
+
+print("Email:", app.config['MAIL_USERNAME'])
+print("Password:", app.config['MAIL_PASSWORD'])
+
 #run_with_ngrok(app)
 @app.route('/')
 def index_one():
@@ -51,65 +96,7 @@ def uploaded_file(filename):
 def android_compatibility():
     return render_template('android_compatibility.html')
 
-# Email sending function using SMTP
-def send_email(to_email, subject, body):
-    from_email = os.environ.get('sidupatnaik216@gmail.com')  # Your email address
-    password = os.environ.get('lnxuhhlinbyrgnvw ')  # Your email password
 
-    msg = MIMEMultipart()
-    msg['From'] = from_email
-    msg['To'] = to_email
-    msg['Subject'] = subject
-
-    msg.attach(MIMEText(body, 'plain'))
-
-    try:
-        with smtplib.SMTP('smtp.gmail.com', 587) as server:
-            server.starttls()  # Upgrade the connection to a secure encrypted SSL/TLS connection
-            server.login(from_email, password)  # Log in to your email account
-            server.send_message(msg)  # Send the email
-            print("Email sent successfully!")
-    except Exception as e:
-        print(f"Failed to send email: {e}")
-
-# Test email function
-def send_test_email():
-    from_email = os.environ.get('sidupatnaik216@gmail.com')
-    password = os.environ.get('lnxuhhlinbyrgnvw ')
-    to_email = 'sidupatnaik216@gmail.com'  # Replace with your email
-
-    msg = MIMEMultipart()
-    msg['From'] = from_email
-    msg['To'] = to_email
-    msg['Subject'] = 'Test Email'
-
-    body = 'This is a test email from Flask application.'
-    msg.attach(MIMEText(body, 'plain'))
-
-    try:
-        with smtplib.SMTP('smtp.gmail.com', 587) as server:
-            server.starttls()
-            server.login(from_email, password)
-            server.send_message(msg)
-            print("Test email sent successfully!")
-    except Exception as e:
-        print(f"Failed to send email: {e}")
-
-# Call the test email function (you can comment this out after testing)
-send_test_email()
-
-# Configure Flask-Mail
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = os.environ.get('sidupatnaik216@gmail.com')  # Your email address
-app.config['MAIL_PASSWORD'] = os.environ.get('lnxuhhlinbyrgnvw')  # Your email password
-app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('rohitptnk216@gmail.com')  # Default sender
-
-mail = Mail(app)  # Initialize the Mail object
-
-app.secret_key = secrets.token_hex(16)  # Generates a random 32-character hex string
-print("Secret key set:", app.secret_key)  # Debugging output
 
 def initialize_contact_table():
     conn = connect_to_database()
@@ -137,14 +124,24 @@ initialize_contact_table()
 
 # Email sending function using SMTP
 def send_email(to_email, subject, body):
-    msg = Message(subject, recipients=[to_email])
-    msg.body = body
+    from_email = os.getenv('DEL_EMAIL')   # Your email address
+    password = os.getenv('PASSWORD')  # Your email password
+
+    msg = MIMEMultipart()
+    msg['From'] = from_email
+    msg['To'] = to_email
+    msg['Subject'] = subject
+
+    msg.attach(MIMEText(body, 'plain'))
+
     try:
-        mail.send(msg)
-        print("Email sent successfully!")
+        with smtplib.SMTP('smtp.gmail.com', 587) as server:
+            server.starttls()  # Upgrade the connection to a secure encrypted SSL/TLS connection
+            server.login(from_email, password)  # Log in to your email account
+            server.sendmail(from_email, to_email, msg.as_string())# Send the email
+            print("Email sent successfully!")
     except Exception as e:
         print(f"Failed to send email: {e}")
-
 
 @app.route('/homepage', methods=['GET', 'POST'])
 def homepage():
@@ -182,6 +179,14 @@ def homepage():
             ''', (username, 'New booking for lawyer: {} by {} at {}'.format(lawyer_type, name, appointment_date)))
             conn.commit()
             conn.close()
+            # Send confirmation email to the user
+            subject = "Booking Confirmation"
+            body = f"Dear {name},\n\nYour booking for a {lawyer_type} on {appointment_date} has been confirmed.\n\nThank you for choosing our service.\n\nBest regards,\nSivini_law_house"
+            try:
+                send_email(email, subject, body)
+                flash("Email sent successfully!", "success")
+            except Exception as e:
+                    flash(f"Failed to send email: {e}", "error")
             return redirect(url_for('profile'))  # Redirect after successful submission
         except Exception as e:
             return f"An error occurred: {e}"
@@ -224,6 +229,12 @@ def initialize_database():
                 gender TEXT,
                 email TEXT NOT NULL,
                 number TEXT NOT NULL
+            );
+        ''')
+        execute_with_retry('''
+            CREATE TABLE IF NOT EXISTS del_counts (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                count INTEGER NOT NULL
             );
         ''')
 
@@ -325,7 +336,14 @@ def register():
         ''', (username, name, cnfpas, paswd,gender, email,number ))
             
             conn.commit()
-            
+            # Send registration email to user
+            subject = "Registration successful"
+            body = f"Dear {name},\n\nRegistration successful.\n\nYour credentials:\nName: {name}\nUsername: {username}\nPassword: {cnfpas}\nGender: {gender}\nPhone: {number}\n\nPlease don't share your credentials with anyone.\n\nBest regards,\nSivini_law_house"
+            try:
+                send_email(email, subject, body)
+                flash("Email sent successfully!", "success")
+            except Exception as e:
+                flash(f"Failed to send email: {e}", "error")
             # Verify if the data is inserted correctly
             cursor.execute("SELECT * FROM clients WHERE username = ?", (username,))
             user = cursor.fetchone()
@@ -389,6 +407,132 @@ def login():
     return render_template('login.html')
 
 
+@app.route('/face_login', methods=['GET', 'POST'])
+def face_login():
+    # Create a dummy face recognizer model
+    def create_dummy_face_model():
+        # Generate dummy data for training
+        face_data = [np.random.randint(0, 255, (50, 50), dtype=np.uint8) for _ in range(10)]
+        labels = list(range(1, 11))  # Dummy labels from 1 to 10
+
+        # Initialize the LBPH face recognizer
+        face_recognizer = cv2.face.LBPHFaceRecognizer_create()
+
+        # Train the recognizer with dummy data
+        face_recognizer.train(face_data, np.array(labels))
+
+        # Save the trained model to a file
+        face_recognizer.save('face_recognizer.yml')
+        print("Dummy face recognizer model created and saved as 'face_recognizer.yml'.")
+
+    # Call the function to create the dummy model
+    create_dummy_face_model()
+    if request.method == 'POST':
+        # Handle face authentication logic
+
+        # Load the pre-trained face recognizer and cascade classifier
+        face_recognizer = cv2.face.LBPHFaceRecognizer_create()
+        face_recognizer.read('face_recognizer.yml')  # Load the trained model
+        face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+
+        # Access the webcam
+        cap = cv2.VideoCapture(0)
+        recognized_user = None
+
+        while True:
+            ret, frame = cap.read()
+            if not ret:
+                break
+
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+
+            for (x, y, w, h) in faces:
+                face = gray[y:y + h, x:x + w]
+                label, confidence = face_recognizer.predict(face)
+
+                if confidence < 50:  # Confidence threshold
+                    recognized_user = label
+                    break
+
+            if recognized_user is not None:
+                break
+
+            cv2.imshow('Face Authentication', frame)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+
+        cap.release()
+        cv2.destroyAllWindows()
+
+        if recognized_user is not None:
+            conn = connect_to_database()
+            cursor = conn.cursor()
+            try:
+                # Fetch user details based on recognized user ID
+                cursor.execute("SELECT * FROM clients WHERE id = ?", (recognized_user,))
+                user = cursor.fetchone()
+
+                if user:
+                    # Store user information in session
+                    session['user_id'] = user[0]
+                    session['username'] = user[1]
+                    session['email'] = user[6]
+                    session['number'] = user[7]
+
+                    print("Face authentication successful for user:", user[1])  # Debugging output
+                    return redirect(url_for('index'))  # Redirect to profile
+                else:
+                    return "Face authentication failed. User not found."
+            except Exception as e:
+                print(f"An error occurred during face authentication: {e}")
+                return f"An error occurred during face authentication: {e}"
+            finally:
+                cursor.close()
+                conn.close()
+        else:
+            return "Face authentication failed. Please try again."
+
+    return render_template('face_login.html')
+
+"""@app.route('/new_login', methods=['GET', 'POST'])
+def new_login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        paswd = request.form.get('paswd')
+
+        conn = connect_to_database()  # Ensure this connects to the correct database
+        cursor = conn.cursor()
+        try:
+            # Check if the user exists with the provided username and password
+            cursor.execute("SELECT * FROM clients WHERE username = ? AND paswd = ?", (username, paswd))
+            user = cursor.fetchone()
+
+            if user:
+                # Store user information in session
+                session['user_id'] = user[0]  # Assuming the first column is user ID
+                session['username'] = user[1]  # Assuming the second column is username
+                session['email'] = user[6]    # Assuming the seventh column is email
+                session['number'] = user[7]   # Assuming the eighth column is phone number # Assuming the ninth column is profile picture path
+
+                print("Login successful for user:", username)  # Debugging output
+
+                # Redirect to the intended page if it exists, otherwise go to profile
+                next_page = session.pop('next', None)  # Remove 'next' after using it
+                return redirect(next_page or url_for('profile'))  # Redirect after login
+            else:
+                print("Login failed for user:", username)  # Debugging output
+                return redirect(url_for('register'))
+        except Exception as e:
+            print(f"An error occurred during login: {e}")  # Log the exact error for debugging
+            return f"An error occurred during login: {e}"  # Return the error message
+        finally:
+            cursor.close()
+            conn.close()
+
+    return render_template('new_login.html')"""
+
+
 # Add the profile route here
 
 @app.route('/profile')
@@ -400,19 +544,23 @@ def profile():
 
     # Retrieve booking details from the database
     bookings = []  # Initialize an empty list for bookings
+    invoices=[]
     if username:  # Ensure the user is logged in
         conn = connect_to_database()
         cursor = conn.cursor()
         try:
             cursor.execute("SELECT * FROM bookings WHERE username = ?", (username,))
             bookings = cursor.fetchall()  # Fetch all bookings for the user
+             # Fetch invoices for the logged-in user
+            cursor.execute("SELECT * FROM invoices WHERE client_name = ?", (username,))
+            invoices = cursor.fetchall()  # Fetch all invoices for the user
         except Exception as e:
             print(f"An error occurred while fetching bookings: {e}")
         finally:
             cursor.close()
             conn.close()
-
-    return render_template('profile.html', username=username, email=email, number=number, bookings=bookings)
+         
+    return render_template('profile.html', username=username, email=email, number=number, bookings=bookings,invoices=invoices)
 
 
 
@@ -484,6 +632,70 @@ initialize_database()
 @app.route('/forget')
 def forget():
     return render_template('forget.html')
+
+def send_otp_email(to_email, otp):
+    sender = "sivini.lawhouse@gmail.com"
+    password = "oscl pjwa zuxt izug "  # use app password for Gmail
+    subject = "Password Reset OTP"
+    message = f"Subject: {subject}\n\nYour OTP is: {otp}"
+
+    server = smtplib.SMTP("smtp.gmail.com", 587)
+    server.starttls()
+    server.login(sender, password)
+    server.sendmail(sender, to_email, message)
+    server.quit()
+
+
+
+@app.route('/forget', methods=['GET', 'POST'])
+def forget_password():
+    if request.method == 'POST':
+        email = request.form['email']
+        conn = sqlite3.connect('lawfirm.db')
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM clients WHERE email = ?", (email,))
+        user = cur.fetchone()
+        conn.close()
+        
+        if user:
+            otp = str(random.randint(100000, 999999))
+            otp_storage[email] = otp
+            send_otp_email(email, otp)
+            flash('OTP sent to your email.')
+            return redirect(url_for('reset_password', email=email))
+        else:
+            flash('Email not found')
+    
+    return render_template('forget.html')
+
+
+
+@app.route('/reset_password', methods=['GET', 'POST'])
+def reset_password():
+    email = request.args.get('email')
+
+    if request.method == 'POST':
+        user_otp = request.form['otp']
+        new_password = request.form['new_password']
+        confirm_password=request.form['confirm_password']
+
+        if otp_storage.get(email) == user_otp:
+            conn = sqlite3.connect('lawfirm.db')
+            cur = conn.cursor()
+            cur.execute("UPDATE clients SET paswd = ? ,cnfpas= ? WHERE email = ?", (new_password,confirm_password, email))
+            conn.commit()
+            conn.close()
+            otp_storage.pop(email)
+            flash('Password reset successfully.')
+            return redirect(url_for('login'))
+        else:
+            flash('Invalid OTP')
+    
+    return render_template('reset_password.html', email=email)
+
+
+
+
 
 # Route for the client video call page
 @app.route('/client_video')
@@ -713,7 +925,7 @@ def lawyer_login():
             flash('Login successful!', 'success')
             
             # Redirect to the intended page (default to dashboard if not specified)
-            next_page = request.args.get('next', 'dashboard')
+            next_page = request.args.get('next', 'new_dashboard')
             return redirect(url_for(next_page))
         else:
             flash('Invalid credentials.', 'error')
@@ -773,6 +985,7 @@ def delete_client(client_id):
     try:
         conn.execute('DELETE FROM clients WHERE id = ?', (client_id,))
         conn.commit()
+        del_count+=1
     except Exception as e:
         print(f"An error occurred while deleting a client: {e}")
     finally:
@@ -824,10 +1037,23 @@ def appointment_management():
 # Route to delete an appointment by ID
 @app.route('/delete_appointment/<int:appointment_id>', methods=['GET'])
 def delete_appointment(appointment_id):
+    global del_count
     conn = get_db_connection()
     conn.execute('DELETE FROM bookings WHERE id = ?', (appointment_id,))
     conn.commit()
     conn.close()
+    del_count += 1
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('INSERT INTO del_counts (count_value) VALUES (?)', (del_count,))
+        print("Delete count successfully inserted into del_counts table.")
+        conn.commit()
+    except Exception as e:
+        print(f"An error occurred while storing the delete count: {e}")
+    finally:
+        cursor.close()
+        conn.close()
     return redirect(url_for('appointment_management'))  # Redirect to appointment management page
 
 def get_db_connection():
@@ -954,7 +1180,7 @@ def get_messages():
 
 @app.route('/enquiry_management', methods=['GET'])
 def enquiry_management():
-    conn = get_db_connection()
+    conn = get_db_connection()                                              
     enquiries = conn.execute('SELECT * FROM contact').fetchall()  # Adjust this query based on your contact table structure
     conn.close()
     return render_template('enquiry_management', enquiries=enquiries)
@@ -2345,7 +2571,7 @@ def save_response(case_id, argument, result, rating, judge_question):
     connection.commit()
     connection.close()
 
-import sqlite3
+
 
 def get_case_details(case_id):
     """
@@ -2446,6 +2672,126 @@ def seed_cases():
     connection.commit()
     connection.close()
 
+@app.route('/new_dashboard')
+def new_dashboard():
+    global clients,delete
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM bookings')
+    appointments = cursor.fetchall()
+    total_bookings = len(appointments)
+    cursor.execute('SELECT * FROM clients')
+    clients = cursor.fetchall()
+    total_clients=len(clients)
+    cursor.execute('SELECT * FROM del_counts')
+    delete=cursor.fetchall()
+    total_deleted_records = len(delete)
+    #fetch the id of the last booking 
+    cursor.execute('SELECT id FROM bookings ORDER BY id DESC LIMIT 1')
+    last_booking_id=cursor.fetchone()[0]
+    #calculate completed bookings
+    completed_bookings=last_booking_id-total_bookings
+    #Count the total number of deleted data from bookings table
+    #cursor.execute('SELECT COUNT(*) FROM bookings WHERE deleted = 1')
+    #total_deleted_bookings = cursor.fetchone()[0]
+    # Fetch the total number of deleted records from the del_counts table
+    # Fetch the total number of clients from the clients table
+    # Fetch the total number of tasks from the tasks table
+# Fetch the total number of tasks from the tasks table
+# Fetch the total number of tasks from the tasks table
+    cursor.execute('SELECT COUNT(*) FROM tasks')
+    total_tasks = cursor.fetchone()[0]
+
+    # Fetch the number of pending tasks
+    cursor.execute("SELECT COUNT(*) FROM tasks WHERE status = 'Pending'")
+    pending_tasks = cursor.fetchone()[0]
+
+    # Fetch the number of completed tasks
+    cursor.execute("SELECT COUNT(*) FROM tasks WHERE status = 'Completed'")
+    completed_tasks = cursor.fetchone()[0]
+    conn.commit()
+    conn.close()
+    print("deleted data:", del_count)
+    return render_template('new_dashboard.html', appointments=appointments, total_bookings=total_bookings,total_tasks=total_tasks, pending_tasks= pending_tasks ,completed_tasks=completed_tasks,clients=clients ,total_clients=total_clients ,delete=delete, total_deleted_records=total_deleted_records,last_booking_id=last_booking_id,completed_bookings=completed_bookings)
+
+@app.route('/blog_1')
+def blog_1():
+    return render_template('blog_1.html')
+@app.route('/blog_2')
+def blog_2():
+    return render_template('blog_2.html')
+@app.route('/blog_3')
+def blog_3():
+    return render_template('blog_3.html')
+
+@app.route('/reset_password')
+def reset():
+    return render_template('reset_password.html')
+
+@app.route('/video_call_2', methods=['GET', 'POST'])
+def video_call_2():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        # Connect to the database
+        conn = sqlite3.connect('lawfirm.db')
+        cursor = conn.cursor()
+
+        # Check if the email and password match in the lawyers table
+        cursor.execute("SELECT * FROM lawyers WHERE email = ? AND password = ?", (email, password))
+        lawyer = cursor.fetchone()
+        conn.close()
+
+        if lawyer:
+            # Redirect to the create-room page if credentials match
+            return redirect(url_for('create_room_2'))
+        else:
+            # If credentials don't match, show an error message
+            flash('Invalid email or password. Please try again.', 'error')
+            return render_template('video_call_2.html')
+
+    return render_template('video_call_2.html')
+
+@app.route('/create_room_2', methods=['GET'])
+def create_room_2():
+    return render_template('create_room_2.html')
+
+@app.route('/join_room', methods=['GET', 'POST'])
+def join_room_page():
+    if request.method == 'POST':
+        room_key = request.form.get('room_key')
+        if room_key:
+            return redirect(url_for('join_room_page', room=room_key))
+        else:
+            flash('Please enter a valid room key.', 'error')
+    return render_template('join_room.html')
+
+@app.route('/video_call_room')
+def video_call_room():
+    room_key = request.args.get('room')
+    if not room_key:
+        flash('Room key is missing.', 'error')
+        return redirect(url_for('join_room_page'))
+    return render_template('video_call_room.html', room_key=room_key)
+
+@app.route('/payments', methods=['GET'])
+def payments():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM qr_payment ORDER BY date DESC, time DESC')
+    qr_payment = cursor.fetchall()
+    conn.close()
+    return render_template('payments.html', qr_payment=qr_payment)
+
+@app.route('/delete_payment/<int:payment_id>', methods=['GET'])
+def delete_payment(payment_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM qr_payment WHERE id = ?', (payment_id,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('payments'))
 
 if __name__ == '__main__': # Initialize the database when the app starts
     app.run(debug=True,port=5001)
