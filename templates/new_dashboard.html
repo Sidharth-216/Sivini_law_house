@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -48,7 +47,7 @@
                     <i class="uil uil-comments"></i>
                     <span class="link-name">Appointment</span>
                 </a></li>
-                <li><a href="{{ url_for('meta') }}">
+                <li><a href="{{ url_for('meta') }}"> <!--meta--> <!--message_management-->
                     <i class="uil uil-share"></i>
                     <span class="link-name">Message</span>
                 </a></li>
@@ -63,6 +62,10 @@
                 <li><a href="{{ url_for('create_case') }}">
                     <i class="uil uil-estate"></i>
                     <span class="link-name">Create Case</span>
+                </a></li>
+                <li><a href="{{ url_for('create_room_2') }}">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Video_2</span>
                 </a></li>
                 <li><a href="{{ url_for('case_update',case_id=1) }}">
                     <i class="uil uil-estate"></i>
@@ -79,6 +82,10 @@
                 <li><a href="{{ url_for('billing_invoicing') }}">
                     <i class="uil uil-estate"></i>
                     <span class="link-name">Billing & Invoice</span>
+                </a></li>
+                <li><a href="{{ url_for('payments') }}">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Payments</span>
                 </a></li>
                 <li><a href="{{ url_for('enquiry_management') }}">
                     <i class="uil uil-estate"></i>
@@ -159,59 +166,145 @@
                 <div class="boxes">
                     <div class="box box1">
                         <i class="uil uil-thumbs-up"></i>
-                        <span class="text">Total Cases</span>
-                        <span class="number">50,120</span>
+                        <span class="text">Clients</span>
+                        <span class="number">{{ clients|length }}</span>
                     </div>
                     <div class="box box2">
-                        <i class="uil uil-comments"></i>
-                        <span class="text">Completed</span>
-                        <span class="number">20,120</span>
+                        <i class="uil uil-thumbs-up"></i>
+                        <span class="text">Total Cases</span>
+                        <span class="number">{{ last_booking_id}}</span>
                     </div>
                     <div class="box box3">
+                        <i class="uil uil-comments"></i>
+                        <span class="text">Completed</span>
+                        <span class="number">{{ completed_bookings }}</span>
+                    </div>
+                    <div class="box box4">
                         <i class="uil uil-share"></i>
                         <span class="text">Pending</span>
-                        <span class="number">10,120</span>
+                        <span class="number">{{ appointments|length }}</span>
                     </div>
                 </div>
             </div>
 
-            <div class="activity">
+           <!-- <div class="task-management-section">
+                <div class="title">
+                    <i class="uil uil-tasks"></i>
+                    <span class="text">Task Management</span>
+                </div>
+                <div class="task-management-container">
+                    <p>Manage your tasks, set deadlines, and keep track of progress.</p>
+
+                    <div class="task-list">
+                        {% for task in tasks %}
+                        <div class="task {% if task.status == 'Pending' %}pending-task{% endif %}">
+                            <h3>{{ task.title }}</h3>
+                            <p>{{ task.description }}</p>
+                            <span class="deadline">Deadline: {{ task.deadline }}</span>
+                            <span class="status">Status: {{ task.status }}</span>
+                            <a href="{{ url_for('update_task', task_id=task.id) }}" class="update-button">Update</a>
+                            <a href="{{ url_for('delete_task', task_id=task.id) }}" class="delete-button">Delete</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="add-task-form">
+                        <h3>Add New Task</h3>
+                        <form action="{{ url_for('add_task') }}" method="POST">
+                            <label for="title">Task Title</label>
+                            <input type="text" id="title" name="title" required>
+
+                            <label for="description">Description</label>
+                            <textarea id="description" name="description"></textarea>
+
+                            <label for="deadline">Deadline</label>
+                            <input type="date" id="deadline" name="deadline">
+
+                            <label for="status">Status</label>
+                            <select id="status" name="status">
+                                <option value="Pending">Pending</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Completed">Completed</option>
+                            </select>
+
+                            <button type="submit" class="add-task-button">Add Task</button>
+                        </form>
+                    </div>
+                </div>
+            </div>-->
                 <div class="title">
                     <i class="uil uil-clock-three"></i>
                     <span class="text">Appointments</span>
                 </div>
-
-                <div class="activity-data">
-                    <div class="data names">
-                        <span class="data-title">Name</span>
-                        {% for appointment in appointments %}
-                        <span class="data-list">{{ appointment[1] }}</span>
-                        {% endfor %}
+                <section class="search-bar">
+                    <input type="text" id="searchBar" placeholder="Search by username..." onkeyup="searchAppointments()">
+                </section>
+                <section class="appointments-list">
+                    <ul id="appointmentList">
+                        {% if appointments %}
+                            <table class="appointment-table">
+                                <tr>
+                                    <th style="padding-right: 20px;">Name</th>
+                                    <th style="padding-right: 20px;">Email</th>
+                                    <th style="padding-right: 20px;">Lawyer</th>
+                                    <th style="padding-right: 20px;">Date</th>
+                                    <th style="padding-right: 20px;">Description</th>
+                                    <th style="padding-right: 20px;">Action</th>
+                                </tr>
+                                {% for appointment in appointments %}
+                                <tr>
+                                    <td style="padding-right: 20px;">{{ appointment[1] }}</td>
+                                    <td style="padding-right: 20px;">{{ appointment[3] }}</td>
+                                    <td style="padding-right: 20px;">{{ appointment[2] }}</td>
+                                    <td style="padding-right: 20px;">{{ appointment[5] }}</td>
+                                    <td style="padding-right: 20px;">{{ appointment[4] }}</td>
+                                    <td style="padding-right: 20px;"><a href="{{ url_for('delete_appointment', appointment_id=appointment[0]) }}" class="delete-btn">Delete</a></td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        {% else %}
+                            <li>No upcoming appointments.</li>
+                        {% endif %}
+                    </ul>
+                </section>
+                <div class="activity">
+                    <!--<div class="title">
+                        <i class="uil uil-users-alt"></i>
+                        <span class="text">Clients</span>
                     </div>
-                    <div class="data email">
-                        <span class="data-title">Email</span>
-                        {% for booking in bookings %}
-                        <span class="data-list">{{ booking.email }}</span>
-                        {% endfor %}
-                    </div>
-                    <div class="data joined">
-                        <span class="data-title">Username</span>
-                        {% for booking in bookings %}
-                        <span class="data-list">{{ booking.username }}</span>
-                        {% endfor %}
-                    </div>
-                    <div class="data type">
-                        <span class="data-title">Type</span>
-                        {% for booking in bookings %}
-                        <span class="data-list">{{ booking.type }}</span>
-                        {% endfor %}
-                    </div>
-                    <div class="data status">
-                        <span class="data-title">Appointment Date</span>
-                        {% for booking in bookings %}
-                        <span class="data-list">{{ booking.appointment_date }}</span>
-                        {% endfor %}
-                    </div>
+                    <section class="search-bar">
+                        <input type="text" id="clientSearchBar" placeholder="Search by client name..." onkeyup="searchClients()">
+                    </section>-->
+                    <!--<section class="clients-list">
+                        <ul id="clientList">
+                            {% if clients %}
+                                <table class="client-table">
+                                    <tr>
+                                        <th style="padding-right: 20px;">Name</th>
+                                        <th style="padding-right: 20px;">Username</th>
+                                        <th style="padding-right: 20px;">email</th>
+                                        <th style="padding-right: 20px;">Gender</th>
+                                        <th style="padding-right: 20px;">Phone</th>
+                                        <th style="padding-right: 20px;">Action</th>
+                                    </tr>
+                                    {% for client in clients %}
+                                    <tr>
+                                        <td style="padding-right: 20px;">{{ client.name }}</td>
+                                        <td style="padding-right: 20px;">{{ client.username }}</td>
+                                        <td style="padding-right: 20px;">{{ client.email }}</td>
+                                        <td style="padding-right: 20px;">{{ client.gender}}</td>
+                                        <td style="padding-right: 20px;">{{ client.number }}</td>
+                                        <td style="padding-right: 20px;"><a href="{{ url_for('delete_client', client_id=client.id) }}" class="delete-btn">Delete</a></td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            {% else %}
+                                <li>No clients found.</li>
+                            {% endif %}
+                        </ul>
+                    </section>-->
+                    
+                </div>
                 </div>
                 </div>
             </div>
