@@ -1,0 +1,145 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #4a90e2, #145374);
+    color: #fff;
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.5s ease;
+    position: relative; /* Added for positioning */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.back-button {
+    position: absolute; /* Positioning it to the absolute */
+    top: 20px; /* Distance from the top */
+    left: 20px; /* Distance from the left */
+    background-color: rgba(255, 171, 64, 0.9);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.back-button:hover {
+    background-color: rgba(255, 171, 64, 1);
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px; /* Added margin to separate header from button */
+}
+
+h1 {
+    color: #ffab40;
+}
+
+.note-form {
+    margin: 20px 0;
+}
+
+.note-form input[type="text"] {
+    width: 70%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+    outline: none;
+}
+
+.note-form .submit-btn {
+    background-color: #ffab40;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.note-form .submit-btn:hover {
+    background-color: #ff8a00;
+}
+
+.notes-list {
+    list-style: none;
+    padding: 0;
+}
+
+.note-item {
+    background: rgba(255, 255, 255, 0.1);
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.note-item:hover {
+    transform: translateY(-5px);
+}
+
+.note-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.note-actions form {
+    margin-left: 10px;
+}
+
+.edit-btn {
+    background-color: #ff8a00;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.edit-btn:hover {
+    background-color: #e67e22;
+}
+
+.delete-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+}

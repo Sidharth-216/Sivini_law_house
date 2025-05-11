@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Call Room</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            outline: none;
+        }
+
+        .input-group label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 14px;
+            color: #ccc;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus + label,
+        .input-group input:not(:placeholder-shown) + label {
+            top: -10px;
+            left: 10px;
+            font-size: 12px;
+            color: #fff;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #2575fc;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #6a11cb;
+        }
+
+        .switch {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .switch a {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        #roomCreation {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #roomCreation input {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        #roomCreation button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background: #2575fc;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        #roomCreation button:hover {
+            background: #6a11cb;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputs = document.querySelectorAll('.input-group input');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    input.style.background = 'rgba(255, 255, 255, 0.3)';
+                });
+                input.addEventListener('blur', () => {
+                    input.style.background = 'rgba(255, 255, 255, 0.2)';
+                });
+            });
+        });
+    </script>
+    <script>
+        async function createRoom() {
+            const response = await fetch('/create-room', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    roomName: document.getElementById('roomName').value,
+                }),
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                alert(`Room created! Share this key with the client: ${data.roomKey}`);
+            } else {
+                alert('Failed to create room: ' + data.message);
+            }
+        }
+    </script>
+</head>
+<body>
+    <form action="{{ url_for('video_call_2') }}" method="POST">
+        <h2>Lawyer Login</h2>
+        <div class="input-group">
+            <input type="email" id="email"name="email" required>
+            <label for="email">Email</label>
+        </div>
+        <div class="input-group">
+            <input type="password" id="password"name="password"required>
+            <label for="password">Password</label>
+        </div>
+        <button type="submit" class="submit-btn">Login</button>
+        <p class="switch">Don’t have an account? <a href="{{ url_for('lawyer_register') }}">Register here</a>.</p>
+    </form>
+
+    <div id="roomCreation" style="display: none;">
+        <h2>Create Video Call Room</h2>
+        <label for="roomName">Room Name:</label>
+        <input type="text" id="roomName" required>
+        <button onclick="createRoom()">Create Room</button>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const response = await fetch('/login', {
+                method: 'POST',
+                body: formData,
+            });
+
+            const data = await response.json();
+            if (data.success && data.role === 'lawyer') {
+                alert('Login successful!');
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('roomCreation').style.display = 'block';
+            } else {
+                alert('Login failed: ' + data.message);
+            }
+        });
+    </script>
+</body>
+</html>

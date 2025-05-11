@@ -1,0 +1,95 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header img {
+    max-width: 100%;
+    height: auto;
+}
+
+.profile-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 10px 0;
+}
+
+h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+.edit-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+input[type="text"], input[type="email"], input[type="tel"], input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.current-profile-pic {
+    display: block;
+    max-width: 100px;
+    margin: 10px auto;
+    border-radius: 50%;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.save-button, .cancel-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+.save-button {
+    background: #4CAF50;
+    color: #fff;
+}
+
+.cancel-button {
+    background: #f44336;
+    color: #fff;
+    text-decoration: none;
+}

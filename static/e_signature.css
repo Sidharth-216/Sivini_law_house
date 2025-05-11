@@ -1,0 +1,66 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.form-container, .signature-container {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+#signatureCanvas {
+    border: 2px solid #000;
+    background-color: #fff;
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+button:disabled {
+    background-color: #bdc3c7;
+}
+
+.signature-details {
+    text-align: center;
+    margin-top: 20px;
+}
+.back-button {
+    padding: 10px 20px;
+    background-color: #e74c3c;
+    color: white;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.back-button:hover {
+    background-color: #c0392b;
+}

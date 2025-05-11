@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Call Room</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #4CAF50;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #roomKey {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        #joinLink {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: white;
+            background-color: #007BFF;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        #joinLink:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        function generateRoomKey() {
+            const roomKey = Math.random().toString(36).substring(2, 10);
+            document.getElementById('roomKey').innerText = `Room Key: ${roomKey}`;
+            document.getElementById('joinLink').href = `{{ url_for('join_room_page') }}?room=${roomKey}`;
+            document.getElementById('joinLink').style.display = 'inline';
+        }
+    </script>
+</head>
+<body>
+    <h1>Create a Video Call Room</h1>
+    <p>Click the button below to generate a unique room key. Share this key with others to let them join the same room.</p>
+    <button onclick="generateRoomKey()">Generate Room Key</button>
+    <p id="roomKey"></p>
+    <a id="joinLink" href="#" style="display: none;">Join Room</a>
+    <div style="margin-top: 30px;">
+        <h2>Join an Existing Room</h2>
+        <input type="text" id="inputRoomKey" placeholder="Enter Room Key" style="padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc; width: 200px;">
+        <button onclick="joinExistingRoom()" style="margin-left: 10px;">Join Room</button>
+    </div>
+    <script>
+        function joinExistingRoom() {
+            const inputRoomKey = document.getElementById('inputRoomKey').value.trim();
+            if (inputRoomKey) {
+                window.location.href = `{{ url_for('join_room_page') }}?room=${inputRoomKey}`;
+            } else {
+                alert('Please enter a valid room key.');
+            }
+        }
+    </script>
+</body>
+</html>

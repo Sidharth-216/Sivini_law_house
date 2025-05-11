@@ -1,0 +1,62 @@
+/* Responsive CSS for the Legal Trends Blog */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #f8eded;
+}
+
+header {
+    background-color: #304a65;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.subtitle {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.blog-content {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: rgb(19, 13, 13);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.blog-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+h2 {
+    color: #0b7aea;
+    margin-top: 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #2c3e50;
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .blog-content {
+        width: 90%;
+        padding: 15px;
+    }
+    h2 {
+        font-size: 20px;
+    }
+}

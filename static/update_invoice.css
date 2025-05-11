@@ -1,0 +1,80 @@
+/* General body and layout styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2 {
+    color: #333;
+    text-align: center;
+    margin-top: 20px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+/* Form and input styling */
+form {
+    background-color: #fff;
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+input[type="text"], input[type="number"], select {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+}
+
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Back link styling */
+a {
+    text-decoration: none;
+    color: #007bff;
+    font-size: 16px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Disabled fields styling */
+input[disabled], select[disabled] {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+}
+
+/* Additional margin for form elements */
+form input, form select {
+    margin-bottom: 15px;
+}

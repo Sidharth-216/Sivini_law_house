@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Login</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const faceAuthButton = document.querySelector('.btn-primary');
+            faceAuthButton.addEventListener('click', async (event) => {
+                event.preventDefault();
+                alert('Face authentication process started!');
+                
+                try {
+                    // Simulate face authentication logic
+                    const videoStream = await navigator.mediaDevices.getUserMedia({ video: true });
+                    const videoElement = document.createElement('video');
+                    videoElement.srcObject = videoStream;
+                    videoElement.play();
+
+                    // Simulate a delay for face recognition (e.g., 3 seconds)
+                    setTimeout(() => {
+                        videoStream.getTracks().forEach(track => track.stop()); // Stop the video stream
+                        alert('Face authentication successful!');
+                        // Redirect or submit the form after successful authentication
+                        document.querySelector('form').submit();
+                    }, 3000);
+                } catch (error) {
+                    alert('Face authentication failed. Please ensure your camera is accessible.');
+                    console.error('Error during face authentication:', error);
+                }
+            });
+        });
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #74ebd5, #9face6);
+            font-family: 'Arial', sans-serif;
+            color: #333;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #4a4a4a;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        .btn-primary {
+            background: #6a11cb;
+            background: linear-gradient(to right, #2575fc, #6a11cb);
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            border-radius: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: #ff7e5f;
+            background: linear-gradient(to right, #feb47b, #ff7e5f);
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            border-radius: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Face Login</h2>
+        <p class="text-center">Please click the button below to start face authentication.</p>
+        <form method="POST">
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Start Face Authentication</button>
+            </div>
+        </form>
+        <div class="text-center mt-3">
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>

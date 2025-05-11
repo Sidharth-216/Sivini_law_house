@@ -1,0 +1,185 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+#backButton {
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 20px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+#backButton:hover {
+    background-color: #45a049;
+}
+
+/* Task Management Container */
+.task-management-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Task List Styling */
+.task-list {
+    margin-top: 20px;
+}
+
+.task {
+    background-color: #ffffff;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.task:hover {
+    transform: scale(1.02);
+}
+
+.task h3 {
+    margin: 0 0 10px;
+    font-size: 20px;
+    color: #333;
+}
+
+.task p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #555;
+}
+
+.task .deadline {
+    font-size: 14px;
+    color: #e21313;
+}
+
+.task .status {
+    font-weight: bold;
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Pending Task Styling */
+.pending-task {
+    background-color: #ffcc00; /* Yellow background for pending tasks */
+    color: #333; /* Dark text for contrast */
+    border: 2px solid #cc9900; /* Dark yellow border */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pending-task:hover {
+    background-color: #ffb300; /* Slightly darker yellow on hover */
+    border-color: #ff9900; /* Darker border when hovering */
+}
+
+.pending-task::before {
+    content: '⏳'; /* Hourglass icon */
+    font-size: 20px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+/* Buttons */
+.update-button, .delete-button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 15px;
+    text-decoration: none;
+    color: white;
+    background-color: #007bff;
+    border-radius: 5px;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+.update-button:hover {
+    background-color: #0056b3;
+}
+
+.delete-button {
+    background-color: #f44336;
+}
+
+.delete-button:hover {
+    background-color: #e31b0c;
+}
+
+/* Add Task Form Styling */
+.add-task-form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+}
+
+.add-task-form h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.add-task-form label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.add-task-form input, .add-task-form select, .add-task-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+.add-task-form button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.add-task-form button:hover {
+    background-color: #45a049;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .task-management-container {
+        padding: 15px;
+    }
+
+    .task {
+        padding: 10px;
+    }
+
+    .add-task-form {
+        padding: 15px;
+    }
+}

@@ -1,0 +1,74 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    background-color: #021417;
+    padding: 10px;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu_links {
+    display: flex;
+    gap: 20px;
+}
+
+.menu_links a, .back-button {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #db1919;
+}
+
+.menu_links a:hover, .back-button:hover {
+    background-color: #1665e5;
+}
+
+.help-section {
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.step {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+.step img {
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+}
+
+.step.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#backButton {
+    display: none;
+    background-color: #eb1010;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+@media (min-width: 768px) {
+    .step {
+        padding: 30px;
+    }
+}

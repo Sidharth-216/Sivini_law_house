@@ -1,0 +1,101 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+nav {
+    background-color: rgba(55, 177, 202, 1);
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+nav .menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav .menu .website_name a {
+    color: #fff;
+    font-size: 22px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+nav .menu .menu_links a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    background-color: #333;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+nav .menu .menu_links a:hover {
+    background-color: #555;
+}
+
+.container {
+    margin-top: 80px;
+    padding: 20px;
+}
+
+.container h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.container h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.container form {
+    margin-top: 20px;
+}
+
+.container form label {
+    font-size: 16px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.container form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.container form button {
+    background-color: #55b8ca;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.container form button:hover {
+    background-color: #3b8c96;
+}
+
+footer {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 14px;
+    color: #888;
+}

@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+}
+
+.container {
+    text-align: center;
+    width: 100%;
+    max-width: 900px;
+    margin: 20px;
+}
+
+#video-call-container {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #4a90e2;
+    margin-bottom: 20px;
+}
+
+#room-info {
+    margin-bottom: 20px;
+}
+
+#roomIdDisplay {
+    font-weight: bold;
+    color: #28a745;
+    margin-top: 10px;
+}
+
+#roomIdInput {
+    padding: 10px;
+    margin: 10px 0;
+    width: 80%;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background: #4a90e2;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #357ab7;
+}
+
+#video-chat {
+    margin-top: 30px;
+}
+
+.video-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+video {
+    width: 48%;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+}
+
+#controls {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+#controls button {
+    width: 30%;
+    background: #f44336;
+}
+
+#controls button:hover {
+    background: #e53935;
+}
+
+#endCallBtn {
+    background: #f44336;
+}
+
+#endCallBtn:hover {
+    background: #d32f2f;
+}
+
+#muteAudioBtn,
+#muteVideoBtn {
+    background: #ffeb3b;
+}
+
+#muteAudioBtn:hover,
+#muteVideoBtn:hover {
+    background: #fbc02d;
+}
+
+.room-id {
+    font-size: 18px;
+    margin-top: 10px;
+    color: #333;
+}
+
+#roomIdInput, #joinRoomBtn, #createRoomBtn {
+    margin: 10px 0;
+}
+
+#roomIdInput {
+    border: 1px solid #ddd;
+}
+
+button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+button:focus {
+    outline: none;
+}

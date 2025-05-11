@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Room</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Add some basic styles for the video call */
+        .video-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        video {
+            width: 300px;
+            height: 200px;
+            margin: 10px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #000;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .controls button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            transition: background-color 0.3s;
+        }
+
+        .controls button:hover {
+            background-color: #0056b3;
+        }
+
+        .controls button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .controls {
+            gap: 15px;
+        }
+
+        .controls button {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .controls button:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Join Video Call Room</h1>
+        <form action="/join_room" method="POST">
+            <label for="room_key">Enter Room Key:</label>
+            <input type="text" id="room_key" name="room_key" placeholder="Enter the room key" required>
+            <button type="submit">Join Room</button>
+        </form>
+        <div class="video-container">
+            <video id="localVideo" autoplay muted></video>
+            <video id="remoteVideo" autoplay></video>
+            <div class="controls">
+                <button id="muteButton">Mute</button>
+                <button id="cameraButton">Camera Off</button>
+                <button id="endCallButton">End Call</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        // JavaScript for live video call
+        const localVideo = document.getElementById('localVideo');
+        const remoteVideo = document.getElementById('remoteVideo');
+
+        async function startVideoCall() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                localVideo.srcObject = stream;
+
+                // Placeholder for signaling and remote stream setup
+                // You would typically use WebRTC and a signaling server here
+                console.log('Local stream started');
+            } catch (error) {
+                console.error('Error accessing media devices.', error);
+            }
+        }
+
+        // Start the video call when the page loads
+        window.onload = () => {
+            startVideoCall();
+
+            const muteButton = document.getElementById('muteButton');
+            const cameraButton = document.getElementById('cameraButton');
+            const endCallButton = document.getElementById('endCallButton');
+
+            let isMuted = false;
+            let isCameraOff = false;
+
+            muteButton.addEventListener('click', () => {
+            const stream = localVideo.srcObject;
+            if (stream) {
+                stream.getAudioTracks().forEach(track => track.enabled = isMuted);
+                isMuted = !isMuted;
+                muteButton.textContent = isMuted ? 'Unmute' : 'Mute';
+            }
+            });
+
+            cameraButton.addEventListener('click', () => {
+            const stream = localVideo.srcObject;
+            if (stream) {
+                stream.getVideoTracks().forEach(track => track.enabled = isCameraOff);
+                isCameraOff = !isCameraOff;
+                cameraButton.textContent = isCameraOff ? 'Camera On' : 'Camera Off';
+            }
+            });
+
+            endCallButton.addEventListener('click', () => {
+            const stream = localVideo.srcObject;
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                localVideo.srcObject = null;
+                remoteVideo.srcObject = null;
+                console.log('Call ended');
+            }
+            });
+        };
+    </script>
+</body>
+</html>

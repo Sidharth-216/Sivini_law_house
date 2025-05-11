@@ -1,0 +1,83 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #0056b3;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.navbar ul li {
+    margin: 0 10px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+/* Video Call Section */
+.video-call {
+    text-align: center;
+    padding: 50px;
+    background-color: white;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.video-call h2 {
+    margin-bottom: 10px;
+    color: #0056b3;
+}
+
+.video-call .btn {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.google-meet {
+    background-color: #4285f4;
+}
+
+.google-meet:hover {
+    background-color: #357ae8;
+}
+
+.zoom-meet {
+    background-color: #2d8cff;
+}
+
+.zoom-meet:hover {
+    background-color: #2167c6;
+}
+
+/* Zoom Embedding */
+#zmmtg-root {
+    margin-top: 20px;
+    text-align: center;
+}
