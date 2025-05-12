@@ -2,3 +2,15 @@ Flask
 Gunicorn
 Flask-Mail
 flask-ngrok
+flask_socketio
+flask_cors
+werkzeug.utils
+random
+string
+jwt
+openai
+sqlite3
+cv2
+numpy
+email.mime.text
+dotenv
