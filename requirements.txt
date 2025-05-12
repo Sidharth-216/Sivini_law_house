@@ -9,4 +9,4 @@ jwt
 openai
 dotenv
 opencv-python==4.8.0.74
-numpy>=1.21,<1.22
+numpy
