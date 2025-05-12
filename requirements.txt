@@ -4,7 +4,7 @@ Flask-Mail
 flask-ngrok
 flask_socketio
 flask_cors
-werkzeug.utils
+werkzeug
 random
 string
 jwt
