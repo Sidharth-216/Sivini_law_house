@@ -7,7 +7,6 @@ flask_cors
 werkzeug
 jwt
 openai
-sqlite3
 cv2
 numpy
 email.mime.text
