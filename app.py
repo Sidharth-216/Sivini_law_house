@@ -416,7 +416,7 @@ def face_login():
         labels = list(range(1, 11))  # Dummy labels from 1 to 10
 
         # Initialize the LBPH face recognizer
-        face_recognizer = cv2.face.LBPHFaceRecognizer_create() if hasattr(cv2.face, 'LBPHFaceRecognizer_create') else cv2.face.createLBPHFaceRecognizer()
+        face_recognizer = cv2.face.LBPHFaceRecognizer_create()
 
         # Train the recognizer with dummy data
         face_recognizer.train(face_data, np.array(labels))
