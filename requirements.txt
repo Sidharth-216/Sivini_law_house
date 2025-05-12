@@ -8,5 +8,4 @@ werkzeug
 jwt
 openai
 numpy
-email.mime.text
 dotenv
