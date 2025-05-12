@@ -5,7 +5,6 @@ flask-ngrok
 flask_socketio
 flask_cors
 werkzeug
-random
 string
 jwt
 openai
