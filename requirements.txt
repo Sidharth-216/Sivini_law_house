@@ -5,7 +5,6 @@ flask-ngrok
 flask_socketio
 flask_cors
 werkzeug
-string
 jwt
 openai
 sqlite3
