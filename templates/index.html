@@ -159,8 +159,8 @@
         <div class="menu">
             <!--<p class="website_name">SIVINI LAW HOUSE</p>-->
             <div class="menu_links">
-                <a href="{{ url_for('login') }}" class="link glowing-button" style="font-weight: bold; color: rgb(228, 222, 222); background-color: rgb(248, 57, 15); padding: 10px; border-radius: 5px;">LOGIN</a>
-                <a href="{{ url_for('whatsapp') }}" class="link">CHAT</a><!-- Updated Chat Room link -->
+                <a href="{{ url_for('login') }}" class="link glowing-button" style="font-weight: bold; color: rgb(228, 222, 222); background-color: rgb(248, 57, 15); padding: 10px; border-radius: 5px;">LOGIN</a><!-- new login page --><!--new_login--><!--login-->
+                <a href="{{ url_for('whatsapp') }}" class="link">CHAT</a><!-- Updated Chat Room link --> <!--whatsapp--> <!--send_message-->
                 <a href="{{ url_for('new_video') }}" class="link">CALL</a>
                 <a href="{{ url_for('team') }}" class="link">TEAM</a>
                 <a href="{{ url_for('login') }}" class="link">BOOK</a>
@@ -173,12 +173,102 @@
                 <a href="{{ url_for('lawyer_login') }}" class="link" style="font-weight: bold; color: rgb(228, 222, 222); background-color: rgb(248, 57, 15); padding: 10px; border-radius: 5px;">LAWYER LOGIN</a>
                 
             </div>
-            <div class="menu_icon">
-                <span class="icon"></span>
+            <style>
+                /* Sidebar styles */
+                .mobile-sidebar {
+                    display: none;
+                    position: fixed;
+                    top: 0;
+                    left: 10px;
+                    left: 0;
+                    width: 250px;
+                    height: 100%;
+                    color: white;
+                    z-index: 10000;
+                    padding: 20px;
+                    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+                    transform: translateX(-100%);
+                    transition: transform 0.3s ease-in-out;
+                }
+
+                .mobile-sidebar a {
+                    display: block;
+                    color: white;
+                    text-decoration: none;
+                    margin: 10px 0;
+                    padding: 10px;
+                    margin-left: 80px;
+                    border-radius: 5px;
+                    background-color: #444;
+                }
+
+                .mobile-sidebar a:hover {
+                    background-color: #555;
+                }
+
+                .sidebar-toggle {
+                    display: none;
+                    position: fixed;
+                    bottom: 20px;
+                    right: 20px;
+                    background-color: rgb(248, 57, 15);
+                    color: white;
+                    border: none;
+                    border-radius: 50%;
+                    width: 50px;
+                    height: 50px;
+                    font-size: 24px;
+                    cursor: pointer;
+                    z-index: 10001;
+                   
+                }
+
+                @media (max-width: 768px) {
+                    .mobile-sidebar {
+                        display: block;
+                    }
+
+                    .sidebar-toggle {
+                        display: block;
+                    }
+                }
+            </style>
+
+            <div class="mobile-sidebar" id="mobileSidebar">
+                <a href="{{ url_for('login') }}" class="link glowing-button" style="font-weight: bold; color: rgb(228, 222, 222); background-color: rgb(248, 57, 15); padding: 10px; border-radius: 5px;">LOGIN</a>
+                <a href="{{ url_for('whatsapp') }}" class="link">CHAT</a>
+                <a href="{{ url_for('new_video') }}" class="link">CALL</a>
+                <a href="{{ url_for('team') }}" class="link">TEAM</a>
+                <a href="{{ url_for('login') }}" class="link">BOOK</a>
+                <a href="{{ url_for('apply') }}" class="link">JOB APPLY</a>
+                <a href="{{ url_for('sid') }}" class="link">IPC SECTION</a>
+                <a href="{{ url_for('bns') }}" class="link">BNS SECTION</a>
+                <a href="{{ url_for('about') }}" class="link">ABOUT</a>
+                <a href="{{ url_for('contact') }}" class="link">CONTACT US</a>
+                <a href="{{ url_for('help') }}" class="link">HELP</a>
+                <a href="{{ url_for('lawyer_login') }}" class="link" style="font-weight: bold; color: rgb(228, 222, 222); background-color: rgb(248, 57, 15); padding: 10px; border-radius: 5px;">LAWYER LOGIN</a>
             </div>
+
+            <button class="sidebar-toggle" id="sidebarToggle" style="position: fixed; top: 20px; left: 20px;">☰</button>
+
+            <script>
+                const sidebar = document.getElementById('mobileSidebar');
+                const toggleButton = document.getElementById('sidebarToggle');
+
+                toggleButton.addEventListener('click', function () {
+                    if (sidebar.style.transform === 'translateX(0%)') {
+                        sidebar.style.transform = 'translateX(-100%)';
+                    } else {
+                        sidebar.style.transform = 'translateX(0%)';
+                    }
+                });
+            </script>
+            
             <div class="dropdown">
-                <button class="dropbtn">Services</button>
+                <button class="dropbtn" style="display: block; margin: 0 auto; margin-left: 130px;">Services</button>
                 <div class="dropdown-content">
+                    <a href="{{ url_for('face_login') }}">Face Login</a>
+                    <a href="{{ url_for('video_call_2') }}">video call</a>
                     <a href="{{ url_for('reviews') }}">Reviews</a>
                     <a href="{{ url_for('books_page') }}">Books</a>
                     <a href="{{ url_for('chatbot') }}">AI Chat</a>
@@ -188,7 +278,7 @@
                             <img src="static/logoback3.png" alt="Your Logo" style="height: 50px;">
                         </div>
                         <ul class="nav-links">
-                          <li><a href="#">Home</a></li>
+                          <li><a href="{{ url_for('reset') }}">Home</a></li>
                           <li class="dropdown">
                             <a href="#" class="dropdown-toggle">Services</a>
                             <div class="dropdown-menu">
@@ -326,8 +416,8 @@
                         <span class="piece"></span>
                     </div>
                 </div>
-                <p class="p404" data-depth="0.50">LAW HOUSE</p>
-                <p class="p404" data-depth="0.10">LAW HOUSE</p>
+                <p class="p404" data-depth="0.50">M\S LAW HOUSE</p>
+                <p class="p404" data-depth="0.10">M\S LAW HOUSE</p>
             </div>
             <div class="text">
                 <article>
@@ -396,20 +486,20 @@
 </section>
 
 
-<section id="blogs" style="padding: 50px; background-color: black; color: white;">
-    <h2 style="text-align: center; color: white; font-size: 2.5rem;">Latest Blogs</h2>
-    <div style="display: flex; justify-content: space-around; margin-top: 50px;">
-        <div style="width: 40%; text-align: center; padding: 20px; border: 1px solid lightgray; border-radius: 10px;">
-            <h3 style="color: lightgray; font-size: 1.5rem;">Understanding Your Rights</h3>
-            <p style="font-size: 1.2rem;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. <a href="#" style="color: #1e90ff;">Read More...</a></p>
+<section id="blogs" style=" padding: 40px 20px; background-color: black; color: white;">
+    <div class="container" style="max-width: 1200px; margin: auto; text-align: center;">
+        <h2 style="text-align: center; color: white; font-size: 2.5rem;">Latest Blogs</h2>
+        <div style="display: flex; margin-bottom: 20px; justify-content: space-around; margin-top: 50px;">
+            <div style="width:300px; text-align: center; padding: 20px; border: 1px solid lightgray; border-radius: 5px; overflow: hidden;">
+                <h3 style="color: lightgray; font-size: 1.5rem;">Understanding Your Rights</h3>
+                <p style="font-size: 1.2rem;">The Indian constitution gives you full of rights....<a href="{{ url_for('blog_1') }}" style="color: #1e90ff;">Read More...</a></p>
+            </div>
+            <div style="width:300px; text-align: center; padding: 20px; border: 1px solid lightgray; border-radius: 5px; overflow: hidden;">
+            <p style="font-size: 1.2rem;">How should we hire a perfect lawyer for the case....<a href="{{ url_for('blog_2') }}" style="color: #1e90ff;">Read More...</a></p>
         </div>
-        <div style="width: 40%; text-align: center; padding: 20px; border: 1px solid lightgray; border-radius: 10px;">
-            <h3 style="color: lightgray; font-size: 1.5rem;">Why Hire a Lawyer?</h3>
-            <p style="font-size: 1.2rem;">Quisque convallis turpis id orci gravida, at euismod est tincidunt. <a href="#" style="color: #1e90ff;">Read More...</a></p>
-        </div>
-        <div style="width: 40%; text-align: center; padding: 20px; border: 1px solid lightgray; border-radius: 10px;">
+        <div style="width:300px; text-align: center; padding: 20px; border: 1px solid lightgray; border-radius: 5px; overflow: hidden;">
             <h3 style="color: lightgray; font-size: 1.5rem;">Trends in Legal Cases</h3>
-            <p style="font-size: 1.2rem;">Morbi sit amet vestibulum urna. Aliquam erat volutpat. <a href="#" style="color: #1e90ff;">Read More...</a></p>
+            <p style="font-size: 1.2rem;">Recent most of the cases are baised on the..... <a href="{{ url_for('blog_3') }}" style="color: #1e90ff;">Read More...</a></p>
         </div>
     </div>
 </section>
@@ -458,8 +548,8 @@
     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 50px; gap: 20px;">
         <!-- Address Details -->
         <div style="width: 50%; font-size: 1.2rem; line-height: 1.8;">
-            <p><strong>Sivini Law House</strong></p>
-            <p><strong>S Babu Rao</strong></p>
+            <p><strong>M/S Law House</strong></p>
+            <p><strong>S Babu Rao GP</strong></p>
             <p>Narayan nivas,near post office,writer street</p>
             <p>Bissam Cuttack,Odisha,765019</p>
             <p>Phone:+91 9040358266</p>
@@ -493,8 +583,8 @@
 <footer class="footer">
     <div class="footer-content">
         <div class="footer-section about">
-            <h2>Sivini Law House</h2>
-            <p>Your trusted partner in legal matters. We provide expert legal advice and services for individuals and businesses alike.</p>
+            <!--<h2>M/S Law House</h2>-->
+           <!-- <p>Your trusted partner in legal matters. We provide expert legal advice and services for individuals and businesses alike.</p>-->
         </div>
         <div class="footer-section links">
             <h3>Quick Links</h3>
