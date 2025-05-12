@@ -8,5 +8,5 @@ werkzeug
 jwt
 openai
 dotenv
-opencv-python==4.8.0.74
+opencv-contrib-python==4.8.0.76
 numpy==1.24.4
