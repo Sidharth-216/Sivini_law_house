@@ -9,3 +9,4 @@ jwt
 openai
 numpy
 dotenv
+cv2
