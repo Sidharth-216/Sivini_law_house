@@ -20,7 +20,10 @@
         <header>
             <h1>Client Management</h1>
         </header>
-
+        <!-- Search Bar Section -->
+    <section class="search-bar">
+        <input type="text" id="searchBar" placeholder="Search by username..." onkeyup="searchAppointments()">
+    </section>
         <!-- Button to redirect to Registration Page -->
         <div class="add-client">
             <a href="{{ url_for('register') }}">
@@ -35,6 +38,9 @@
                 {% for client in clients %}
                     <li class="client-item">
                         <strong>Name:</strong> {{ client[2] }}<br>
+                        <strong>username:</strong> {{ client[1] }}<br>
+                        <strong>Gender:</strong> {{ client[5] }}<br>
+                        <strong>password:</strong> {{ client[3] }}<br>
                         <strong>Email:</strong> {{ client[6] }}<br>
                         <strong>Phone:</strong> {{ client[7] }}<br>
                         <!-- Corrected delete URL reference -->
@@ -50,7 +56,7 @@
     <script>
         // JavaScript function for Back Button
         function goToDashboard() {
-            window.location.href = "{{ url_for('dashboard') }}";
+            window.location.href = "{{ url_for('new_dashboard') }}";
         }
 
         document.getElementById('backButton').addEventListener('click', goToDashboard);
