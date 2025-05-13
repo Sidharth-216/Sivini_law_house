@@ -15,6 +15,157 @@
     <link rel="icon" type="image/png" href="static/logoback.avif">
 </head>
 <body>
+    <div class="mobile-menu-icon">
+        <i class="uil uil-bars" onclick="toggleSidebar()"></i>
+    </div>
+
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <div class="menu-items">
+            <ul class="nav-links">
+                <li><a href="{{ url_for('tracker') }}">
+                    <i class="uil uil-files-landscapes"></i>
+                    <span class="link-name">Progress Chart</span>
+                </a></li>
+                <li><a href="{{ url_for('lawyer_profile') }}">
+                    <i class="uil uil-chart"></i>
+                    <span class="link-name">Profile</span>
+                </a></li>
+                <li><a href="{{ url_for('client_management') }}">
+                    <i class="uil uil-thumbs-up"></i>
+                    <span class="link-name">Client Management</span>
+                </a></li>
+                <li><a href="{{ url_for('appointment_management') }}">
+                    <i class="uil uil-comments"></i>
+                    <span class="link-name">Appointment</span>
+                </a></li>
+                <li><a href="{{ url_for('meta') }}">
+                    <i class="uil uil-share"></i>
+                    <span class="link-name">Message</span>
+                </a></li>
+                <li><a href="{{ url_for('new_video_lawyer') }}">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Video Call</span>
+                </a></li>
+                <li><a href="{{ url_for('notifications') }}">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Notifications</span>
+                </a></li>
+                <li><a href="{{ url_for('create_case') }}">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Create Case</span>
+                </a></li>
+                <li><a href="{{ url_for('create_room_2') }}">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Video_2</span>
+                </a></li>
+                <li><a href="{{ url_for('case_update',case_id=1) }}">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Case Update</span>
+                </a></li>
+                <li><a href="{{ url_for('task_management') }}">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Task Management</span>
+                </a></li>
+                <li><a href="{{ url_for('show_applications') }}">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Job Apply</span>
+                </a></li>
+                <li><a href="{{ url_for('billing_invoicing') }}">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Billing & Invoice</span>
+                </a></li>
+                <li><a href="{{ url_for('payments') }}">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Payments</span>
+                </a></li>
+                <li><a href="{{ url_for('enquiry_management') }}">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Enquries</span>
+                </a></li>
+                <li><a href="{{ url_for('create_document') }}">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Editor</span>
+                </a></li>
+                <li><a href="{{ url_for('upload_document') }}">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Documents</span>
+                </a></li>
+                <li><a href="{{ url_for('calendar') }}">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Calendar</span>
+                </a></li>
+                <li><a href="{{ url_for('view_case_notes') }}">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Case Notes</span>
+                </a></li>
+                <li><a href="{{ url_for('e_signature') }}">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Digital Signature</span>
+                </a></li>
+                <li><a href="{{ url_for('knowledge_base') }}">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Knowledge Base</span>
+                </a></li>
+                <li><a href="{{ url_for('law_books') }}">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Books</span>
+                </a></li>
+            </ul>
+            <ul class="logout-mode">
+                <li class="sticky"><a href="{{ url_for('lawyer_login') }}">
+                    <i class="uil uil-signout"></i>
+                    <span class="link-name">Logout</span>
+                </a></li>
+                <li class="mode">
+                    <a href="#">
+                        <i class="uil uil-moon"></i>
+                        <span class="link-name">Dark Mode</span>
+                    </a>
+                    <div class="mode-toggle">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <style>
+        .mobile-menu-icon {
+            display: none;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .mobile-sidebar {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100%;
+            background-color: #fff;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+            overflow-y: auto;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-icon {
+                display: block;
+            }
+        }
+    </style>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('mobileSidebar');
+            sidebar.style.display = sidebar.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
     <nav>
         <div class="logo-name">
             <div class="logo-image">
@@ -23,6 +174,7 @@
 
             <span class="logo_name">Law House</span>
         </div>
+        
         <div class="menu-items">
             <ul class="nav-links">
                 <style>
