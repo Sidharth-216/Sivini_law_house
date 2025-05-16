@@ -486,20 +486,22 @@
 </section>
 
 
-<section id="blogs" style=" padding: 40px 20px; background-color: black; color: white;">
+<section id="blogs" style="padding: 40px 20px; background-color: black; color: white;"></section>
     <div class="container" style="max-width: 1200px; margin: auto; text-align: center;">
         <h2 style="text-align: center; color: white; font-size: 2.5rem;">Latest Blogs</h2>
-        <div style="display: flex; margin-bottom: 20px; justify-content: space-around; margin-top: 50px;">
-            <div style="width:300px; text-align: center; padding: 20px; border: 1px solid lightgray; border-radius: 5px; overflow: hidden;">
+        <div style="display: flex; flex-wrap: wrap; margin-bottom: 20px; justify-content: center; margin-top: 50px; gap: 20px;">
+            <div style="width: 300px; text-align: center; padding: 20px; border: 1px solid rgb(230, 220, 220); border-radius: 5px; overflow: hidden; background-color: black;">
                 <h3 style="color: lightgray; font-size: 1.5rem;">Understanding Your Rights</h3>
-                <p style="font-size: 1.2rem;">The Indian constitution gives you full of rights....<a href="{{ url_for('blog_1') }}" style="color: #1e90ff;">Read More...</a></p>
+                <p style="font-size: 1.2rem; color: white; background-color: black; padding: 10px; border-radius: 5px;">The Indian constitution gives you full of rights....<a href="{{ url_for('blog_1') }}" style="color: #1e90ff;">Read More...</a></p>
             </div>
-            <div style="width:300px; text-align: center; padding: 20px; border: 1px solid lightgray; border-radius: 5px; overflow: hidden;">
-            <p style="font-size: 1.2rem;">How should we hire a perfect lawyer for the case....<a href="{{ url_for('blog_2') }}" style="color: #1e90ff;">Read More...</a></p>
-        </div>
-        <div style="width:300px; text-align: center; padding: 20px; border: 1px solid lightgray; border-radius: 5px; overflow: hidden;">
-            <h3 style="color: lightgray; font-size: 1.5rem;">Trends in Legal Cases</h3>
-            <p style="font-size: 1.2rem;">Recent most of the cases are baised on the..... <a href="{{ url_for('blog_3') }}" style="color: #1e90ff;">Read More...</a></p>
+            <div style="width: 300px; text-align: center; padding: 20px; border: 1px solid lightgray; border-radius: 5px; overflow: hidden; background-color: black;">
+                <h3 style="color: lightgray; font-size: 1.5rem;">Hiring the Perfect Lawyer</h3>
+                <p style="font-size: 1.2rem; color: white;">How should we hire a perfect lawyer for the case....<a href="{{ url_for('blog_2') }}" style="color: #1e90ff;">Read More...</a></p>
+            </div>
+            <div style="width: 300px; text-align: center; padding: 20px; border: 1px solid lightgray; border-radius: 5px; overflow: hidden; background-color: black;">
+                <h3 style="color: lightgray; font-size: 1.5rem;">Trends in Legal Cases</h3>
+                <p style="font-size: 1.2rem; color: white;">Recent most of the cases are based on the..... <a href="{{ url_for('blog_3') }}" style="color: #1e90ff;">Read More...</a></p>
+            </div>
         </div>
     </div>
 </section>
