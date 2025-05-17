@@ -607,6 +607,25 @@ def contact():
             ''', (username, 'New contact form submission from {} (Email: {})'.format(name, email)))
             conn.commit()
             conn.close()
+            # Send email to the official
+            official_email = "sivini.lawhouse@gmail.com"
+            subject = f"Client Enquiry: {subject}"
+            body = f"""
+            You have received a new contact form submission:
+
+            Name: {name}
+            Email: {email}
+            Number: {number}
+            Subject: {subject}
+            Message: {message}
+
+            Please review and respond accordingly.
+            """
+            try:
+                send_email(official_email, subject, body)
+                flash("Email sent to the official successfully!", "success")
+            except Exception as e:
+                flash(f"Failed to send email to the official: {e}", "error")
             return redirect(url_for('index'))  # Redirect after successful submission
         except Exception as e:
             return f"An error occurred: {e}"
