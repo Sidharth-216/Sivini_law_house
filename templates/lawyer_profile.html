@@ -4,15 +4,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lawyer Profile</title>
-    <link rel="icon" type="image/png" href="static/logoback.avif">
-    <link rel="stylesheet" href="static/lawyer_profile.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #16e1f0;
+            color: #333;
+        }
+        .profile-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .profile-container h2 {
+            background-color: #2c3e50;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        .profile-info {
+            padding: 20px;
+        }
+        .profile-info p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .profile-info p strong {
+            color: #2c3e50;
+        }
+        .profile-info p:last-child {
+            font-style: italic;
+            color: #555;
+        }
+        .profile-container:hover {
+            transform: scale(1.02);
+            transition: transform 0.3s ease;
+        }
+    </style>
 </head>
 <body>
-    <!-- Back Button -->
-    <a href="{{ url_for('new_dashboard') }}">
-        <button id="backButton" class="back-button">Back to Dashboard</button>
-    </a>
-
+    <div style="text-align: center; margin-top: 40px;margin-bottom:20px;"></div>
+        <a href="javascript:history.back()" style="text-decoration: none; color: #fff; background-color: #2c3e50; padding: 10px 20px; border-radius: 5px; font-size: 16px;">Back</a>
+    </div>
+    <div style="text-align: center; margin-top: 50px; margin-bottom: 40px;"></div>
+        <a href="javascript:void(0);" id="logoutButton" style="text-decoration: none; color: #fff; background-color: #e74c3c; padding: 10px 20px; border-radius: 5px; font-size: 16px; margin-right: 530px;">Logout</a>
+        <script>
+            document.getElementById('logoutButton').addEventListener('click', function() {
+            window.location.href = '/lawyer_login';
+            });
+        </script>
+    </div>
+    <div style="text-align: center; margin-top: 60px;margin-bottom:20px;"></div>
+        <a href="/edit-profile" style="text-decoration: none; color: #fff; background-color: #3498db; padding: 10px 20px; border-radius: 5px; font-size: 16px;">Edit Profile</a>
+    </div>
     <div class="profile-container">
         <h2>Lawyer Profile</h2>
         <div class="profile-info">
@@ -24,7 +73,5 @@
             <p><strong>Bio:</strong> "Dedicated legal professional committed to excellence and justice."</p>
         </div>
     </div>
-
-    <script src="static/lawyer_profile.js"></script>
 </body>
 </html>
