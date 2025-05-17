@@ -16,7 +16,11 @@
     <div class="backButton">
         <a href="{{ url_for('login') }}"><button id="backButton">Back</button></a>
     </div>
-
+    <div class="logout-button" style="position: absolute; top: 60px; left: -130px;margin-bottom: 40px;margin-top: -20px;">
+        <a href="{{ url_for('logout') }}">
+            <button id="logoutButton" onclick="confirmLogout()">Logout</button>
+        </a>
+    </div>
     <div class="container">
         <header>
             <img src="static/banner.jpg" alt="Banner">
@@ -47,7 +51,23 @@
                 <input type="tel" value="{{ number }}" name="number" class="animated-input">
             </div>
         </section>
-
+ <!-- Invoice Details Section -->
+ <section class="invoices">
+    <h2>Invoice Details</h2>
+    {% if invoices %}
+    <ul>
+        {% for invoice in invoices %}
+        <li>
+            <strong>Total Amount:</strong> ₹ {{ invoice[2] }}<br>
+            <strong>Amount Paid:</strong> ₹ {{ invoice[3]}}<br>
+            <strong>Due:</strong> ₹ {{ invoice[4] }}<br>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No invoices found.</p>
+    {% endif %}
+</section>
         <!-- Payment and Booking Buttons (Centered) -->
         <div class="payment-button">
             <a href="{{ url_for('payment') }}">
@@ -60,7 +80,7 @@
                 <button id="bookButton">Book Again</button>
             </a>
         </div>
-
+       
         <!-- Booking Details Section -->
         <section class="bookings">
             <h2>Booking Details</h2>
@@ -80,11 +100,7 @@
             {% else %}
                 <p>No bookings found.</p>
             {% endif %}
-        <!-- Logout Button (Centered) -->
-        <div class="logout-button">
-            <a href="{{ url_for('logout') }}">
-            <button id="logoutButton">Logout</button>
-            </a>
+            
         </div>
         </section>
     <!-- Edit Profile Button (Centered) -->
@@ -94,7 +110,7 @@
         </a>
     </div>
     </div>
-
+    <!-- Logout Button (Placed below the Back Button, top-left corner) -->
     <script src="static/profile.js"></script>
 </body>
 </html>
