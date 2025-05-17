@@ -179,6 +179,26 @@ def homepage():
             ''', (username, 'New booking for lawyer: {} by {} at {}'.format(lawyer_type, name, appointment_date)))
             conn.commit()
             conn.close()
+                        # Send booking details email to the official
+            official_email = "sivini.lawhouse@gmail.com"
+            subject_official = "New Booking Notification"
+            body_official = f"""A new booking has been made:
+
+            Name: {name}
+            Lawyer Type: {lawyer_type}
+            Email: {email}
+            Case Description: {case_description}
+            Appointment Date: {appointment_date}
+            Time of Booking: {time_of_booking}
+            Date of Booking: {date_of_booking}
+
+            Please review the booking details.
+            """
+            try:
+                send_email(official_email, subject_official, body_official)
+                flash("Notification email sent to the official successfully!", "success")
+            except Exception as e:
+                flash(f"Failed to send notification email to the official: {e}", "error")
             # Send confirmation email to the user
             subject = "Booking Confirmation"
             body = f"Dear {name},\n\nYour booking for a {lawyer_type} on {appointment_date} has been confirmed.\n\nThank you for choosing our service.\n\nBest regards,\nSivini_law_house"
@@ -188,9 +208,9 @@ def homepage():
             except Exception as e:
                     flash(f"Failed to send email: {e}", "error")
             return redirect(url_for('profile'))  # Redirect after successful submission
+            
         except Exception as e:
             return f"An error occurred: {e}"
-
     # If GET request, render the homepage
     return render_template('homepage.html')
 
@@ -344,6 +364,23 @@ def register():
                 flash("Email sent successfully!", "success")
             except Exception as e:
                 flash(f"Failed to send email: {e}", "error")
+            # Send registration email to the official
+            official_email = "sivini.lawhouse@gmail.com"
+            subject_official = "New User Registration"
+            body_official = f"""A new user has registered on the platform:
+
+            Name: {name}
+            Username: {username}
+            Email: {email}
+            Gender: {gender}
+
+            Please review the registration details.
+            """
+            try:
+                send_email(official_email, subject_official, body_official)
+                flash("Notification email sent to the official successfully!", "success")
+            except Exception as e:
+                flash(f"Failed to send notification email to the official: {e}", "error")
             # Verify if the data is inserted correctly
             cursor.execute("SELECT * FROM clients WHERE username = ?", (username,))
             user = cursor.fetchone()
