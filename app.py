@@ -609,9 +609,8 @@ def contact():
             conn.close()
             # Send email to the official
             official_email = "sivini.lawhouse@gmail.com"
-            subject = f"Client Enquiry: {subject}"
-            body = f"""
-            You have received a new contact form submission:
+            subject1 = f"Client Enquiry: {subject}"
+            body = f"""You have received a new contact form submission:
 
             Name: {name}
             Email: {email}
@@ -622,7 +621,7 @@ def contact():
             Please review and respond accordingly.
             """
             try:
-                send_email(official_email, subject, body)
+                send_email(official_email, subject1, body)
                 flash("Email sent to the official successfully!", "success")
             except Exception as e:
                 flash(f"Failed to send email to the official: {e}", "error")
