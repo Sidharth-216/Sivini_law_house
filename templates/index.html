@@ -179,48 +179,62 @@
                     display: none;
                     position: fixed;
                     top: 0;
-                    left: 10px;
                     left: 0;
-                    width: 250px;
+                    width: 200px;
                     height: 100%;
+                    background: linear-gradient(135deg, #1e3c72, #2a5298); /* Professional gradient */
+                    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
                     color: white;
                     z-index: 10000;
+                    height: 100vh;
                     padding: 20px;
-                    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+                    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
                     transform: translateX(-100%);
                     transition: transform 0.3s ease-in-out;
+                    overflow-y: auto;
                 }
 
                 .mobile-sidebar a {
                     display: block;
                     color: white;
                     text-decoration: none;
-                    margin: 10px 0;
-                    padding: 10px;
-                    margin-left: 80px;
-                    border-radius: 5px;
-                    background-color: #444;
+                    margin: 15px 0;
+                    padding: 15px;
+                    border-radius: 8px;
+                    background-color: rgba(255, 255, 255, 0.1);
+                    font-size: 16px;
+                    font-weight: bold;
+                    text-align: center;
+                    transition: background-color 0.3s ease, transform 0.2s ease;
                 }
 
                 .mobile-sidebar a:hover {
-                    background-color: #555;
+                    background-color: rgba(255, 255, 255, 0.2);
+                    transform: scale(1.05);
                 }
 
                 .sidebar-toggle {
                     display: none;
                     position: fixed;
-                    bottom: 20px;
+                    margin-top: 20px;
+                    margin-bottom:16px;
+                    left: 20px;
                     right: 20px;
-                    background-color: rgb(248, 57, 15);
+                    background: linear-gradient(135deg, #ff416c, #ff4b2b);
                     color: white;
                     border: none;
                     border-radius: 50%;
-                    width: 50px;
-                    height: 50px;
-                    font-size: 24px;
+                    width: 60px;
+                    height: 60px;
+                    font-size: 28px;
                     cursor: pointer;
                     z-index: 10001;
-                   
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+                    transition: transform 0.3s ease;
+                }
+
+                .sidebar-toggle:hover {
+                    transform: rotate(90deg);
                 }
 
                 @media (max-width: 768px) {
@@ -235,22 +249,109 @@
             </style>
 
             <div class="mobile-sidebar" id="mobileSidebar">
-                <a href="{{ url_for('login') }}" class="link glowing-button" style="font-weight: bold; color: rgb(228, 222, 222); background-color: rgb(248, 57, 15); padding: 10px; border-radius: 5px;">LOGIN</a>
-                 <a href="{{ url_for('register') }}" class="link glowing-button" style="font-weight: bold; color: rgb(228, 222, 222); background-color: rgb(248, 57, 15); padding: 10px; border-radius: 5px;">REGISTER</a>
-                <a href="{{ url_for('whatsapp') }}" class="link">CHAT</a>
-                <a href="{{ url_for('new_video') }}" class="link">CALL</a>
-                <a href="{{ url_for('team') }}" class="link">TEAM</a>
-                <a href="{{ url_for('login') }}" class="link">BOOK</a>
-                <a href="{{ url_for('apply') }}" class="link">JOB APPLY</a>
-                <a href="{{ url_for('sid') }}" class="link">IPC SECTION</a>
-                <a href="{{ url_for('bns') }}" class="link">BNS SECTION</a>
-                <a href="{{ url_for('about') }}" class="link">ABOUT</a>
-                <a href="{{ url_for('contact') }}" class="link">CONTACT US</a>
-                <a href="{{ url_for('help') }}" class="link">HELP</a>
-                <a href="{{ url_for('lawyer_login') }}" class="link" style="font-weight: bold; color: rgb(228, 222, 222); background-color: rgb(248, 57, 15); padding: 10px; border-radius: 5px;">LAWYER LOGIN</a>
+                <a href="{{ url_for('login') }}" class="link glowing-button live-shake2" style="font-weight: bold; color: rgb(228, 222, 222); background-color: rgb(248, 57, 15); padding: 10px; border-radius: 5px; border: 2px solid red; box-shadow: 0 0 10px red;">LOGIN</a>
+                <style>
+                    .live-shake2 {
+                        animation: glow 1.5s infinite alternate, shake 0.5s infinite ease-in-out;
+                    }
+
+                    @keyframes glow {
+                        0% {
+                            box-shadow: 0 0 5px rgb(248, 57, 15);
+                        }
+                        100% {
+                            box-shadow: 0 0 20px rgb(248, 57, 15);
+                        }
+                    }
+
+                    @keyframes shake {
+                        0%, 100% {
+                            transform: translateX(0);
+                        }
+                        25% {
+                            transform: translateX(-2px);
+                        }
+                        50% {
+                            transform: translateX(2px);
+                        }
+                        75% {
+                            transform: translateX(-2px);
+                        }
+                    }
+                </style>
+                <a href="{{ url_for('whatsapp') }}">CHAT</a>
+                <a href="{{ url_for('new_video') }}">CALL</a>
+                <a href="{{ url_for('team') }}">TEAM</a>
+                <a href="{{ url_for('login') }}">BOOK</a>
+                <a href="{{ url_for('apply') }}">JOB APPLY</a>
+                <a href="{{ url_for('register') }}" class="regi-shake" style="font-weight: bold; color: rgb(255, 255, 255); background-color: rgb(34, 139, 34); padding: 10px; border-radius: 5px;">REGISTER</a>
+                <style>
+                    .regi-shake {
+                        animation: glow 1.5s infinite alternate, shake 0.5s infinite ease-in-out;
+                    }
+
+                    @keyframes glow {
+                        0% {
+                            box-shadow: 0 0 5px rgb(17, 230, 63);
+                        }
+                        100% {
+                            box-shadow: 0 0 20px rgb(8, 223, 8);
+                        }
+                    }
+
+                    @keyframes shake {
+                        0%, 100% {
+                            transform: translateX(0);
+                        }
+                        25% {
+                            transform: translateX(-2px);
+                        }
+                        50% {
+                            transform: translateX(2px);
+                        }
+                        75% {
+                            transform: translateX(-2px);
+                        }
+                    }
+                </style>
+                <a href="{{ url_for('sid') }}">IPC SECTION</a>
+                <a href="{{ url_for('bns') }}">BNS SECTION</a>
+                <a href="{{ url_for('about') }}">ABOUT</a>
+                <a href="{{ url_for('contact') }}">CONTACT US</a>
+                <a href="{{ url_for('help') }}">HELP</a>
+                <a href="{{ url_for('lawyer_login') }}" class="live-shake glowing-button" style="font-weight: bold; color: rgb(255, 255, 255); background-color: rgb(248, 57, 15); padding: 10px; border-radius: 5px;">LAWYER LOGIN</a>
+                <style>
+                    .live-shake {
+                        animation: glow 1.5s infinite alternate, shake 0.5s infinite ease-in-out;
+                    }
+
+                    @keyframes glow {
+                        0% {
+                            box-shadow: 0 0 5px rgb(248, 57, 15);
+                        }
+                        100% {
+                            box-shadow: 0 0 20px rgb(248, 57, 15);
+                        }
+                    }
+
+                    @keyframes shake {
+                        0%, 100% {
+                            transform: translateX(0);
+                        }
+                        25% {
+                            transform: translateX(-2px);
+                        }
+                        50% {
+                            transform: translateX(2px);
+                        }
+                        75% {
+                            transform: translateX(-2px);
+                        }
+                    }
+                </style>
             </div>
 
-            <button class="sidebar-toggle" id="sidebarToggle" style="position: fixed; top: 20px; left: 20px;">☰</button>
+            <button class="sidebar-toggle" id="sidebarToggle">☰</button>
 
             <script>
                 const sidebar = document.getElementById('mobileSidebar');
