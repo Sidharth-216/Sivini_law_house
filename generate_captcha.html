@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate CAPTCHA</title>
+    <style>
+        .captcha-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .captcha {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            background-color: #f0f0f0;
+            display: inline-block;
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+        .refresh-btn {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="captcha-container">
+        <div id="captcha" class="captcha">Loading...</div>
+        <div>
+            <span class="refresh-btn" onclick="generateCaptcha()">Refresh CAPTCHA</span>
+        </div>
+        <form action="/verify_captcha" method="POST">
+            <input type="text" name="captcha_input" placeholder="Enter CAPTCHA" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        function generateCaptcha() {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let captcha = '';
+            for (let i = 0; i < 6; i++) {
+                captcha += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            document.getElementById('captcha').textContent = captcha;
+        }
+
+        // Generate CAPTCHA on page load
+        document.addEventListener('DOMContentLoaded', generateCaptcha);
+    </script>
+</body>
+</html>
