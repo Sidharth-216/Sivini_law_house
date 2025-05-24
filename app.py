@@ -26,6 +26,10 @@ import cv2
 import numpy as np
 from email.mime.text import MIMEText
 from dotenv import load_dotenv
+import random
+import string
+from io import BytesIO
+from PIL import Image, ImageDraw, ImageFont
 
 load_dotenv()  # Loads variables from .env
 # Define the function to create the dummy model
@@ -411,6 +415,12 @@ def login():
     if request.method == 'POST':
         username = request.form.get('username')
         paswd = request.form.get('paswd')
+        captcha_input = request.form.get('captcha')
+
+        # Validate captcha
+        if captcha_input != session.get('captcha'):
+            flash('Invalid captcha. Please try again.', 'error')
+            return render_template('login.html', captcha=session.get('captcha'))
 
         conn = connect_to_database()  # Ensure this connects to the correct database
         cursor = conn.cursor()
@@ -424,7 +434,7 @@ def login():
                 session['user_id'] = user[0]  # Assuming the first column is user ID
                 session['username'] = user[1]  # Assuming the second column is username
                 session['email'] = user[6]    # Assuming the seventh column is email
-                session['number'] = user[7]   # Assuming the eighth column is phone number # Assuming the ninth column is profile picture path
+                session['number'] = user[7]   # Assuming the eighth column is phone number
 
                 print("Login successful for user:", username)  # Debugging output
 
@@ -433,7 +443,8 @@ def login():
                 return redirect(next_page or url_for('profile'))  # Redirect after login
             else:
                 print("Login failed for user:", username)  # Debugging output
-                return redirect(url_for('register'))
+                flash('Invalid username or password. Please try again.', 'error')
+                return render_template('login.html', captcha=session.get('captcha'))
         except Exception as e:
             print(f"An error occurred during login: {e}")  # Log the exact error for debugging
             return f"An error occurred during login: {e}"  # Return the error message
@@ -441,7 +452,10 @@ def login():
             cursor.close()
             conn.close()
 
-    return render_template('login.html')
+    # Generate a new captcha for GET requests
+    captcha_text = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+    session['captcha'] = captcha_text
+    return render_template('login.html', captcha=captcha_text)
 
 
 @app.route('/face_login', methods=['GET', 'POST'])
@@ -2568,7 +2582,6 @@ def evaluate_argument(argument, case_id):
     :param case_id: The ID of the case being argued.
     :return: A dictionary containing the judge's question, the result of the case, and a rating.
     """
-    import random
 
     # Simulated responses for demonstration
     responses = [
@@ -2847,6 +2860,48 @@ def delete_payment(payment_id):
     conn.commit()
     conn.close()
     return redirect(url_for('payments'))
+
+@app.route('/generate_captcha', methods=['GET'])
+def generate_captcha():
+
+    # Generate random captcha text
+    captcha_text = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+
+    # Store the captcha text in the session for validation
+    session['captcha'] = captcha_text
+
+    # Create an image for the captcha
+    width, height = 200, 70
+    image = Image.new('RGB', (width, height), color=(255, 255, 255))
+    draw = ImageDraw.Draw(image)
+
+    # Load a font
+    font_path = "arial.ttf"  # Replace with the path to a valid .ttf font file
+    try:
+        font = ImageFont.truetype(font_path, 40)
+    except IOError:
+        font = ImageFont.load_default()
+
+    # Draw the captcha text on the image
+    text_width, text_height = draw.textsize(captcha_text, font=font)
+    text_x = (width - text_width) // 2
+    text_y = (height - text_height) // 2
+    draw.text((text_x, text_y), captcha_text, font=font, fill=(0, 0, 0))
+
+    # Add some noise
+    for _ in range(100):
+        x = random.randint(0, width)
+        y = random.randint(0, height)
+        draw.point((x, y), fill=(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
+
+    # Save the image to a BytesIO object
+    buffer = BytesIO()
+    image.save(buffer, format="PNG")
+    buffer.seek(0)
+
+    # Return the image as a response
+    return send_file(buffer, mimetype='image/png')
+
 
 if __name__ == '__main__': # Initialize the database when the app starts
     app.run(debug=True,port=5001)
