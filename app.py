@@ -317,7 +317,7 @@ def initialize_database():
 # Call this function when your application starts
 initialize_database()
 
-@app.route('/register', methods=['GET','POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         username = request.form.get('username')
@@ -327,10 +327,16 @@ def register():
         gender = request.form.get('gender')
         email = request.form.get('email')
         number = request.form.get('number')
-        
+        captcha_input = request.form.get('captcha')
+
+        # Validate captcha
+        if captcha_input != session.get('captcha'):
+            flash('Invalid captcha. Please try again.', 'error')
+            return render_template('register.html', captcha=session.get('captcha'))
+
         if paswd != cnfpas:
             return "Passwords do not match."
-        
+
         conn = connect_to_database()
         cursor = conn.cursor()
         try:
@@ -349,17 +355,13 @@ def register():
             ''')
 
             # Insert user data into the database
-            #query = "INSERT INTO clients (username, name,cnfpas,paswd, gender, email, number) VALUES (?,?,?,?,?,?,?)"
-
-            #cursor.execute(query, (username, name,cnfpas, paswd, gender, email, number))  # Added parameters for the query
-            #conn.commit()  # Commit the transaction
-
             cursor.execute('''
-        INSERT INTO clients (username,name,cnfpas,paswd,gender,email, number)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-        ''', (username, name, cnfpas, paswd,gender, email,number ))
-            
+                INSERT INTO clients (username, name, cnfpas, paswd, gender, email, number)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            ''', (username, name, cnfpas, paswd, gender, email, number))
+
             conn.commit()
+
             # Send registration email to user
             subject = "Registration successful"
             body = f"Dear {name},\n\nRegistration successful.\n\nYour credentials:\nName: {name}\nUsername: {username}\nPassword: {cnfpas}\nGender: {gender}\nPhone: {number}\n\nPlease don't share your credentials with anyone.\n\nBest regards,\nSivini_law_house"
@@ -368,6 +370,7 @@ def register():
                 flash("Email sent successfully!", "success")
             except Exception as e:
                 flash(f"Failed to send email: {e}", "error")
+
             # Send registration email to the official
             official_email = "sivini.lawhouse@gmail.com"
             subject_official = "New User Registration"
@@ -385,6 +388,7 @@ def register():
                 flash("Notification email sent to the official successfully!", "success")
             except Exception as e:
                 flash(f"Failed to send notification email to the official: {e}", "error")
+
             # Verify if the data is inserted correctly
             cursor.execute("SELECT * FROM clients WHERE username = ?", (username,))
             user = cursor.fetchone()
@@ -400,8 +404,11 @@ def register():
         finally:
             cursor.close()
             conn.close()
-        
-    return render_template('register.html')
+
+    # Generate a new captcha for GET requests
+    captcha_text = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+    session['captcha'] = captcha_text
+    return render_template('register.html', captcha=captcha_text)
 
 
 @app.route('/team')
