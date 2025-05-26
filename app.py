@@ -986,6 +986,12 @@ def lawyer_login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
+        captcha_input = request.form.get('captcha')
+
+        # Validate captcha
+        if captcha_input != session.get('captcha'):
+            flash("Invalid captcha. Please try again.", "error")
+            return render_template('lawyer_login.html', captcha=session.get('captcha'))
         
         # Connect to the database
         connection = sqlite3.connect('lawfirm.db')
@@ -1005,11 +1011,13 @@ def lawyer_login():
             return redirect(url_for(next_page))
         else:
             flash('Invalid credentials.', 'error')
-            return render_template('lawyer_login.html')
+            return render_template('lawyer_login.html', captcha=session.get('captcha'))
     
-    # Save the next page to redirect after login
+    # Generate a new captcha for GET requests
+    captcha_text = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+    session['captcha'] = captcha_text
     next_page = request.args.get('next', None)
-    return render_template('lawyer_login.html', next=next_page)
+    return render_template('lawyer_login.html', captcha=captcha_text, next=next_page)
 
 
 
