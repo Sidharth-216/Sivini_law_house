@@ -23,7 +23,10 @@
                 <span class="deadline">Deadline: {{ task.deadline }}</span>
                 <span class="status">Status: {{ task.status }}</span>
                 <a href="{{ url_for('update_task', task_id=task.id) }}" class="update-button">Update</a>
-                <a href="{{ url_for('delete_task', task_id=task.id) }}" class="delete-button">Delete</a>
+                <form action="{{ url_for('delete_task', task_id=task.id) }}" method="POST" style="display:inline;">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="delete-button">Delete</button>
+                </form>
             </div>
             {% endfor %}
         </div>
