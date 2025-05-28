@@ -158,10 +158,15 @@ def homepage():
         appointment_date = request.form['appointment_date']
         time_of_booking = request.form['time_of_booking']
         date_of_booking = request.form['date_of_booking']
+        captcha_input = request.form.get('captcha')
 
         # Validate that the inputs are not empty
         if not appointment_date or not time_of_booking or not date_of_booking:
             return "All fields are required."
+        #validate captcha 
+        if captcha_input!=session.get('captcha'):
+            flash("Invalid captcha .Please try again,","error")
+            return render_template('lawyer_login.html',captcha=session.get('captcha'))
         
         username = session.get('username')
         if not username:
@@ -212,11 +217,16 @@ def homepage():
             except Exception as e:
                     flash(f"Failed to send email: {e}", "error")
             return redirect(url_for('profile'))  # Redirect after successful submission
-            
+        
+
         except Exception as e:
             return f"An error occurred: {e}"
+    #generate a new captcha for get requests
+    captcha_text = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+    session['captcha'] = captcha_text
+    next_page = request.args.get('next', None)
     # If GET request, render the homepage
-    return render_template('homepage.html')
+    return render_template('homepage.html', captcha=captcha_text, next=next_page)
 
     # If GET request, render the homepage
     return render_template('homepage.html')
