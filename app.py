@@ -2120,40 +2120,37 @@ def case_update(case_id):
     cursor = conn.cursor()
 
     if request.method == 'POST':
-        # Retrieving form data
-        case_name = request.form['case_name']
-        client_name = request.form['client_name']
-        start_date = request.form['start_date']
-        status = request.form['status']
-        description = request.form['description']
+        # Get form data from the update form
+        status = request.form.get('status')
+        remarks = request.form.get('remarks', '')
 
-        # Update the case in the database
+        # Update the case status and remarks in the database
         cursor.execute('''
             UPDATE cases
-            SET case_name = ?, client_name = ?, start_date = ?, status = ?, description = ?
-            WHERE case_id = ?
-        ''', (case_name, client_name, start_date, status, description, case_id))
-
+            SET status = ?, remarks = ?
+            WHERE id = ?
+        ''', (status, remarks, case_id))
         conn.commit()
         conn.close()
+        return redirect(url_for('case_list'))
 
-        # Redirect to the updated case page or a list of cases
-        return redirect(url_for('case_list'))  # Adjust as needed to your case listing page
-
-    # If GET request, fetch the case data to populate the form
-    case = cursor.execute('SELECT * FROM cases WHERE case_id = ?', (case_id,)).fetchone()
+    # For GET request, fetch the case details to prefill the form
+    cursor.execute('SELECT * FROM cases WHERE case_id = ?', (case_id,))
+    case = cursor.fetchone()
     conn.close()
 
-    if case is None:
-        return "Case not found", 404  # Or redirect to an error page
+    if not case:
+        return "Case not found", 404
 
     return render_template('case_update.html', case=case)
 # Example case list route
 @app.route('/case_list')
 def case_list():
     conn = get_db_connection()
-    cases = conn.execute('SELECT * FROM cases').fetchall()
+    # Fetch all cases with relevant fields, using column names that match your HTML template
+    cases = conn.execute('SELECT case_id, case_name, client_name, start_date, status, description FROM cases').fetchall()
     conn.close()
+    # Pass the cases (list of Row objects) to the template for display
     return render_template('case_list.html', cases=cases)
 
 
