@@ -2,149 +2,111 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Case</title>
-    <link rel="icon" type="image/png" href="static/logoback.avif">
+    <title>Update Case Status</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            background: linear-gradient(120deg, #2980b9, #6dd5fa, #ffffff);
+            font-family: 'Roboto', sans-serif;
             margin: 0;
-            padding: 0;
+            min-height: 100vh;
         }
-        .main-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        .container {
+            max-width: 450px;
+            margin: 60px auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(44, 62, 80, 0.15);
+            padding: 40px 32px 32px 32px;
         }
-        .form-container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 600px;
-        }
-        .form-title {
+        h2 {
             text-align: center;
-            font-size: 2em;
-            margin-bottom: 20px;
-            color: #333;
+            color: #2980b9;
+            margin-bottom: 30px;
+            font-weight: 700;
+            letter-spacing: 1px;
         }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group label {
+        form label {
             display: block;
             margin-bottom: 8px;
-            font-weight: bold;
+            color: #34495e;
+            font-weight: 500;
         }
-        .form-group input, .form-group select, .form-group textarea {
+        form input[type="text"],
+        form select,
+        form textarea {
             width: 100%;
-            padding: 10px;
-            font-size: 1em;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-            box-sizing: border-box;
+            padding: 10px 12px;
+            margin-bottom: 20px;
+            border: 1px solid #b2bec3;
+            border-radius: 6px;
+            font-size: 16px;
+            background: #f8fafc;
+            transition: border 0.2s;
         }
-        .form-group textarea {
+        form input[type="text"]:focus,
+        form select:focus,
+        form textarea:focus {
+            border-color: #2980b9;
+            outline: none;
+        }
+        form textarea {
             resize: vertical;
+            min-height: 80px;
         }
-        .btn-submit {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            font-size: 1.1em;
-            cursor: pointer;
+        .btn {
             width: 100%;
+            background: linear-gradient(90deg, #2980b9, #6dd5fa);
+            color: #fff;
+            border: none;
+            padding: 12px 0;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+            box-shadow: 0 2px 8px rgba(52, 152, 219, 0.15);
         }
-        .btn-submit:hover {
-            background-color: #45a049;
+        .btn:hover {
+            background: linear-gradient(90deg, #2574a9, #48c6ef);
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 24px 8px;
+            }
         }
     </style>
 </head>
 <body>
-    <div>
-        <a href="{{ url_for('new_dashboard') }}" class="btn-back">Back</a>
+    <div class="container">
+        <h2>Update Case Status</h2>
+        <form method="POST" action="/update_case">
+            <!-- CSRF token if using Flask/Django -->
+            <div class="form-group">
+                <label for="case_id">Case ID</label>
+                <input type="text" id="case_id" name="case_id" placeholder="Enter Case ID" required>
+            </div>
+            <div class="form-group">
+                <label for="status">Case Status</label>
+                <select id="status" name="status" required>
+                    <option value="" disabled selected>Select status</option>
+                    <option value="Open">Open</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="On Hold">On Hold</option>
+                    <option value="Closed">Closed</option>
+                    <option value="Resolved">Resolved</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="remarks">Remarks / Notes</label>
+                <textarea id="remarks" name="remarks" placeholder="Add any remarks or notes..."></textarea>
+            </div>
+            <button type="submit" class="btn">Update Status</button>
+        </form>
     </div>
-    <style>
-        .btn-back {
-            display: inline-block;
-            margin: 20px;
-            padding: 10px 20px;
-            background-color: #ccc;
-            color: #333;
-            text-decoration: none;
-            border-radius: 4px;
-            font-size: 1em;
-        }
-        .btn-back:hover {
-            background-color: #bbb;
-        }
-    </style>
-    <div class="main-container">
-        <div class="form-container">
-            <h1 class="form-title">Update Case</h1>
-            <form method="POST" action="{{ url_for('case_update', case_id=case['case_id']) }}">
-                <div class="form-group">
-                    <label for="case_name">Case Name</label>
-                    <input type="text" id="case_name" name="case_name" value="{{ case['case_name'] }}" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="client_name">Client Name</label>
-                    <input type="text" id="client_name" name="client_name" value="{{ case['client_name'] }}" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="start_date">Start Date</label>
-                    <input type="date" id="start_date" name="start_date" value="{{ case['start_date'] }}" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="status">Status</label>
-                    <select id="status" name="status" required>
-                        <option value="Pending" {% if case['status'] == 'Pending' %}selected{% endif %}>Pending</option>
-                        <option value="Ongoing" {% if case['status'] == 'Ongoing' %}selected{% endif %}>Ongoing</option>
-                        <option value="Closed" {% if case['status'] == 'Closed' %}selected{% endif %}>Closed</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <textarea id="description" name="description" rows="5" required>{{ case['description'] }}</textarea>
-                </div>
-
-                <button type="submit" class="btn-submit">Update Case</button>
-            </form>
-        </div>
-    </div>
-
-    <script>
-        // JavaScript for form handling and animations
-        document.querySelector('form').addEventListener('submit', function(event) {
-            const caseName = document.getElementById('case_name').value;
-            const clientName = document.getElementById('client_name').value;
-            const description = document.getElementById('description').value;
-            
-            if (!caseName || !clientName || !description) {
-                alert('Please fill out all fields before submitting the form.');
-                event.preventDefault();  // Prevent form submission if validation fails
-            }
-        });
-
-        // Optional: Animated button effect on hover
-        const btnSubmit = document.querySelector('.btn-submit');
-        btnSubmit.addEventListener('mouseenter', function() {
-            btnSubmit.style.transform = 'scale(1.05)';
-            btnSubmit.style.transition = 'transform 0.3s ease';
-        });
-        btnSubmit.addEventListener('mouseleave', function() {
-            btnSubmit.style.transform = 'scale(1)';
-        });
-    </script>
 </body>
 </html>
