@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Case List</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
+        th { background-color: #f2f2f2; }
+        tr:hover { background-color: #f9f9f9; }
+        .header { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <h2 class="header">Case List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Case ID</th>
+                <th>Case Name</th>
+                <th>Client Name</th>
+                <th>Start Date</th>
+                <th>Status</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for case in cases %}
+            <tr>
+                <td>{{ case.case_id }}</td>
+                <td>{{ case.case_name }}</td>
+                <td>{{ case.client_name }}</td>
+                <td>{{ case.start_date }}</td>
+                <td>{{ case.status }}</td>
+                <td>{{ case.description }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6">No cases found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
