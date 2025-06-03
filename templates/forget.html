@@ -2,8 +2,98 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Forget Password</title>
-    <link rel="stylesheet" href="static/forget.css">
+    <title>Forgot Password</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e1e2f, #3a3a52);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #f0f0f0;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            width: 350px;
+            text-align: center;
+            backdrop-filter: blur(8px);
+        }
+
+        h2 {
+            margin-bottom: 25px;
+            font-size: 24px;
+            color: #ffffff;
+        }
+
+        input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            border: none;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+            transition: background-color 0.3s;
+        }
+
+        input[type="email"]::placeholder {
+            color: #ccc;
+        }
+
+        input[type="email"]:focus {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        button, .back-btn {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button {
+            background-color: #5a67d8;
+            color: white;
+        }
+
+        button:hover {
+            background-color: #434190;
+        }
+
+        .back-btn {
+            background-color: transparent;
+            color: #ccc;
+            border: 1px solid #444;
+            margin-top: 20px;
+        }
+
+        .back-btn:hover {
+            background-color: #2d2d44;
+            color: #fff;
+            border-color: #5a67d8;
+        }
+
+        @media (max-width: 400px) {
+            .container {
+                width: 90%;
+                padding: 30px 20px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -12,6 +102,9 @@
             <input type="email" name="email" placeholder="Enter your email" required>
             <button type="submit">Send OTP</button>
         </form>
+        <a href="{{ url_for('login') }}">
+            <button class="back-btn">← Back to Login</button>
+        </a>
     </div>
 </body>
 </html>
