@@ -77,12 +77,47 @@ print("Email:", app.config['MAIL_USERNAME'])
 print("Password:", app.config['MAIL_PASSWORD'])
 
 #run_with_ngrok(app)
+
+# Create a table to store page view count
+def initialize_view_count_table():
+    conn = sqlite3.connect('lawfirm.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS view_count (
+            view_count INTEGER DEFAULT 0
+        )
+    ''')
+    # Initialize with 0 if the table is empty
+    cursor.execute('SELECT COUNT(*) FROM view_count')
+    if cursor.fetchone()[0] == 0:
+        cursor.execute('INSERT INTO view_count (view_count) VALUES (0)')
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+# Call this function when the application starts
+initialize_view_count_table()
+
 @app.route('/')
 def index_one():
     db = get_db()
     cursor = db.execute('SELECT name, review, rating FROM reviews ORDER BY id DESC LIMIT 5')  # Limit to latest 5 reviews
     client_reviews = cursor.fetchall()
+    # Increment the view_count by 1 each time the page is accessed
+    db.execute('UPDATE view_count SET view_count = view_count + 1')
+    db.commit()
     return render_template('index.html', reviews=client_reviews)
+
+
+@app.route('/view_count')
+def view_count():
+    conn = sqlite3.connect('lawfirm.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT view_count FROM view_count')
+    result = cursor.fetchone()
+    conn.close()
+    count = result[0] if result else 0
+    return render_template('view_count.html', view_count=count)
 
 
 @app.route('/index')
