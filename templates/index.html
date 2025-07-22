@@ -472,7 +472,57 @@
             <a href="{{ url_for('user') }}" class="link"><img src="static/new_profile1.png" alt="Profile" style="height: 75px; vertical-align: middle;"></a>
         </div>
     </nav>
-
+    <!-- Floating Help Button -->
+    <style>
+        .floating-help-btn {
+            position: fixed;
+            bottom: 15px;
+            margin-bottom: -5px;
+            right: 10px;
+            z-index: 9999;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .floating-help-btn:hover {
+            background: linear-gradient(135deg, #ff4b2b, #ff416c);
+        }
+    </style>
+    <a href="{{ url_for('chatbot') }}">
+        <button class="floating-help-btn" title="Help">
+            <style>
+            @keyframes glow {
+                0% {
+                    box-shadow: 0 0 8px 2px #ff416c, 0 0 16px 4px #ff4b2b;
+                }
+                50% {
+                    box-shadow: 0 0 32px 8px #ff416c, 0 0 48px 12px #ff4b2b;
+                }
+                100% {
+                    box-shadow: 0 0 8px 2px #ff416c, 0 0 16px 4px #ff4b2b;
+                }
+            }
+            .glowing-chatbot {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                animation: glow 1.5s infinite;
+                transition: box-shadow 0.3s;
+            }
+            </style>
+            <img src="static/AI_LAWYER.avif" alt="Chatbot" class="glowing-chatbot" style="width: 58px; height: 58px;">
+        </button>
+    </a>
     <section class="wrapper">
         <div class="container">
             <div id="scene" class="scene" data-hover-only="false">
