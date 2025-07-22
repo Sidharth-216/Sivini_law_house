@@ -1,22 +1,21 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const textarea = document.getElementById("user_input");
-    const button = document.querySelector(".submit-button");
+// Wait until DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('.chat-form');
+    const replySection = document.querySelector('.response-section');
+    const submitButton = document.querySelector('.submit-button');
 
-    // Add focus effect on the textarea
-    textarea.addEventListener("focus", () => {
-        textarea.style.boxShadow = "0px 0px 10px #6a11cb";
-    });
+    if (form && submitButton) {
+        form.addEventListener('submit', () => {
+            // Add a quick animation to the button on click
+            submitButton.classList.add('clicked');
+            setTimeout(() => {
+                submitButton.classList.remove('clicked');
+            }, 200);
+        });
+    }
 
-    textarea.addEventListener("blur", () => {
-        textarea.style.boxShadow = "none";
-    });
-
-    // Add button click animation
-    button.addEventListener("mousedown", () => {
-        button.style.transform = "scale(0.9)";
-    });
-
-    button.addEventListener("mouseup", () => {
-        button.style.transform = "scale(1)";
-    });
+    // Scroll to AI reply smoothly when reply appears
+    if (replySection) {
+        replySection.scrollIntoView({ behavior: 'smooth' });
+    }
 });
