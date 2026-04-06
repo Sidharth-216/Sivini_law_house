@@ -1,0 +1,13 @@
+# Local environment and secrets
+.env
+.env.*
+*.env
+
+# Python virtual environments
+env/
+venv/
+.venv/
+
+# Common Python cache artifacts
+__pycache__/
+*.pyc
