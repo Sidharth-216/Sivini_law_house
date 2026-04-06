@@ -498,12 +498,12 @@ nav .menu .menu_icon {
   align-items: center;
   cursor: pointer;
 }
-@media screen and (max-width: 799px) {
+/*@media screen and (max-width: 799px) {
   nav .menu .menu_icon {
-    display: flex;
+    
   }
-}
-nav .menu .menu_icon .icon {
+}*/
+/*nav .menu .menu_icon .icon {
   width: 24px;
   height: 2px;
   background: white;
@@ -531,7 +531,7 @@ nav .menu .menu_icon:hover .icon:before {
 }
 nav .menu .menu_icon:hover .icon:after {
   transform: translateY(10px);
-}
+}*/
 .wrapper {
   display: grid;
   grid-template-columns: 1fr;
@@ -941,6 +941,7 @@ nav .menu .menu_icon:hover .icon:after {
 .footer a:hover {
   text-decoration: underline;
 }
+
 
 .footer-bottom {
   text-align: center;

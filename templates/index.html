@@ -13,7 +13,7 @@
             color: rgb(246, 244, 244);
         }
     </style>
-    <script>
+   <!--<script>
         document.addEventListener('DOMContentLoaded', function() {
             const scrollDown = document.createElement('div');
             scrollDown.classList.add('scroll-down');
@@ -27,7 +27,7 @@
             });
             });
         });
-    </script>
+    </script>-->
     <style>
         .popup {
             position: fixed;
@@ -159,26 +159,198 @@
         <div class="menu">
             <!--<p class="website_name">SIVINI LAW HOUSE</p>-->
             <div class="menu_links">
-                <a href="{{ url_for('login') }}" class="link glowing-button" style="font-weight: bold; color: rgb(228, 222, 222); background-color: rgb(248, 57, 15); padding: 10px; border-radius: 5px;">LOGIN</a><!-- new login page --><!--new_login--><!--login-->
-                <a href="{{ url_for('send_message') }}" class="link">CHAT</a><!-- Updated Chat Room link --><!--whatsapp--><!--send_message-->
-                <a href="{{ url_for('new_video') }}" class="link">CALL</a>
-                <a href="{{ url_for('team') }}" class="link">TEAM</a>
-                <a href="{{ url_for('login') }}" class="link">BOOK</a>
-                <a href="{{ url_for('apply') }}" class="link">JOB APPLY</a>
-                <a href="{{ url_for('sid') }}" class="link">IPC SECTION</a>
-                <a href="{{ url_for('bns') }}" class="link">BNS SECTION</a>
-                <a href="{{ url_for('about') }}" class="link">ABOUT</a>
-                <a href="{{ url_for('contact') }}" class="link">CONTACT US</a>
-                <a href="{{ url_for('help') }}" class="link">HELP</a>
-                <a href="{{ url_for('lawyer_login') }}" class="link" style="font-weight: bold; color: rgb(228, 222, 222); background-color: rgb(248, 57, 15); padding: 10px; border-radius: 5px;">LAWYER LOGIN</a>
-                
+                <a href="{{ url_for('login') }}" class="link glowing-button" style="font-weight: bold; color: rgb(228, 222, 222); background-color: rgb(248, 57, 15); padding: 8px; border-radius: 5px; font-size: 12px;">LOGIN</a><!-- new login page --><!--new_login--><!--login-->
+                <a href="{{ url_for('whatsapp') }}" class="link" style="font-size: 12px;">CHAT</a><!-- Updated Chat Room link --> <!--whatsapp--> <!--send_message-->
+                <a href="{{ url_for('new_video') }}" class="link" style="font-size: 12px;">CALL</a>
+                <a href="{{ url_for('team') }}" class="link" style="font-size: 12px;">TEAM</a>
+                <a href="{{ url_for('login') }}" class="link" style="font-size: 12px;">BOOK</a>
+                <a href="{{ url_for('apply') }}" class="link" style="font-size: 12px;">JOB APPLY</a>
+                <a href="{{ url_for('sid') }}" class="link" style="font-size: 12px;">IPC SECTION</a>
+                <a href="{{ url_for('bns') }}" class="link" style="font-size: 12px;">BNS SECTION</a>
+                <a href="{{ url_for('about') }}" class="link" style="font-size: 12px;">ABOUT</a>
+                <a href="{{ url_for('contact') }}" class="link" style="font-size: 12px;">CONTACT US</a>
+                <a href="{{ url_for('help') }}" class="link" style="font-size: 12px;">HELP</a>
+                <a href="{{ url_for('lawyer_login') }}" class="link" style="font-weight: bold; color: rgb(228, 222, 222); background-color: rgb(248, 57, 15); padding: 8px; border-radius: 5px; font-size: 12px;">LAWYER LOGIN</a>
             </div>
-            <div class="menu_icon">
-                <span class="icon"></span>
+            <style>
+                /* Sidebar styles */
+                .mobile-sidebar {
+                    display: none;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 200px;
+                    height: 100%;
+                    background: linear-gradient(135deg, #1e3c72, #2a5298); /* Professional gradient */
+                    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
+                    color: white;
+                    z-index: 10000;
+                    height: 100vh;
+                    padding: 20px;
+                    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+                    transform: translateX(-100%);
+                    transition: transform 0.3s ease-in-out;
+                    overflow-y: auto;
+                }
+
+                .mobile-sidebar a {
+                    display: block;
+                    color: white;
+                    text-decoration: none;
+                    margin: 15px 0;
+                    padding: 15px;
+                    border-radius: 8px;
+                    background-color: rgba(255, 255, 255, 0.1);
+                    font-size: 16px;
+                    font-weight: bold;
+                    text-align: center;
+                    transition: background-color 0.3s ease, transform 0.2s ease;
+                }
+
+                .mobile-sidebar a:hover {
+                    background-color: rgba(255, 255, 255, 0.2);
+                    transform: scale(1.05);
+                }
+
+                .sidebar-toggle {
+                    display: none;
+                    position: fixed;
+                    margin-top: 20px;
+                    margin-bottom:16px;
+                    left: 20px;
+                    right: 20px;
+                    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+                    color: white;
+                    border: none;
+                    border-radius: 50%;
+                    width: 60px;
+                    height: 60px;
+                    font-size: 28px;
+                    cursor: pointer;
+                    z-index: 10001;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+                    transition: transform 0.3s ease;
+                }
+
+                .sidebar-toggle:hover {
+                    transform: rotate(90deg);
+                }
+
+                @media (max-width: 768px) {
+                    .mobile-sidebar {
+                        display: block;
+                    }
+
+                    .sidebar-toggle {
+                        display: block;
+                    }
+                }
+            </style>
+            <div class="mobile-sidebar" id="mobileSidebar">
+                <a href="{{ url_for('login') }}" class="sidebar-link" style="background-color: red; color: white;">LOGIN</a>
+                <a href="{{ url_for('whatsapp') }}" class="sidebar-link">CHAT</a>
+                <a href="{{ url_for('new_video') }}" class="sidebar-link">CALL</a>
+                <a href="{{ url_for('team') }}" class="sidebar-link">TEAM</a>
+                <a href="{{ url_for('login') }}" class="sidebar-link">BOOK</a>
+                <a href="{{ url_for('apply') }}" class="sidebar-link">JOB APPLY</a>
+                <a href="{{ url_for('register') }}" class="sidebar-link" style="background-color: green; color: white;">REGISTER</a>
+                <a href="{{ url_for('sid') }}" class="sidebar-link">IPC SECTION</a>
+                <a href="{{ url_for('bns') }}" class="sidebar-link">BNS SECTION</a>
+                <a href="{{ url_for('about') }}" class="sidebar-link">ABOUT</a>
+                <a href="{{ url_for('contact') }}" class="sidebar-link">CONTACT US</a>
+                <a href="{{ url_for('help') }}" class="sidebar-link">HELP</a>
+                <a href="{{ url_for('lawyer_login') }}" class="sidebar-link" style="background-color: red; color: white;">LAWYER LOGIN</a>
             </div>
+
+            <style>
+                .mobile-sidebar {
+                    display: none;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 200px;
+                    max-width: 300px;
+                    height: 650px;
+                    background: linear-gradient(135deg, #1e3c72, #2a5298);
+                    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+                    z-index: 10000;
+                    padding: 20px;
+                    transform: translateX(-100%);
+                    transition: transform 0.4s ease-in-out;
+                    overflow-y: auto;
+                }
+
+                .sidebar-link {
+                    display: block;
+                    margin: 10px 0;
+                    padding: 15px;
+                    border-radius: 8px;
+                    text-align: center;
+                    font-size: 16px;
+                    font-weight: bold;
+                    text-decoration: none;
+                    color: white;
+                    background-color: rgba(255, 255, 255, 0.1);
+                    transition: background-color 0.3s ease, transform 0.2s ease;
+                }
+
+                .sidebar-link:hover {
+                    background-color: rgba(255, 255, 255, 0.2);
+                    transform: scale(1.05);
+                }
+
+                .sidebar-toggle {
+                    display: none;
+                    position: fixed;
+                    top: 20px;
+                    left: 20px;
+                    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+                    color: white;
+                    border: none;
+                    border-radius: 50%;
+                    width: 50px;
+                    height: 50px;
+                    font-size: 24px;
+                    cursor: pointer;
+                    z-index: 10001;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+                    transition: transform 0.3s ease;
+                }
+
+                .sidebar-toggle:hover {
+                    transform: rotate(90deg);
+                }
+
+                @media (max-width: 768px) {
+                    .mobile-sidebar {
+                        display: block;
+                    }
+
+                    .sidebar-toggle {
+                        display: block;
+                    }
+                }
+            </style>
+
+            <button class="sidebar-toggle" id="sidebarToggle" style="margin-top: -4px;">☰</button>
+
+            <script>
+                const sidebar = document.getElementById('mobileSidebar');
+                const toggleButton = document.getElementById('sidebarToggle');
+
+                toggleButton.addEventListener('click', function () {
+                    if (sidebar.style.transform === 'translateX(0%)') {
+                        sidebar.style.transform = 'translateX(-100%)';
+                    } else {
+                        sidebar.style.transform = 'translateX(0%)';
+                    }
+                });
+            </script>
             <div class="dropdown">
-                <button class="dropbtn">Services</button>
+                <button class="dropbtn" style="display: block; margin: 0 auto; margin-left: 130px;">Services</button>
                 <div class="dropdown-content">
+                    <a href="{{ url_for('face_login') }}">Face Login</a>
+                    <a href="{{ url_for('video_call_2') }}">video call</a>
                     <a href="{{ url_for('reviews') }}">Reviews</a>
                     <a href="{{ url_for('books_page') }}">Books</a>
                     <a href="{{ url_for('chatbot') }}">AI Chat</a>
@@ -300,7 +472,57 @@
             <a href="{{ url_for('user') }}" class="link"><img src="static/new_profile1.png" alt="Profile" style="height: 75px; vertical-align: middle;"></a>
         </div>
     </nav>
-
+    <!-- Floating Help Button -->
+    <style>
+        .floating-help-btn {
+            position: fixed;
+            bottom: 15px;
+            margin-bottom: -5px;
+            right: 10px;
+            z-index: 9999;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .floating-help-btn:hover {
+            background: linear-gradient(135deg, #ff4b2b, #ff416c);
+        }
+    </style>
+    <a href="{{ url_for('chatbot') }}">
+        <button class="floating-help-btn" title="Help">
+            <style>
+            @keyframes glow {
+                0% {
+                    box-shadow: 0 0 8px 2px #ff416c, 0 0 16px 4px #ff4b2b;
+                }
+                50% {
+                    box-shadow: 0 0 32px 8px #ff416c, 0 0 48px 12px #ff4b2b;
+                }
+                100% {
+                    box-shadow: 0 0 8px 2px #ff416c, 0 0 16px 4px #ff4b2b;
+                }
+            }
+            .glowing-chatbot {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                animation: glow 1.5s infinite;
+                transition: box-shadow 0.3s;
+            }
+            </style>
+            <img src="static/AI_LAWYER.avif" alt="Chatbot" class="glowing-chatbot" style="width: 58px; height: 58px;">
+        </button>
+    </a>
     <section class="wrapper">
         <div class="container">
             <div id="scene" class="scene" data-hover-only="false">
@@ -396,20 +618,22 @@
 </section>
 
 
-<section id="blogs" style="padding: 50px; background-color: black; color: white;">
-    <h2 style="text-align: center; color: white; font-size: 2.5rem;">Latest Blogs</h2>
-    <div style="display: flex; justify-content: space-around; margin-top: 50px;">
-        <div style="width: 40%; text-align: center; padding: 20px; border: 1px solid lightgray; border-radius: 10px;">
-            <h3 style="color: lightgray; font-size: 1.5rem;">Understanding Your Rights</h3>
-            <p style="font-size: 1.2rem;">The Indian constitution gives you full of rights....<a href="{{ url_for('blog_1') }}" style="color: #1e90ff;">Read More...</a></p>
-        </div>
-        <div style="width: 40%; text-align: center; padding: 20px; border: 1px solid lightgray; border-radius: 10px;">
-            <h3 style="color: lightgray; font-size: 1.5rem;">Why Hire a Lawyer?</h3>
-            <p style="font-size: 1.2rem;">How should we hire a perfect lawyer for the case....<a href="{{ url_for('blog_2') }}" style="color: #1e90ff;">Read More...</a></p>
-        </div>
-        <div style="width: 40%; text-align: center; padding: 20px; border: 1px solid lightgray; border-radius: 10px;">
-            <h3 style="color: lightgray; font-size: 1.5rem;">Trends in Legal Cases</h3>
-            <p style="font-size: 1.2rem;">Recent most of the cases are baised on the..... <a href="{{ url_for('blog_3') }}" style="color: #1e90ff;">Read More...</a></p>
+<section id="blogs" style="padding: 40px 20px; background-color: black; color: white;"></section>
+    <div class="container" style="max-width: 1200px; margin: auto; text-align: center;">
+        <h2 style="text-align: center; color: white; font-size: 2.5rem;">Latest Blogs</h2>
+        <div style="display: flex; flex-wrap: wrap; margin-bottom: 20px; justify-content: center; margin-top: 50px; gap: 20px;">
+            <div style="width: 300px; text-align: center; padding: 20px; border: 1px solid rgb(230, 220, 220); border-radius: 5px; overflow: hidden; background-color: black;">
+                <h3 style="color: lightgray; font-size: 1.5rem;">Understanding Your Rights</h3>
+                <p style="font-size: 1.2rem; color: white; background-color: black; padding: 10px; border-radius: 5px;">The Indian constitution gives you full of rights....<a href="{{ url_for('blog_1') }}" style="color: #1e90ff;">Read More...</a></p>
+            </div>
+            <div style="width: 300px; text-align: center; padding: 20px; border: 1px solid lightgray; border-radius: 5px; overflow: hidden; background-color: black;">
+                <h3 style="color: lightgray; font-size: 1.5rem;">Hiring the Perfect Lawyer</h3>
+                <p style="font-size: 1.2rem; color: white;">How should we hire a perfect lawyer for the case....<a href="{{ url_for('blog_2') }}" style="color: #1e90ff;">Read More...</a></p>
+            </div>
+            <div style="width: 300px; text-align: center; padding: 20px; border: 1px solid lightgray; border-radius: 5px; overflow: hidden; background-color: black;">
+                <h3 style="color: lightgray; font-size: 1.5rem;">Trends in Legal Cases</h3>
+                <p style="font-size: 1.2rem; color: white;">Recent most of the cases are based on the..... <a href="{{ url_for('blog_3') }}" style="color: #1e90ff;">Read More...</a></p>
+            </div>
         </div>
     </div>
 </section>
@@ -458,8 +682,8 @@
     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 50px; gap: 20px;">
         <!-- Address Details -->
         <div style="width: 50%; font-size: 1.2rem; line-height: 1.8;">
-            <p><strong>Sivini Law House</strong></p>
-            <p><strong>S Babu Rao</strong></p>
+            <p><strong>M/S Law House</strong></p>
+            <p><strong>S Babu Rao GP</strong></p>
             <p>Narayan nivas,near post office,writer street</p>
             <p>Bissam Cuttack,Odisha,765019</p>
             <p>Phone:+91 9040358266</p>
@@ -493,8 +717,8 @@
 <footer class="footer">
     <div class="footer-content">
         <div class="footer-section about">
-            <h2>Sivini Law House</h2>
-            <p>Your trusted partner in legal matters. We provide expert legal advice and services for individuals and businesses alike.</p>
+            <!--<h2>M/S Law House</h2>-->
+           <!-- <p>Your trusted partner in legal matters. We provide expert legal advice and services for individuals and businesses alike.</p>-->
         </div>
         <div class="footer-section links">
             <h3>Quick Links</h3>
