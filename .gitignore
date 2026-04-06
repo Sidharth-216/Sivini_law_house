@@ -11,3 +11,23 @@ venv/
 # Common Python cache artifacts
 __pycache__/
 *.pyc
+
+# Node and package manager artifacts
+node_modules/
+
+# Editor and notebook metadata
+.vscode/
+.ipynb_checkpoints/
+
+# Local outputs, backups, and temp files
+db_backups/
+*.log
+*.out
+a.out
+
+# Runtime upload/output folders
+static/uploads/
+
+# Local nested copy of project
+final_project/
+*.pyc
